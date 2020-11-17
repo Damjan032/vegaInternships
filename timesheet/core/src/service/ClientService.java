@@ -1,11 +1,10 @@
 package service;
 
-import models.client.Client;
+import model.client.Client;
 import repository.ClientRepository;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 public class ClientService implements IService<Client, UUID> {
 

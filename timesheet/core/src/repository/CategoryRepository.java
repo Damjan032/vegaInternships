@@ -1,6 +1,6 @@
 package repository;
 
-import models.project.Category;
+import model.project.Category;
 
 public interface CategoryRepository extends  CoreRepository<Category> {
 }

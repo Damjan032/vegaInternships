@@ -1,6 +1,6 @@
 package service;
 
-import models.project.Category;
+import model.project.Category;
 import repository.CategoryRepository;
 
 import java.util.Optional;

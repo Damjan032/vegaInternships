@@ -1,6 +1,6 @@
 package repository;
 
-import models.timesheet.DailyTimeSheet;
+import model.timesheet.DailyTimeSheet;
 
 public interface DailyTimeSheetRepository extends CoreRepository<DailyTimeSheet>{
 }

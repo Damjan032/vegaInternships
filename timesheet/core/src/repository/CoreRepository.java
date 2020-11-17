@@ -1,9 +1,9 @@
 package repository;
 
-import models.Page;
-import models.client.Client;
+import model.Page;
+import model.client.Client;
 
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,9 +20,9 @@ public interface CoreRepository<T> {
 
     public Optional<T> findByName(String name);
 
-    public Page<Client>  findBy(String searchText, char firstLetter, int pageNumber, int pageSize);
+    public Page<T>  findBy(String searchText, char firstLetter, int pageNumber, int pageSize);
 
-    public T removeByName(String id);
+    public void removeByName(String id);
 
-    public T save(T newObject); //update if exist like a spring
+   // public T save(T newObject); //update if exist like a spring
 }

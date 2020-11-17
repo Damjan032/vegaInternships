@@ -1,6 +1,6 @@
 package service;
 
-import models.employee.Employee;
+import model.employee.Employee;
 import repository.EmployeeRepository;
 
 import java.util.Optional;

@@ -1,8 +1,9 @@
 package service;
 
-import models.timesheet.DailyTimeSheet;
+import model.timesheet.DailyTimeSheet;
 import repository.DailyTimeSheetRepository;
 
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class DailyTimeSheetService implements IService<DailyTimeSheet, UUID> {
     }
 
     @Override
-    public void create(DailyTimeSheet dailyTimeSheet) {
+    public void create(DailyTimeSheet dailyTimeSheet)  {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(dailyTimeSheet.id());
         if (foundDailyTimeSheet.isPresent()) {
             throw new RuntimeException("Already exists with same id");

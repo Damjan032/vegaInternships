@@ -7,6 +7,13 @@
     <groupId>rs.vegait.timesheet</groupId>
     <artifactId>persitence</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

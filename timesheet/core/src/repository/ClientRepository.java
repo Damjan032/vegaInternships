@@ -1,12 +1,5 @@
 package repository;
-
-import jdk.jfr.Category;
-import models.Page;
-import models.client.Client;
-import models.client.ClientName;
-
-import java.util.Optional;
-import java.util.UUID;
+import model.client.Client;
 
 // new module persistence
 // JDBC

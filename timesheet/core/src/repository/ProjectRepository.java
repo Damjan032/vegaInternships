@@ -1,6 +1,6 @@
 package repository;
 
-import models.project.Project;
+import model.project.Project;
 
 public interface ProjectRepository extends CoreRepository<Project>{
 }

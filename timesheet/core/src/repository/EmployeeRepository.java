@@ -1,6 +1,6 @@
 package repository;
 
-import models.employee.Employee;
+import model.employee.Employee;
 
 public interface EmployeeRepository extends CoreRepository<Employee> {
 }

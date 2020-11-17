@@ -1,7 +1,6 @@
 package service;
 
-import models.project.Project;
-import repository.ProjectRepository;
+import model.project.Project;
 import repository.ProjectRepository;
 
 import java.util.Optional;
