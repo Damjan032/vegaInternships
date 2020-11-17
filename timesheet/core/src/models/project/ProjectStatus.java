@@ -1,4 +1,4 @@
-package models.enums;
+package models.project;
 
 public enum ProjectStatus {
     ACTIVE,

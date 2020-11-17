@@ -1,4 +1,4 @@
-package models.enums;
+package models.employee;
 
 public enum EmployeeRole {
     ADMIN,

@@ -1,11 +1,10 @@
 package models.client;
 
 public class Country {
-    private int zip;
     private String name;
 
-    public Country(String name, int zip) {
-        if (name == null || zip <= 0)
+    public Country(String name) {
+        if (name == null)
             throw new ExceptionInInitializerError();
     }
 
@@ -13,7 +12,4 @@ public class Country {
         return name;
     }
 
-    public int zipCode() {
-        return zip;
-    }
 }

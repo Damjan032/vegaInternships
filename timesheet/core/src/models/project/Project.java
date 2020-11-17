@@ -2,18 +2,19 @@ package models.project;
 
 import models.client.Client;
 import models.employee.Employee;
-import models.enums.ProjectStatus;
+
+import java.util.UUID;
 
 public class Project {
-    protected String id;
+    protected UUID id;
     protected ProjectDescription description;
     protected ProjectName name;
-    protected Category category;
     protected ProjectStatus status;
     protected Employee teamLead;
     protected Client client;
+    protected Category category;
 
-    public Project(String id, String projectDescription, String projectName, Client client,Category category, ProjectStatus projectStatus, Employee teamLead) {
+    public Project(UUID id, String projectDescription, String projectName, Client client,Category category, ProjectStatus projectStatus, Employee teamLead) {
         this.id = id;
         this.description = new ProjectDescription(projectDescription);
         this.name = new ProjectName(projectName);
@@ -23,7 +24,7 @@ public class Project {
         this.teamLead = teamLead;
     }
 
-    public String id() {
+    public UUID id() {
         return id;
     }
 

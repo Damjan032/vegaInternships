@@ -1,10 +1,12 @@
 package models.project;
 
+import java.util.UUID;
+
 public class Category {
-    private String id;
+    private UUID id;
     private String name;
 
-    public Category(String id, String name) {
+    public Category(UUID id, String name) {
         if (id == null || name == null) {
             throw new ExceptionInInitializerError();
         }
@@ -12,7 +14,7 @@ public class Category {
         this.name = name;
     }
 
-    public String id() {
+    public UUID id() {
         return id;
     }
 

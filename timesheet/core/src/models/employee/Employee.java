@@ -1,11 +1,12 @@
 package models.employee;
 
-import models.enums.EmployeeRole;
-import models.enums.EmployeeStatus;
 import models.timesheet.DailyTimeSheet;
 
+import java.util.UUID;
+
 public class Employee {
-    protected String id;
+    protected UUID id;
+    protected Name name;
     protected Username username;
     protected EmailAddress emailAddress;
     protected HoursPerWeek requiredHoursPerWeek;
@@ -13,8 +14,9 @@ public class Employee {
     protected EmployeeRole role;
     protected DailyTimeSheet dailyTimeSheet;
 
-    public Employee(String id, String username, String emailAddress, double requiredHoursPerWeek, EmployeeStatus status, DailyTimeSheet dailyTimeSheet, EmployeeRole role) {
+    public Employee(UUID id, Name name, String username, String emailAddress, double requiredHoursPerWeek, EmployeeStatus status, DailyTimeSheet dailyTimeSheet, EmployeeRole role) {
         this.id = id;
+        this.name = name;
         this.username = new Username(username);
         this.emailAddress = new EmailAddress(emailAddress);
         this.requiredHoursPerWeek = new HoursPerWeek(requiredHoursPerWeek);
@@ -23,7 +25,7 @@ public class Employee {
         this.role = role;
     }
 
-    public Employee(String id, Username username, EmailAddress emailAddress, HoursPerWeek requiredHoursPerWeek, EmployeeStatus status, EmployeeRole role, DailyTimeSheet dailyTimeSheet) {
+    public Employee(UUID id, Username username, EmailAddress emailAddress, HoursPerWeek requiredHoursPerWeek, EmployeeStatus status, EmployeeRole role, DailyTimeSheet dailyTimeSheet) {
         this.id = id;
         this.username = username;
         this.emailAddress = emailAddress;
@@ -33,7 +35,7 @@ public class Employee {
         this.dailyTimeSheet = dailyTimeSheet;
     }
 
-    public String id() {
+    public UUID id() {
         return id;
     }
 

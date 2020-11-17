@@ -1,21 +1,21 @@
 package models.client;
 
-public class Client {
-    private String id;
-    private ClientName clientName;
-    private ClientAddress address;
-    private CityName cityName;
-    private Country country;
+import java.util.UUID;
 
-    public Client(String id, String clientName, String address, String cityName, String countryName, int countryZip) {
+public class Client {
+    private UUID id;
+    private ClientName clientName;
+    private Address address;
+
+    public Client(UUID id, ClientName clientName, Address address) {
+        if (id == null || clientName == null || address == null)
+            throw new ExceptionInInitializerError();
         this.id = id;
-        this.clientName = new ClientName(clientName);
-        this.address = new ClientAddress(address);
-        this.cityName = new CityName(cityName);
-        this.country = new Country(countryName, countryZip);
+        this.clientName = clientName;
+        this.address = address;
     }
 
-    public String id() {
+    public UUID id() {
         return id;
     }
 
@@ -23,23 +23,5 @@ public class Client {
         return clientName.name();
     }
 
-    public String address() {
-        return address.address();
-    }
-
-    public String cityName() {
-        return cityName.name();
-    }
-
-    public Country country() {
-        return country;
-    }
-
-    public int countryZip() {
-        return country.zipCode();
-    }
-
-    public String countryName() {
-        return country.name();
-    }
+    public Address address() { return this.address; }
 }

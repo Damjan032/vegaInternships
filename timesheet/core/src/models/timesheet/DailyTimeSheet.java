@@ -4,25 +4,29 @@ import models.employee.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DailyTimeSheet {
-    private int id;
+    private UUID id;
     private Employee employee;
     private List<TimeSheet> timeSheetList;
 
-    public DailyTimeSheet(int id, Employee employee, List<TimeSheet> timeSheetList) {
+    public DailyTimeSheet(UUID id, Employee employee, Iterable<TimeSheet> timeSheetIterable) {
+
         this.id = id;
         this.employee = employee;
-        this.timeSheetList = timeSheetList;
+        this.timeSheetList = new ArrayList<TimeSheet>();
+        timeSheetIterable.forEach(this.timeSheetList::add);
+
     }
 
-    public DailyTimeSheet(int id, Employee employee) {
+    public DailyTimeSheet(UUID id, Employee employee) {
         this.id = id;
         this.employee = employee;
         this.timeSheetList = new ArrayList<>();
     }
 
-    public int id() {
+    public UUID id() {
         return id;
     }
 

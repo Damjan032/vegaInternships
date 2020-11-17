@@ -1,15 +1,26 @@
 package repository;
 
+import models.Page;
+import models.client.Client;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface CoreRepository<T> {
-    public List<T> findAll();
+    public void add(T newObject);
 
-    public T findById(String id);
+    public void remove(UUID id);
 
-    public T findByName(String name);
+    public void update(T newObject);
 
-    public T removeById(String id);
+    public Iterable<T> findAll();
+
+    public Optional<T> findById(UUID id);
+
+    public Optional<T> findByName(String name);
+
+    public Page<Client>  findBy(String searchText, char firstLetter, int pageNumber, int pageSize);
 
     public T removeByName(String id);
 

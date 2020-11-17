@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persitence/persitence.iml" filepath="$PROJECT_DIR$/persitence/persitence.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/rs.vegait.timesheet.iml" filepath="$PROJECT_DIR$/.idea/rs.vegait.timesheet.iml" />
     </modules>
   </component>
