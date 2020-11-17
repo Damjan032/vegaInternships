@@ -3,36 +3,35 @@
 package JdbcRepository;
 
 import model.Page;
-import model.client.Client;
 import model.project.Category;
 import repository.CategoryRepository;
-
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class JdbcCategoryRepository implements CategoryRepository {
     private final Connection connection;
-    private final String TABLE_NAME = "category";
+    private final String TABLE_NAME = "categories";
     private Statement statement;
 
     public JdbcCategoryRepository(Connection connection) throws SQLException {
         this.connection = connection;
         statement = connection.createStatement();
-        statement.execute( "CREATE TABLE IF NOT EXISTS category " +
-                "(id VARCHAR(255) not NULL , " +
-                " name VARCHAR(255), " +
+        statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                " (id VARCHAR(255) not NULL , " +
+                " name VARCHAR(255) not NULL, " +
                 " PRIMARY KEY ( id ))");
     }
     @Override
     public void add(Category newObject)  {
         String sql = "INSERT INTO "+TABLE_NAME+ " VALUES ('" +
                 newObject.id() +"',  '"+ newObject.name() +"')";
-
-        System.out.println(sql);
         try {
             statement.executeUpdate(sql);
         } catch (SQLException throwables) {
@@ -68,13 +67,8 @@ public class JdbcCategoryRepository implements CategoryRepository {
         List<Category> categories = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery(sql);
-
             while(rs.next()){
                 categories.add(new Category(UUID.fromString(rs.getString("id")),rs.getString("name")));
-
-                //Display values
-                System.out.print("ID: " + rs.getString("id"));
-                System.out.println(", Age: " + rs.getString("name"));
             }
             rs.close();
         } catch (SQLException throwables) {
@@ -89,13 +83,8 @@ public class JdbcCategoryRepository implements CategoryRepository {
         Category category = null;
         try {
             ResultSet rs = statement.executeQuery(sql);
-
             while(rs.next()){
                 category = new Category(UUID.fromString(rs.getString("id")),rs.getString("name"));
-
-                //Display values
-                System.out.print("ID: " + rs.getString("id"));
-                System.out.println(", Age: " + rs.getString("name"));
             }
             rs.close();
         } catch (SQLException throwables) {
@@ -110,13 +99,8 @@ public class JdbcCategoryRepository implements CategoryRepository {
         Category category = null;
         try {
             ResultSet rs = statement.executeQuery(sql);
-
             while(rs.next()){
                 category = new Category(UUID.fromString(rs.getString("id")),rs.getString("name"));
-
-                //Display values
-                System.out.print("ID: " + rs.getString("id"));
-                System.out.println(", Age: " + rs.getString("name"));
             }
             rs.close();
         } catch (SQLException throwables) {
@@ -137,10 +121,6 @@ public class JdbcCategoryRepository implements CategoryRepository {
             rs = statement.executeQuery(sql);
             while(rs.next()){
                 categories.add(new Category(UUID.fromString(rs.getString("id")),rs.getString("name")));
-
-                //Display values
-                System.out.print("ID: " + rs.getString("id"));
-                System.out.println(", Age: " + rs.getString("name"));
             }
             rs.close();
         } catch (SQLException throwables) {
