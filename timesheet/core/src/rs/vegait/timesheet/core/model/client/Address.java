@@ -13,5 +13,15 @@ public class Address {
         this.country = country;
     }
 
+    public Street street() {
+        return street;
+    }
 
+    public City city() {
+        return city;
+    }
+
+    public Country country() {
+        return country;
+    }
 }

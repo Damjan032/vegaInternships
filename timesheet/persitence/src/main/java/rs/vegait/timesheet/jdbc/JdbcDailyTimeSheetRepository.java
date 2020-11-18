@@ -14,20 +14,10 @@ import java.util.UUID;
 
 public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
     private final String TABLE_NAME = "dailyTimeSheets";
-    private Statement statement;
+    private final Connection connection;
 
     public JdbcDailyTimeSheetRepository(Connection connection) throws SQLException {
-        statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (id VARCHAR(255) not NULL , " +
-                " employeeId VARCHAR(255) not NULL, " +
-                " day DATE not NULL, " +
-                " emailAddress VARCHAR(255) not NULL, " +
-                " requiredHoursPerWeek INT not NULL, " +
-                " status INT not NULL, " +
-                " role INT not NULL, " +
-                " PRIMARY KEY ( id )," +
-                " FOREIGN KEY (employeeId) REFERENCES employees(id))");
+        this.connection = connection;
     }
 
     @Override
@@ -65,8 +55,4 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
         return null;
     }
 
-    @Override
-    public void removeByName(String id) throws SQLException {
-
-    }
 }

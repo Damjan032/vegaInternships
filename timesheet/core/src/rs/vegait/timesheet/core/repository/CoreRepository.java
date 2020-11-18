@@ -23,7 +23,5 @@ public interface CoreRepository<T> {
 
     public Page<T> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException;
 
-    public void removeByName(String id) throws SQLException;
-
    // public T save(T newObject); //update if exist like a spring
 }

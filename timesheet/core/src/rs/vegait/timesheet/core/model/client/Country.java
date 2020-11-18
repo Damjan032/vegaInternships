@@ -6,6 +6,7 @@ public class Country {
     public Country(String name) {
         if (name == null)
             throw new ExceptionInInitializerError();
+        this.name = name;
     }
 
     public String name() {

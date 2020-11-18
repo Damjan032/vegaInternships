@@ -12,22 +12,10 @@ import java.util.UUID;
 
 public class JdbcProjectRepository implements ProjectRepository {
     private final String TABLE_NAME = "projects";
-    private Statement statement;
+    private final Connection connection;
 
     public JdbcProjectRepository(Connection connection) throws SQLException {
-        statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (id VARCHAR(255) not NULL , " +
-                " teamleadId VARCHAR(255) not NULL, " +
-                " name VARCHAR(255) not NULL, " +
-                " categoryId VARCHAR(255) not NULL, " +
-                " clientId VARCHAR(255) not NULL, " +
-                " status INT not NULL, " +
-                " description VARCHAR(255), " +
-                " PRIMARY KEY ( id )," +
-                " FOREIGN KEY (teamleadId) REFERENCES employees(id), " +
-                " FOREIGN KEY (clientId) REFERENCES clients(id)," +
-                "FOREIGN KEY (categoryId) REFERENCES categories(id))");
+        this.connection = connection;
     }
 
 
@@ -66,8 +54,4 @@ public class JdbcProjectRepository implements ProjectRepository {
         return null;
     }
 
-    @Override
-    public void removeByName(String id) throws SQLException {
-
-    }
 }

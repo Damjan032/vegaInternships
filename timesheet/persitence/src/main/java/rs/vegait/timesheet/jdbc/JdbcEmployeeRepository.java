@@ -4,10 +4,9 @@ import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.employee.*;
 import rs.vegait.timesheet.core.repository.EmployeeRepository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,87 +15,184 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     private Connection connection;
 
     public JdbcEmployeeRepository(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (id VARCHAR(255) not NULL , " +
-                " firstName VARCHAR(255) not NULL, " +
-                " lastName VARCHAR(255) not NULL, " +
-                " username VARCHAR(255) not NULL, " +
-                " emailAddress VARCHAR(255) not NULL, " +
-                " requiredHoursPerWeek FLOAT not NULL, " +
-                " status VARCHAR(255) not NULL, " +
-                " role VARCHAR(255) not NULL, " +
-                " PRIMARY KEY ( id ))");
+        this.connection = connection;
     }
 
     @Override
     public void add(Employee newObject) throws SQLException {
-        String sql = "INSERT INTO "+TABLE_NAME+ " VALUES ('" +
-                newObject.id() +"',  '"+ newObject.name().firstName() +"','" +
-                newObject.name().lastName()+"','" +
-                newObject.username()+"','" +
-                newObject.emailAddress()+"'," +
-                newObject.requiredHoursPerWeek()+",'" +
-                newObject.status()+"','" +
-                newObject.role()+
+        String sql = "INSERT INTO " + TABLE_NAME + " VALUES ('" +
+                newObject.id() + "',  '" + newObject.name().firstName() + "','" +
+                newObject.name().lastName() + "','" +
+                newObject.username() + "','" +
+                newObject.password() + "','" +
+                newObject.emailAddress() + "'," +
+                newObject.requiredHoursPerWeek() + ",'" +
+                newObject.status() + "','" +
+                newObject.role() +
                 "')";
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+        PreparedStatement prepareStatement = connection.prepareStatement(sql);
+        prepareStatement.executeUpdate();
 
     }
 
     @Override
-    public void remove(UUID id) throws SQLException{
+    public void remove(UUID id) throws SQLException {
+        String sql = "DELETE FROM " + TABLE_NAME + " " +
+                " WHERE id like (?)";
+
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setString(1, id.toString());
+        pstmt.execute();
 
     }
 
     @Override
-    public void update(Employee newObject) throws SQLException{
+    public void update(Employee newObject) throws SQLException {
 
+
+        Optional<Employee> employeeOptional = this.findById(newObject.id());
+        if (!employeeOptional.isPresent()) {
+            return;
+        }
+        String sql = "UPDATE " + TABLE_NAME + " SET " +
+                "firstName = ?, " +
+                "lastName = ?, " +
+                "username = ?, " +
+                "password = ?, " +
+                "emailAddress = ?, " +
+                "requiredHoursPerWeek = ?, " +
+                "status = ?," +
+                "role = ? " +
+                "WHERE (id = ?);";
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setString(1,
+                newObject.name().firstName() == null ? employeeOptional.get().name().firstName() : newObject.name().firstName());
+        pstmt.setString(2,
+                newObject.name().lastName() == null ? employeeOptional.get().name().lastName() : newObject.name().lastName());
+        pstmt.setString(3,
+                newObject.username() == null ? employeeOptional.get().username() : newObject.username());
+        pstmt.setString(4,
+                newObject.password() == null ? employeeOptional.get().password() : newObject.password());
+        pstmt.setString(5,
+                newObject.emailAddress() == null ? employeeOptional.get().emailAddress() : newObject.emailAddress());
+        pstmt.setDouble(6,
+                newObject.requiredHoursPerWeek() <= 0 ? employeeOptional.get().requiredHoursPerWeek() : newObject.requiredHoursPerWeek());
+        pstmt.setString(7,
+                newObject.status() == null ? employeeOptional.get().status().toString() : newObject.status().toString());
+        pstmt.setString(8,
+                newObject.role() == null ? employeeOptional.get().role().toString() : newObject.role().toString());
+        pstmt.setString(9, employeeOptional.get().id().toString());
+
+        pstmt.executeUpdate();
     }
 
     @Override
-    public Iterable<Employee> findAll() throws SQLException{
-        return null;
+    public Iterable<Employee> findAll() throws SQLException {
+        String sql = "SELECT * FROM " + TABLE_NAME;
+        List<Employee> employees = new ArrayList<>();
+
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            employees.add(new Employee(UUID.fromString(rs.getString("id")),
+                    new Name(rs.getString("firstName"),
+                            rs.getString("lastName")),
+                    new Password(rs.getString("password")),
+                    new Username(rs.getString("username")),
+                    new EmailAddress(rs.getString("emailAddress")),
+                    new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
+                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER));
+        }
+        rs.close();
+        return employees;
     }
 
     @Override
     public Optional<Employee> findById(UUID id) throws SQLException {
-        String sql = "SELECT * FROM "+TABLE_NAME + " WHERE id LIKE('"+id+"')";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setString(1, id.toString());
+
         Employee employee = null;
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            employee = new Employee(UUID.fromString(rs.getString("id")),
+                    new Name(rs.getString("firstName"),
+                            rs.getString("lastName")),
+                    new Password(rs.getString("password")),
+                    new Username(rs.getString("username")),
+                    new EmailAddress(rs.getString("emailAddress")),
+                    new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
+                    rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER);
+        }
+        rs.close();
 
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while(rs.next()){
-                employee = new Employee(UUID.fromString(rs.getString("id")),
-                        new Name(rs.getString("firstName"),
-                                rs.getString("lastName")),
-                        new Username(rs.getString("username")),
-                        new EmailAddress(rs.getString("emailAddress")),
-                        new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
-                        rs.getString("status")=="ACTIVE" ? EmployeeStatus.ACTIVE  : EmployeeStatus.INACTIVE,
-                        rs.getString("role")=="ADMIN" ? EmployeeRole.ADMIN  : EmployeeRole.WORKER);
-            }
-            rs.close();
-
-        if (employee==null){
+        if (employee == null) {
             return Optional.empty();
         }
         return Optional.of(employee);
     }
 
     @Override
-    public Optional<Employee> findByName(String name) throws SQLException{
-        return Optional.empty();
+    public Optional<Employee> findByName(String name) throws SQLException {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setString(1, name);
+
+        Employee employee = null;
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            employee = new Employee(UUID.fromString(rs.getString("id")),
+                    new Name(rs.getString("firstName"),
+                            rs.getString("lastName")),
+                    new Password(rs.getString("password")),
+                    new Username(rs.getString("username")),
+                    new EmailAddress(rs.getString("emailAddress")),
+                    new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
+                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER);
+        }
+        rs.close();
+
+        if (employee == null) {
+            return Optional.empty();
+        }
+        return Optional.of(employee);
     }
 
     @Override
-    public Page<Employee> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException{
-        return null;
-    }
+    public Page<Employee> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException {
+        String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT  ?, ?";
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setInt(1, pageNumber);
+        pstmt.setInt(2, pageSize);
 
-    @Override
-    public void removeByName(String id) throws SQLException{
 
+        List<Employee> employees = new ArrayList<>();
+        int numberOfRows = 0;
+
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS total FROM " + TABLE_NAME);
+        rs.next();
+        numberOfRows = rs.getInt("total");
+
+        rs = pstmt.executeQuery();
+        while (rs.next()) {
+            employees.add(new Employee(UUID.fromString(rs.getString("id")),
+                    new Name(rs.getString("firstName"),
+                            rs.getString("lastName")),
+                    new Password(rs.getString("password")),
+                    new Username(rs.getString("username")),
+                    new EmailAddress(rs.getString("emailAddress")),
+                    new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
+                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER));
+        }
+        rs.close();
+
+        Page<Employee> employeePage = new Page<Employee>(employees, pageNumber, pageSize, numberOfRows);
+        return employeePage;
     }
 }

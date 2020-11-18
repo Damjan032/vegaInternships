@@ -6,6 +6,7 @@ import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.repository.ClientRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -14,25 +15,26 @@ import java.util.UUID;
 @Component
 public class JdbcClientRepository implements ClientRepository {
     private final String TABLE_NAME = "clients";
-    private Statement statement;
+    private final Connection connection;
 
     public JdbcClientRepository(Connection connection) throws SQLException {
-        statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (id VARCHAR(255) not NULL , " +
-                " name VARCHAR(255) not NULL, " +
-                " countryName VARCHAR(255) not NULL, " +
-                " cityName VARCHAR(255) not NULL, " +
-                " postalCode VARCHAR(255) not NULL, " +
-                " streetName VARCHAR(255) not NULL, " +
-                " number VARCHAR(255) not NULL, " +
-                " PRIMARY KEY ( id ))");
+        this.connection = connection;
     }
 
 
     @Override
     public void add(Client newObject) throws SQLException {
-
+        String sql = "INSERT INTO "+TABLE_NAME+" (`id`, `name`, `countryName`, `cityName`, `postalCode`, `streetName`, `streetNumber`) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        preparedStatement.setString(1,newObject.id().toString());
+        preparedStatement.setString(2,newObject.name());
+        preparedStatement.setString(3,newObject.address().country().name());
+        preparedStatement.setString(4,newObject.address().city().name());
+        preparedStatement.setInt(5,newObject.address().city().postalCode());
+        preparedStatement.setString(6,newObject.address().street().name());
+        preparedStatement.setString(7,newObject.address().street().number());
+        preparedStatement.execute();
     }
 
     @Override
@@ -65,8 +67,4 @@ public class JdbcClientRepository implements ClientRepository {
         return null;
     }
 
-    @Override
-    public void removeByName(String id) throws SQLException {
-
-    }
 }

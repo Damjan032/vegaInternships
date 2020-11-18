@@ -11,6 +11,9 @@ public class Client {
         if (id == null || clientName == null || address == null)
             throw new ExceptionInInitializerError();
         this.id = id;
+        System.out.println(clientName.name());
+        System.out.println(clientName);
+        System.out.println("AADADADA");
         this.clientName = clientName;
         this.address = address;
     }

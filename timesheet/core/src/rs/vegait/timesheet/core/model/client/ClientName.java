@@ -6,6 +6,7 @@ public class ClientName {
     public ClientName(String name) {
         if (name == null)
             throw new NullPointerException();
+        this.name = name;
     }
 
     public String name() {
