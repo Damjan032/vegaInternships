@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.jdbc;
 
+
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.project.Category;
 import rs.vegait.timesheet.core.repository.CategoryRepository;
@@ -14,7 +15,7 @@ public class JdbcCategoryRepository implements CategoryRepository {
     private final Connection connection;
     private final String TABLE_NAME = "categories";
 
-    public JdbcCategoryRepository(Connection connection) throws SQLException {
+    public JdbcCategoryRepository(Connection connection) {
         this.connection = connection;
     }
 
@@ -42,8 +43,6 @@ public class JdbcCategoryRepository implements CategoryRepository {
     public void update(Category newObject) throws SQLException {
         String sql = "UPDATE " + TABLE_NAME + " " +
                 "SET name = '" + newObject.name() + "'  WHERE id like ('" + newObject.id() + "')";
-        //PreparedStatement pstmt = this.connection.prepareStatement(sql);
-        //pstmt.setString(1, id.toString());
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
 
@@ -51,7 +50,7 @@ public class JdbcCategoryRepository implements CategoryRepository {
 
     @Override
     public Iterable<Category> findAll() throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY name";
         List<Category> categories = new ArrayList<>();
 
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
@@ -65,12 +64,10 @@ public class JdbcCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> findById(UUID id) throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?) ORDER BY name";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, id.toString());
         Category category = null;
-
-        //Statement statement = connection.createStatement();
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
             category = new Category(UUID.fromString(rs.getString("id")), rs.getString("name"));
@@ -90,12 +87,10 @@ public class JdbcCategoryRepository implements CategoryRepository {
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, name);
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+        if (rs.next()) {
             category = new Category(UUID.fromString(rs.getString("id")), rs.getString("name"));
         }
         rs.close();
-
-
         if (category == null) {
             return Optional.empty();
         }
@@ -104,10 +99,8 @@ public class JdbcCategoryRepository implements CategoryRepository {
 
     @Override
     public Page<Category> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT  ?, ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY name LIMIT  ?, ? ";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
-        pstmt.setInt(1, pageNumber);
-        pstmt.setInt(2, pageSize);
         List<Category> categories = new ArrayList<>();
         int numberOfRows = 0;
 
@@ -115,6 +108,9 @@ public class JdbcCategoryRepository implements CategoryRepository {
         ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS total FROM " + TABLE_NAME);
         rs.next();
         numberOfRows = rs.getInt("total");
+
+        pstmt.setInt(1, (pageNumber - 1) * pageSize);
+        pstmt.setInt(2, Math.min(numberOfRows, pageNumber * pageSize));
 
         rs = pstmt.executeQuery();
         while (rs.next()) {

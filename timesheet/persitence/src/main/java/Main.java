@@ -1,5 +1,3 @@
-import rs.vegait.timesheet.jdbc.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -32,11 +30,11 @@ public class Main {
                     "(id VARCHAR(255) not NULL , " +
                     " name VARCHAR(255), " +
                     " PRIMARY KEY ( id ))");*/
-            JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(conn);
+           /* JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(conn);
            JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(conn);
             JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(conn);
             JdbcDailyTimeSheetRepository jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(conn);
-            JdbcProjectRepository jdbcProjectRepository = new JdbcProjectRepository(conn);
+            JdbcProjectRepository jdbcProjectRepository = new JdbcProjectRepository(conn);*/
             // jdbcCategoryRepository.add(new Category(UUID.randomUUID(), "FRONTEND"));
             // Category cat = new Category(UUID.randomUUID(), "BAACKEND");
             // jdbcCategoryRepository.findBy("pera", 'd', 1,2);

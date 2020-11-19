@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/persitence/pom.xml" />
         <option value="$PROJECT_DIR$/api/pom.xml" />
+        <option value="$PROJECT_DIR$/core/pom.xml" />
       </list>
     </option>
   </component>

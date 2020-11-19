@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class JdbcEmployeeRepository implements EmployeeRepository {
     private final String TABLE_NAME = "employees";
-    private Connection connection;
+    private final Connection connection;
 
     public JdbcEmployeeRepository(Connection connection) throws SQLException {
         this.connection = connection;
@@ -88,7 +88,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Iterable<Employee> findAll() throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY lastName, firstName";
         List<Employee> employees = new ArrayList<>();
 
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
@@ -137,7 +137,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Optional<Employee> findByName(String name) throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE(?)";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, name);
 
@@ -164,7 +164,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Page<Employee> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT  ?, ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY lastName, firstName LIMIT  ?, ?";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setInt(1, pageNumber);
         pstmt.setInt(2, pageSize);
@@ -177,6 +177,9 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
         ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS total FROM " + TABLE_NAME);
         rs.next();
         numberOfRows = rs.getInt("total");
+
+        pstmt.setInt(1, (pageNumber - 1) * pageSize);
+        pstmt.setInt(2, Math.min(numberOfRows, pageNumber * pageSize));
 
         rs = pstmt.executeQuery();
         while (rs.next()) {
