@@ -145,6 +145,34 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
+    public Optional<Employee> isExistsEmailAndUsername(Employee employee) throws SQLException {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE LOWER(username) LIKE(?) and LOWER(emailAddress) LIKE (?)";
+        PreparedStatement pstmt = this.connection.prepareStatement(sql);
+        pstmt.setString(1, employee.username());
+        pstmt.setString(2, employee.emailAddress());
+        ResultSet rs = pstmt.executeQuery();
+        Employee resultEmployee = null;
+        if (rs.next()) {
+            resultEmployee = new Employee(UUID.fromString(rs.getString("id")),
+                    new Name(rs.getString("firstName"),
+                            rs.getString("lastName")),
+                    new Password(rs.getString("password")),
+                    new Username(rs.getString("username")),
+                    new EmailAddress(rs.getString("emailAddress")),
+                    new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
+                    rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getBoolean("wasAccepted"));
+        }
+        rs.close();
+
+        if (resultEmployee == null) {
+            return Optional.empty();
+        }
+        return Optional.of(resultEmployee);
+    }
+
+    @Override
     public Optional<Employee> findByName(String name) throws SQLException {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE(?)";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);

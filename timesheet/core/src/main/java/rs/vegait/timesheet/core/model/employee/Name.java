@@ -7,7 +7,7 @@ public class Name {
     private String lastName;
 
     public Name(String firstName, String lastName) {
-        if (firstName == null || lastName == null)
+        if (firstName == null)
             throw new ExceptionInInitializerError();
         this.lastName = lastName;
         this.firstName = firstName;
@@ -31,6 +31,8 @@ public class Name {
     public int hashCode() {
         return Objects.hash(firstName, lastName);
     }
+
+
 
     public String firstName() {
         return firstName;

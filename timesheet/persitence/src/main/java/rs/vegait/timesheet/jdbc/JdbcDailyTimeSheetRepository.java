@@ -68,6 +68,7 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
         return dailyTimeSheets;
     }
 
+    @Override
     public Iterable<DailyTimeSheet> findDailyTimeSheetsForEmployer(Employee employee) throws SQLException {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE employeeId = ? ORDER BY day ";
         List<DailyTimeSheet> dailyTimeSheets = new ArrayList<>();
