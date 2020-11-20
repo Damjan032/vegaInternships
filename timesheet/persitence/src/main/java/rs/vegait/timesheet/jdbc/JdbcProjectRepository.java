@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.jdbc;
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.model.employee.Employee;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class JdbcProjectRepository implements ProjectRepository {
     private final String TABLE_NAME = "projects";
     private final Connection connection;
@@ -64,7 +66,7 @@ public class JdbcProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public void update(Project newObject) throws SQLException {
+    public void update(Project newObject) throws Exception {
         Optional<Project> projectOptional = this.findById(newObject.id());
         if (!projectOptional.isPresent()) {
             return;
@@ -102,7 +104,7 @@ public class JdbcProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Iterable<Project> findAll() throws SQLException {
+    public Iterable<Project> findAll() throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY name";
         List<Project> projects = new ArrayList<>();
 
@@ -129,7 +131,7 @@ public class JdbcProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Optional<Project> findById(UUID id) throws SQLException {
+    public Optional<Project> findById(UUID id) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, id.toString());
@@ -160,7 +162,7 @@ public class JdbcProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Optional<Project> findByName(String name) throws SQLException {
+    public Optional<Project> findByName(String name) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE(?)";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, name);
@@ -190,7 +192,7 @@ public class JdbcProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Page<Project> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException {
+    public Page<Project> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws Exception {
         String sql = "Select * from projects where ( ?=' ' or name like (?)) " +
                 "and name like (?) ORDER BY NAME limit ?,?";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);

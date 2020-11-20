@@ -39,18 +39,18 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
+    public void setUp() throws ClassNotFoundException, Exception {
         initTestClients();
     }
 
     @Test
-    public void Add_new_project_and_find_it() throws SQLException {
+    public void Add_new_project_and_find_it() throws Exception {
         Optional<Project> result = jdbcProjectRepository.findById(testProject.id());
         assertEquals(true, result.isPresent());
     }
 
     @Test
-    public void Find_all_projects() throws SQLException {
+    public void Find_all_projects() throws Exception {
         Iterable<Project> projectsIterable = jdbcProjectRepository.findAll();
         AtomicInteger j = new AtomicInteger();
         projectsIterable.forEach(project -> {
@@ -64,14 +64,14 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Test
-    public void Rename_existing_project() throws SQLException {
+    public void Rename_existing_project() throws Exception {
         testProject = testProject.rename(new ProjectName("123Project"));
         jdbcProjectRepository.update(testProject);
         assertEquals(testProject.name().name(), jdbcProjectRepository.findById(testProject.id()).get().name().name());
     }
 
     @Test
-    public void Update_status_of_existing_project() throws SQLException {
+    public void Update_status_of_existing_project() throws Exception {
         testProject = testProject.changeStatus(ProjectStatus.ARCHIVE);
         jdbcProjectRepository.update(testProject);
         jdbcProjectRepository.findById(testProject.id());
@@ -79,7 +79,7 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Test
-    public void Search_project_pageable_method_only_pageable() throws SQLException {
+    public void Search_project_pageable_method_only_pageable() throws Exception {
         List<Project> allProjects = Lists.newArrayList(jdbcProjectRepository.findAll());
         int start = 1;
         int size = 3;
@@ -92,7 +92,7 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Test
-    public void Search_employers_pageable_method_only_search() throws SQLException {
+    public void Search_employers_pageable_method_only_search() throws Exception {
         List<UUID> listToCheck = Arrays.asList(testProjectsList.get(4).id(), testProjectsList.get(0).id(), testProjectsList.get(2).id());
         List<UUID> resultsList = new ArrayList<>();
         int start = 1;
@@ -106,7 +106,7 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Test
-    public void Search_employers_pageable_method_only_first_letter() throws SQLException {
+    public void Search_employers_pageable_method_only_first_letter() throws Exception {
         List<UUID> listToCheck = Arrays.asList(testProjectsList.get(1).id(), testProjectsList.get(4).id());
         List<UUID> resultsList = new ArrayList<>();
         int start = 1;
@@ -120,7 +120,7 @@ public class JdbcProjectRepositoryTest {
     }
 
     @Test
-    public void Search_employers_pageable_method_search_first_letter() throws SQLException {
+    public void Search_employers_pageable_method_search_first_letter() throws Exception {
         List<UUID> listToCheck = Arrays.asList(testProjectsList.get(4).id());
         List<UUID> resultsList = new ArrayList<>();
         int start = 1;
@@ -154,7 +154,7 @@ public class JdbcProjectRepositoryTest {
         jdbcEmployeeRepository.remove(testProject.teamLead().id());
     }
 
-    private void initTestClients() throws SQLException {
+    private void initTestClients() throws Exception {
         Employee testEmployee = new Employee(UUID.randomUUID(),
                 new Name("Pera", "Pearic"),
                 new Password("test1234"),
@@ -162,7 +162,8 @@ public class JdbcProjectRepositoryTest {
                 new EmailAddress("test@test.com"),
                 new HoursPerWeek(7.5),
                 EmployeeStatus.ACTIVE,
-                EmployeeRole.WORKER);
+                EmployeeRole.WORKER,
+                true);
         JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
         jdbcEmployeeRepository.add(testEmployee);
         Category testCategory = new Category(UUID.randomUUID(), "TEST_CAT");

@@ -16,7 +16,7 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     }
 
     @Override
-    public void create(Category category) throws SQLException {
+    public void create(Category category) throws Exception {
         var foundCategory = this.categoryRepository.findById(category.id());
         if (foundCategory.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -26,7 +26,7 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     }
 
     @Override
-    public void update(Category updateObject) throws SQLException {
+    public void update(Category updateObject) throws Exception {
         var foundCategory = this.categoryRepository.findById(updateObject.id());
         if (foundCategory.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -36,7 +36,7 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     }
 
     @Override
-    public void delete(UUID id) throws SQLException {
+    public void delete(UUID id) throws Exception {
         var foundCategory = this.categoryRepository.findById(id);
         if (!foundCategory.isPresent()) {
             throw new RuntimeException("Non-existent category");

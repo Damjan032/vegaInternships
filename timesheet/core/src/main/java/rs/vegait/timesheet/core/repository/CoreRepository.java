@@ -3,24 +3,23 @@ package rs.vegait.timesheet.core.repository;
 
 import rs.vegait.timesheet.core.model.Page;
 
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface CoreRepository<T> {
-    public void add(T newObject) throws SQLException;
+    void add(T newObject) throws Exception;
 
-    public void remove(UUID id) throws SQLException;
+    void remove(UUID id) throws Exception;
 
-    public void update(T newObject) throws SQLException;
+    void update(T newObject) throws Exception;
 
-    public Iterable<T> findAll() throws SQLException;
+    Iterable<T> findAll() throws Exception;
 
-    public Optional<T> findById(UUID id) throws SQLException;
+    Optional<T> findById(UUID id) throws Exception;
 
-    public Optional<T> findByName(String name) throws SQLException;
+    Optional<T> findByName(String name) throws Exception;
 
-    public Page<T> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException;
+    Page<T> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws Exception;
 
     // public T save(T newObject); //update if exist like a spring
 }

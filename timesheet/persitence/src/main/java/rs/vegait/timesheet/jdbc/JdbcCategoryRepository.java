@@ -1,6 +1,7 @@
 package rs.vegait.timesheet.jdbc;
 
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.project.Category;
 import rs.vegait.timesheet.core.repository.CategoryRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class JdbcCategoryRepository implements CategoryRepository {
     private final Connection connection;
     private final String TABLE_NAME = "categories";

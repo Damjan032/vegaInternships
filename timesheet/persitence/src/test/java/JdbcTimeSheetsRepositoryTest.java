@@ -37,7 +37,7 @@ public class JdbcTimeSheetsRepositoryTest {
     private List<TimeSheet> testList;
 
     @BeforeClass
-    public static void setup() throws SQLException, ClassNotFoundException {
+    public static void setup() throws Exception, ClassNotFoundException {
         String DB_URL = "jdbc:mysql://localhost:3306/timesheet?autoReconnect=true&useSSL=false";
         String USER = "root";
         String PASS = "root";
@@ -46,13 +46,13 @@ public class JdbcTimeSheetsRepositoryTest {
     }
 
     @Before
-    public void setUp() throws SQLException, ParseException {
+    public void setUp() throws Exception {
         initTests();
 
     }
 
     @Test
-    public void Find_all_time_sheets_for_specified_daily_sheet() throws SQLException {
+    public void Find_all_time_sheets_for_specified_daily_sheet() throws Exception {
         Iterable<TimeSheet> timeSheetsForDailySheet = jdbcTimeSheetRepository.findDailyTimeSheetsForDailySheet(testList.get(0).dailyTimeSheet());
         AtomicInteger j = new AtomicInteger();
         AtomicBoolean isSame = new AtomicBoolean(true);
@@ -64,7 +64,7 @@ public class JdbcTimeSheetsRepositoryTest {
     }
 
     @Test
-    public void Update_time_of_work_in_existing_time_sheet() throws SQLException {
+    public void Update_time_of_work_in_existing_time_sheet() throws Exception {
         double newTime = 1;
         testTimeSheet = testTimeSheet.changeTimeOfWork(new SpentTime(1));
         jdbcTimeSheetRepository.update(testTimeSheet);
@@ -72,7 +72,7 @@ public class JdbcTimeSheetsRepositoryTest {
     }
 
     @Test
-    public void Update_description_of_work_in_existing_time_sheet() throws SQLException {
+    public void Update_description_of_work_in_existing_time_sheet() throws Exception {
         String description = "Hey";
         testTimeSheet = testTimeSheet.makeNewDescription(Optional.of(new TimeSheetDescription(description)));
         jdbcTimeSheetRepository.update(testTimeSheet);
@@ -80,13 +80,13 @@ public class JdbcTimeSheetsRepositoryTest {
     }
 
     @Test
-    public void Add_new_time_sheet_and_find_it() throws SQLException {
+    public void Add_new_time_sheet_and_find_it() throws Exception {
         Optional<TimeSheet> result = jdbcTimeSheetRepository.findById(testTimeSheet.id());
         assertEquals(true, result.isPresent());
     }
 
     @Test
-    public void Remove_time_sheet() throws SQLException {
+    public void Remove_time_sheet() throws Exception {
         jdbcTimeSheetRepository.remove(testTimeSheet.id());
         Optional<TimeSheet> result = jdbcTimeSheetRepository.findById(testTimeSheet.id());
         assertEquals(false, result.isPresent());
@@ -94,7 +94,7 @@ public class JdbcTimeSheetsRepositoryTest {
 
 
     @After
-    public void Remove_tests_classes() throws SQLException {
+    public void Remove_tests_classes() throws Exception {
         JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
         JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
         JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
@@ -117,7 +117,7 @@ public class JdbcTimeSheetsRepositoryTest {
         jdbcEmployeeRepository.remove(testTimeSheet.project().teamLead().id());
     }
 
-    private void initTests() throws SQLException, ParseException {
+    private void initTests() throws Exception, ParseException {
         Project testProject;
         Employee testEmployee = new Employee(UUID.randomUUID(),
                 new Name("Pera", "Pearic"),
@@ -126,7 +126,8 @@ public class JdbcTimeSheetsRepositoryTest {
                 new EmailAddress("test@test.com"),
                 new HoursPerWeek(7.5),
                 EmployeeStatus.ACTIVE,
-                EmployeeRole.WORKER);
+                EmployeeRole.WORKER,
+                true);
         JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
         jdbcEmployeeRepository.add(testEmployee);
         Category testCategory = new Category(UUID.randomUUID(), "TEST_CAT");

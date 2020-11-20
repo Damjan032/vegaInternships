@@ -5,20 +5,23 @@ import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.repository.ClientRepository;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 @Component
 public class ClientService implements BaseService<Client, UUID> {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
+    public Iterable<Client> findAll() throws Exception {
+        return this.clientRepository.findAll();
+    }
+
     @Override
-    public void create(Client client) throws SQLException {
+    public void create(Client client) throws Exception {
         var foundClient = this.clientRepository.findById(client.id());
         if (foundClient.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -28,7 +31,7 @@ public class ClientService implements BaseService<Client, UUID> {
     }
 
     @Override
-    public void update(Client updateObject) throws SQLException {
+    public void update(Client updateObject) throws Exception {
         var foundClient = this.clientRepository.findById(updateObject.id());
         if (foundClient.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -38,7 +41,7 @@ public class ClientService implements BaseService<Client, UUID> {
     }
 
     @Override
-    public void delete(UUID id) throws SQLException {
+    public void delete(UUID id) throws Exception {
         var foundClient = this.clientRepository.findById(id);
         if (!foundClient.isPresent()) {
             throw new RuntimeException("Non-existent client");

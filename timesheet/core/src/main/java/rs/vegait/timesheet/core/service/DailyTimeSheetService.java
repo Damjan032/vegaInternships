@@ -16,7 +16,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     }
 
     @Override
-    public void create(DailyTimeSheet dailyTimeSheet) throws SQLException {
+    public void create(DailyTimeSheet dailyTimeSheet) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(dailyTimeSheet.id());
         if (foundDailyTimeSheet.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -27,7 +27,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
 
 
     @Override
-    public void update(DailyTimeSheet updateObject) throws SQLException {
+    public void update(DailyTimeSheet updateObject) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(updateObject.id());
         if (foundDailyTimeSheet.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -37,7 +37,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     }
 
     @Override
-    public void delete(UUID id) throws SQLException {
+    public void delete(UUID id) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(id);
         if (!foundDailyTimeSheet.isPresent()) {
             throw new RuntimeException("Non-existent dailyTimeSheet");

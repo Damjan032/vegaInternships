@@ -1,15 +1,18 @@
 package rs.vegait.timesheet.jdbc;
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.employee.*;
 import rs.vegait.timesheet.core.repository.EmployeeRepository;
 
+import javax.validation.constraints.NotNull;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class JdbcEmployeeRepository implements EmployeeRepository {
     private final String TABLE_NAME = "employees";
     private final Connection connection;
@@ -19,7 +22,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public void add(Employee newObject) throws SQLException {
+    public void add(Employee newObject) throws  SQLException{
         String sql = "INSERT INTO " + TABLE_NAME + " VALUES ('" +
                 newObject.id() + "',  '" + newObject.name().firstName() + "','" +
                 newObject.name().lastName() + "','" +
@@ -28,7 +31,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 newObject.emailAddress() + "'," +
                 newObject.requiredHoursPerWeek() + ",'" +
                 newObject.status() + "','" +
-                newObject.role() +
+                newObject.role() + "','" +
+                (newObject.isAccepted() ? 1 : 0) +
                 "')";
         PreparedStatement prepareStatement = connection.prepareStatement(sql);
         prepareStatement.executeUpdate();
@@ -62,7 +66,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 "emailAddress = ?, " +
                 "requiredHoursPerWeek = ?, " +
                 "status = ?," +
-                "role = ? " +
+                "role = ?, " +
+                "wasAccepted = ? " +
                 "WHERE (id = ?);";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1,
@@ -81,7 +86,9 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 newObject.status() == null ? employeeOptional.get().status().toString() : newObject.status().toString());
         pstmt.setString(8,
                 newObject.role() == null ? employeeOptional.get().role().toString() : newObject.role().toString());
-        pstmt.setString(9, employeeOptional.get().id().toString());
+
+        pstmt.setBoolean(9, newObject.isAccepted());
+        pstmt.setString(10, employeeOptional.get().id().toString());
 
         pstmt.executeUpdate();
     }
@@ -93,7 +100,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
+            while (rs.next()) {
             employees.add(new Employee(UUID.fromString(rs.getString("id")),
                     new Name(rs.getString("firstName"),
                             rs.getString("lastName")),
@@ -102,7 +109,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
                     rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER));
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getBoolean("wasAccepted")));
         }
         rs.close();
         return employees;
@@ -125,7 +133,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
                     rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER);
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getBoolean("wasAccepted"));
         }
         rs.close();
 
@@ -152,7 +161,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
                     rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER);
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getBoolean("wasAccepted"));
         }
         rs.close();
 
@@ -191,7 +201,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
                     rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER));
+                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getBoolean("wasAccepted")));
         }
         rs.close();
 

@@ -1,6 +1,7 @@
 package rs.vegait.timesheet.jdbc;
 
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
     private final String TABLE_NAME = "dailyTimeSheets";
     private final Connection connection;
@@ -49,7 +51,7 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
 
 
     @Override
-    public Iterable<DailyTimeSheet> findAll() throws SQLException {
+    public Iterable<DailyTimeSheet> findAll() throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY day ";
         List<DailyTimeSheet> dailyTimeSheets = new ArrayList<>();
 
@@ -85,7 +87,7 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
     }
 
     @Override
-    public Optional<DailyTimeSheet> findById(UUID id) throws SQLException {
+    public Optional<DailyTimeSheet> findById(UUID id) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?) ORDER BY day, employeeId";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, id.toString());

@@ -1,12 +1,14 @@
 package rs.vegait.timesheet.core.service;
 
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.project.Project;
 import rs.vegait.timesheet.core.repository.ProjectRepository;
 
 import java.sql.SQLException;
 import java.util.UUID;
 
+@Component
 public class ProjectService implements BaseService<Project, UUID> {
 
     private ProjectRepository projectRepository;
@@ -16,7 +18,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     }
 
     @Override
-    public void create(Project project) throws SQLException {
+    public void create(Project project) throws Exception {
         var foundProject = this.projectRepository.findById(project.id());
         if (foundProject.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -27,7 +29,7 @@ public class ProjectService implements BaseService<Project, UUID> {
 
 
     @Override
-    public void update(Project updateObject) throws SQLException {
+    public void update(Project updateObject) throws Exception {
         var foundProject = this.projectRepository.findById(updateObject.id());
         if (foundProject.isPresent()) {
             throw new RuntimeException("Already exists with same id");
@@ -37,7 +39,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     }
 
     @Override
-    public void delete(UUID id) throws SQLException {
+    public void delete(UUID id) throws Exception {
         var foundProject = this.projectRepository.findById(id);
         if (!foundProject.isPresent()) {
             throw new RuntimeException("Non-existent project");

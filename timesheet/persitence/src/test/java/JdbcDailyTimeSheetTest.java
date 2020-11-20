@@ -30,7 +30,7 @@ public class JdbcDailyTimeSheetTest {
     private JdbcEmployeeRepository jdbcEmployeeRepository;
 
     @BeforeClass
-    public static void setup() throws SQLException, ClassNotFoundException {
+    public static void setup() throws Exception, ClassNotFoundException {
         String DB_URL = "jdbc:mysql://localhost:3306/timesheet?autoReconnect=true&useSSL=false";
         String USER = "root";
         String PASS = "root";
@@ -39,7 +39,7 @@ public class JdbcDailyTimeSheetTest {
     }
 
     @Test
-    public void Find_all_daily_sheets() throws SQLException {
+    public void Find_all_daily_sheets() throws Exception {
         Iterable<DailyTimeSheet> dailyTimeSheetIterable = jdbcDailyTimeSheetRepository.findAll();
         AtomicInteger j = new AtomicInteger();
         dailyTimeSheetIterable.forEach(dailyTimeSheet -> {
@@ -53,7 +53,7 @@ public class JdbcDailyTimeSheetTest {
     }
 
     @Test
-    public void Find_all_daily_sheets_for_specified_employee() throws SQLException {
+    public void Find_all_daily_sheets_for_specified_employee() throws Exception {
         Iterable<DailyTimeSheet> dailyTimeSheetIterable = jdbcDailyTimeSheetRepository.findDailyTimeSheetsForEmployer(testDailyTimeSheet.employee());
         AtomicInteger j = new AtomicInteger();
         AtomicBoolean isSame = new AtomicBoolean(true);
@@ -66,20 +66,20 @@ public class JdbcDailyTimeSheetTest {
 
 
     @Before
-    public void setUp() throws SQLException, ParseException {
+    public void setUp() throws Exception, ParseException {
         jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
         jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(this.connection, jdbcEmployeeRepository);
         initTests();
     }
 
     @Test
-    public void Add_new_dailyTimeSheet_and_find_it() throws SQLException {
+    public void Add_new_dailyTimeSheet_and_find_it() throws Exception {
         Optional<DailyTimeSheet> result = jdbcDailyTimeSheetRepository.findById(testDailyTimeSheet.id());
         assertEquals(true, result.isPresent());
     }
 
     @After
-    public void remove_tests_classes() throws SQLException {
+    public void remove_tests_classes() throws Exception {
         jdbcDailyTimeSheetRepository.remove(testDailyTimeSheet.id());
         testListDailyTimeSheet.forEach(dailyTimeSheet -> {
             try {
@@ -91,7 +91,7 @@ public class JdbcDailyTimeSheetTest {
         jdbcEmployeeRepository.remove(testDailyTimeSheet.employee().id());
     }
 
-    public void initTests() throws SQLException, ParseException {
+    public void initTests() throws Exception, ParseException {
         this.testListDailyTimeSheet = new ArrayList<>();
         Employee testEmployee = new Employee(UUID.randomUUID(),
                 new Name("Pera", "Pearic"),
@@ -100,7 +100,8 @@ public class JdbcDailyTimeSheetTest {
                 new EmailAddress("test@test.com"),
                 new HoursPerWeek(7.5),
                 EmployeeStatus.ACTIVE,
-                EmployeeRole.WORKER);
+                EmployeeRole.WORKER,
+                true);
 
         jdbcEmployeeRepository.add(testEmployee);
         String dateString = "31-12-0000";

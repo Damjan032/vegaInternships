@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.jdbc;
 
+import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.project.Project;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class JdbcTimeSheetRepository implements TimeSheetRepository {
     private final Connection connection;
     private final ProjectRepository projectRepository;
@@ -59,7 +61,7 @@ public class JdbcTimeSheetRepository implements TimeSheetRepository {
     }
 
     @Override
-    public void update(TimeSheet newObject) throws SQLException {
+    public void update(TimeSheet newObject) throws Exception {
         Optional<TimeSheet> timeSheetOptional = this.findById(newObject.id());
         if (!timeSheetOptional.isPresent()) {
             return;
@@ -99,7 +101,7 @@ public class JdbcTimeSheetRepository implements TimeSheetRepository {
         return null;
     }
 
-    public Iterable<TimeSheet> findDailyTimeSheetsForDailySheet(DailyTimeSheet dailyTimeSheet) throws SQLException {
+    public Iterable<TimeSheet> findDailyTimeSheetsForDailySheet(DailyTimeSheet dailyTimeSheet) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE dailytimesheetID = ?  ";
         List<TimeSheet> timeSheets = new ArrayList<>();
 
@@ -129,7 +131,7 @@ public class JdbcTimeSheetRepository implements TimeSheetRepository {
     }
 
     @Override
-    public Optional<TimeSheet> findById(UUID id) throws SQLException {
+    public Optional<TimeSheet> findById(UUID id) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id LIKE(?)";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, id.toString());

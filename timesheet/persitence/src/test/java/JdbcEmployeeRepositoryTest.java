@@ -162,7 +162,8 @@ public class JdbcEmployeeRepositoryTest {
                 new EmailAddress("test@test.com"),
                 new HoursPerWeek(7.5),
                 EmployeeStatus.ACTIVE,
-                EmployeeRole.WORKER);
+                EmployeeRole.WORKER,
+                true);
         testList = new ArrayList<>();
         jdbcEmployeeRepository.add(testEmployee);
         for (int i = 0; i < 5; i++) {
@@ -173,7 +174,8 @@ public class JdbcEmployeeRepositoryTest {
                     new EmailAddress("test@test.com" + i),
                     new HoursPerWeek(7.5),
                     EmployeeStatus.ACTIVE,
-                    EmployeeRole.WORKER);
+                    EmployeeRole.WORKER,
+                    true);
             jdbcEmployeeRepository.add(listElement);
             testList.add(listElement);
         }
