@@ -1,32 +1,27 @@
 package rs.vegait.timesheet.api.factory;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.api.dto.EmployeeDto;
+import rs.vegait.timesheet.api.dto.PageDto;
+import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.employee.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Data
 @Component
-public class EmployeeFactory {
-    public EmployeeFactory() {
-    }
+public class EmployeeFactory implements Factory<EmployeeDto, Employee> {
 
-    public Employee convertFromDtoForCreate(EmployeeDto employeeDto) {
-        List<String> name = Arrays.asList(employeeDto.getName().trim().split(" "));
-        Name employeeName = new Name("FirstName", "LastName");
-        String firstName = name.get(0);
-        if (name.size() == 1) {
-            employeeName = new Name(employeeDto.getName(), " ");
-        } else {
-            employeeName = new Name(firstName, String.join(" ", name.subList(1, name.size())));
-
-        }
-        return new Employee(UUID.randomUUID(),
-                employeeName,
-                new Password(employeeDto.getPassword()),
+    @Override
+    public Employee createFromDto(UUID id, EmployeeDto employeeDto) {
+        return new Employee(id,
+                new Name(employeeDto.getName()),
                 new Username(employeeDto.getUsername()),
+                Optional.empty(),
                 new EmailAddress(employeeDto.getEmail()),
                 new HoursPerWeek(employeeDto.getHoursPerWeek()),
                 EmployeeStatus.ACTIVE,
@@ -34,24 +29,30 @@ public class EmployeeFactory {
                 false);
     }
 
-    public Employee convertFromDtoForUpdate(EmployeeDto employeeDto) {
-        List<String> name = Arrays.asList(employeeDto.getName().trim().split(" "));
-        Name employeeName = new Name("FirstName", "LastName");
-        String firstName = name.get(0);
-        if (name.size() == 1) {
-            employeeName = new Name(employeeDto.getName(), " ");
-        } else {
-            employeeName = new Name(firstName, String.join(" ", name.subList(1, name.size())));
+    @Override
+    public EmployeeDto toDto(Employee employee) {
+        String name = employee.name().firstName() + " " + employee.name().lastName();
+        return new EmployeeDto(employee.id().toString(), employee.username(), name, employee.requiredHoursPerWeek(), employee.emailAddress(),
+                employee.role(), employee.status(), employee.wasAccepted(), null);
 
-        }
-        return new Employee(UUID.fromString(employeeDto.getId()),
-                employeeName,
-                new Password(employeeDto.getPassword()),
-                new Username(employeeDto.getUsername()),
-                new EmailAddress(employeeDto.getEmail()),
-                new HoursPerWeek(employeeDto.getHoursPerWeek()),
-                EmployeeStatus.ACTIVE,
-                EmployeeRole.WORKER,
-                false);
+    }
+
+    @Override
+    public List<EmployeeDto> toListDto(Iterable<Employee> iterable) {
+        List<EmployeeDto> employeeDtoList = new ArrayList<>();
+        iterable.forEach(employee -> {
+            employeeDtoList.add(this.toDto(employee));
+        });
+        return employeeDtoList;
+    }
+
+    @Override
+    public PageDto<EmployeeDto> toDtoPage(Page<Employee> page) {
+
+        return new PageDto<>(this.toListDto(page.items()),
+                page.pageSize(),
+                page.pageNumber(),
+                page.totalItems()
+        );
     }
 }

@@ -10,7 +10,8 @@ public class EmailAddress {
         this.emailAddress = emailAddress;
     }
 
-    public String emailAddress() {
-        return emailAddress;
+    @Override
+    public String toString() {
+        return this.emailAddress;
     }
 }

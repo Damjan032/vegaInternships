@@ -1,18 +1,28 @@
 package rs.vegait.timesheet.core.service;
 
 
+import org.springframework.stereotype.Component;
+import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
+import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
+import rs.vegait.timesheet.core.model.timesheet.TimeSheetResultSet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
+import rs.vegait.timesheet.core.repository.TimeSheetRepository;
 
-import java.sql.SQLException;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+@Component
 public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> {
 
-    private DailyTimeSheetRepository dailyTimeSheetRepository;
+    private final DailyTimeSheetRepository dailyTimeSheetRepository;
+    private final EmployeeService employeeService;
+    private final TimeSheetRepository timeSheetRepository;
 
-    public DailyTimeSheetService(DailyTimeSheetRepository dailyTimeSheetRepository) {
+    public DailyTimeSheetService(DailyTimeSheetRepository dailyTimeSheetRepository, EmployeeService employeeService, TimeSheetRepository timeSheetRepository) {
         this.dailyTimeSheetRepository = dailyTimeSheetRepository;
+        this.employeeService = employeeService;
+        this.timeSheetRepository = timeSheetRepository;
     }
 
     @Override
@@ -43,5 +53,33 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
             throw new RuntimeException("Non-existent dailyTimeSheet");
         }
         this.dailyTimeSheetRepository.remove(id);
+    }
+
+    public Iterable<TimeSheetResultSet> findTimeSheetSet(String employeeId, Date dateFrom, Date dateTo) throws Exception {
+        Employee employee = this.employeeService.findById(employeeId);
+        List<TimeSheetResultSet> timeSheetResultSetList = new ArrayList<>();
+        Iterable<DailyTimeSheet> dailyTimeSheets = this.dailyTimeSheetRepository.findDailyTimeSheetsForEmployer(employee, dateFrom, dateTo);
+        for (DailyTimeSheet dailyTimeSheet : dailyTimeSheets) {
+            Iterable<TimeSheet> timeSheets = this.timeSheetRepository.findDailyTimeSheetsForDailySheet(dailyTimeSheet.id().toString());
+            timeSheetResultSetList.add(new TimeSheetResultSet(dailyTimeSheet, timeSheets, dailyHoursOfWork(timeSheets)));
+        }
+        return timeSheetResultSetList;
+    }
+
+    public double dailyHoursOfWork(Iterable<TimeSheet> timeSheets) {
+        double time = 0;
+        for (TimeSheet timeSheet : timeSheets) {
+            time += timeSheet.time().numberOfHours();
+            if (timeSheet.hasOvertime()) time += timeSheet.overtime().numberOfHours();
+        }
+        return time;
+    }
+
+    public Optional<DailyTimeSheet> findByEmployeeAndData(String employeeId, String date) throws Exception {
+        Employee employee = this.employeeService.findById(employeeId);
+        if(employee==null){
+            throw new RuntimeException("Non-existing employeeId");
+        }
+        return  this.dailyTimeSheetRepository.findByEmployeeAndDay(employee,new SimpleDateFormat("yyyy-MM-dd").parse(date));
     }
 }

@@ -10,7 +10,8 @@ public class Username {
         this.username = username;
     }
 
-    public String username() {
-        return username;
+    @Override
+    public String toString() {
+        return this.username;
     }
 }

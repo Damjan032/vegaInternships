@@ -9,12 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="core" />
         <module name="api" />
+        <module name="infrastructure" />
         <module name="persitence" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="11" />
       <module name="core" target="10" />
+      <module name="infrastructure" target="10" />
       <module name="persitence" target="8" />
     </bytecodeTargetLevel>
   </component>
