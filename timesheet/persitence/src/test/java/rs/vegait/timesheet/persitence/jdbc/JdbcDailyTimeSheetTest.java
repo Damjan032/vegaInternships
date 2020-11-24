@@ -38,6 +38,10 @@ public class JdbcDailyTimeSheetTest {
     private JdbcProjectRepository jdbcProjectRepository;
     private TimeSheet testTimeSheet;
     private Project testProject;
+    private JdbcCategoryRepository jdbcCategoryRepository;
+    private Category testCategory;
+    private JdbcClientRepository jdbcClientRepository;
+    private Client testClient;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -101,16 +105,16 @@ public class JdbcDailyTimeSheetTest {
         });
         jdbcEmployeeRepository.remove(testDailyTimeSheet.employee().id());
         jdbcProjectRepository.remove(testProject.id());
-        // testTimeSheet = new TimeSheet(new SpentTime(5),Optional.empty(),Optional.empty(),testProject,testCategory);
+        jdbcCategoryRepository.remove(testCategory.id());
+        jdbcClientRepository.remove(testClient.id());
 
     }
 
     public void initTests() throws Exception {
-        JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
-        JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
-        JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
-        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository,jdbcEmployeeRepository);
-        jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(this.connection, jdbcEmployeeRepository,jdbcCategoryRepository,
+        jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
+        jdbcClientRepository = new JdbcClientRepository(this.connection);
+        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository, jdbcEmployeeRepository);
+        jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(this.connection, jdbcEmployeeRepository, jdbcCategoryRepository,
                 jdbcProjectRepository);
         this.testListDailyTimeSheet = new ArrayList<>();
         Employee testEmployee = new Employee(UUID.randomUUID(),
@@ -123,9 +127,9 @@ public class JdbcDailyTimeSheetTest {
                 EmployeeRole.WORKER,
                 true);
         jdbcEmployeeRepository.add(testEmployee);
-        Category testCategory = new Category(UUID.randomUUID(), "TEST_CAT");
+        testCategory = new Category(UUID.randomUUID(), "TEST_CAT");
         jdbcCategoryRepository.add(testCategory);
-        Client testClient = new Client(UUID.randomUUID(), new ClientName("Client123"),
+        testClient = new Client(UUID.randomUUID(), new ClientName("Client123"),
                 new Address(
                         new Street("Jump", "21"),
                         new City("New York", 10001),
@@ -138,7 +142,7 @@ public class JdbcDailyTimeSheetTest {
 
 
         testProject = new Project(UUID.randomUUID(), Optional.empty(), new ProjectName("TestProject"), ProjectStatus.ACTIVE, testEmployee, testClient);
-        testTimeSheet = new TimeSheet(new SpentTime(5),Optional.empty(),Optional.empty(),testProject,testCategory);
+        testTimeSheet = new TimeSheet(new SpentTime(5), Optional.empty(), Optional.empty(), testProject, testCategory);
         List<TimeSheet> timeSheets = new ArrayList<>();
         jdbcProjectRepository.add(testProject);
         testDailyTimeSheet = new DailyTimeSheet(UUID.randomUUID(), testEmployee, dateFormat.parse(dateString), timeSheets);
@@ -153,7 +157,6 @@ public class JdbcDailyTimeSheetTest {
             jdbcDailyTimeSheetRepository.add(liseElement);
             testListDailyTimeSheet.add(liseElement);
         }
-
     }
 
 }

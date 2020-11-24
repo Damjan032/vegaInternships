@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
-import rs.vegait.timesheet.core.model.timesheet.TimeSheetResultSet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> {
@@ -52,16 +52,10 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
         this.dailyTimeSheetRepository.remove(id);
     }
 
-    public Iterable<TimeSheetResultSet> findTimeSheetSet(String employeeId, Date dateFrom, Date dateTo) throws Exception {
-      /* Employee employee = this.employeeService.findById(employeeId);
-        List<TimeSheetResultSet> timeSheetResultSetList = new ArrayList<>();
+    public Iterable<DailyTimeSheet> findTimeSheetSet(String employeeId, Date dateFrom, Date dateTo) throws Exception {
+        Employee employee = this.employeeService.findById(employeeId);
         Iterable<DailyTimeSheet> dailyTimeSheets = this.dailyTimeSheetRepository.findDailyTimeSheetsForEmployee(employee, dateFrom, dateTo);
-        for (DailyTimeSheet dailyTimeSheet : dailyTimeSheets) {
-            Iterable<TimeSheet> timeSheets = this.timeSheetRepository.findDailyTimeSheetsForDailySheet(dailyTimeSheet.id().toString());
-            timeSheetResultSetList.add(new TimeSheetResultSet(dailyTimeSheet, timeSheets, dailyHoursOfWork(timeSheets)));
-        }
-        return timeSheetResultSetList;*/
-        return null;
+        return dailyTimeSheets;
     }
 
     public double dailyHoursOfWork(Iterable<TimeSheet> timeSheets) {
@@ -73,11 +67,23 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
         return time;
     }
 
-    public Optional<DailyTimeSheet> findByEmployeeAndData(String employeeId, String date) throws Exception {
+    public Optional<DailyTimeSheet> findByEmployeeAndData(String employeeId, Date date) throws Exception {
         Employee employee = this.employeeService.findById(employeeId);
-        if(employee==null){
+        if (employee == null) {
             throw new RuntimeException("Non-existing employeeId");
         }
-        return  this.dailyTimeSheetRepository.findByEmployeeAndDay(employee,new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        return this.dailyTimeSheetRepository.findByEmployeeAndDay(employee, date);
+    }
+
+    public void createOrUpdate(DailyTimeSheet dailyTimeSheet, Employee employee) throws Exception {
+        Optional<DailyTimeSheet> dailyTimeSheetOptional = this.findByEmployeeAndData(employee.id().toString(), dailyTimeSheet.day());
+        if (dailyTimeSheetOptional.isPresent()) {
+            DailyTimeSheet dailyTimeSheetForUpdate = dailyTimeSheetOptional.get().changeTimeSheets(dailyTimeSheet.timeSheets());
+            this.dailyTimeSheetRepository.update(dailyTimeSheetForUpdate);
+        } else {
+            this.dailyTimeSheetRepository.add(new DailyTimeSheet
+                    (UUID.randomUUID(), employee, dailyTimeSheet.day(), dailyTimeSheet.timeSheets()));
+        }
+
     }
 }

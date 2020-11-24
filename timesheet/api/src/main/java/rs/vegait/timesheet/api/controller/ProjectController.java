@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.api.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import rs.vegait.timesheet.core.model.project.Project;
 import rs.vegait.timesheet.core.service.ProjectService;
 
 import javax.websocket.server.PathParam;
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -32,10 +34,13 @@ public class ProjectController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectDto> add(@RequestBody ProjectDto projectDto) throws Exception {
+    public ResponseEntity<Void> add(@RequestBody ProjectDto projectDto) throws Exception {
         Project newProject = projectFactory.createFromDto(UUID.randomUUID(), projectDto);
         projectService.create(newProject);
-        return new ResponseEntity<>(projectDto, HttpStatus.OK);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("api/projects/" + newProject.id()));
+        return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

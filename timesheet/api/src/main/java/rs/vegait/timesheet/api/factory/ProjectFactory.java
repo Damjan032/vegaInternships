@@ -42,7 +42,7 @@ public class ProjectFactory implements Factory<ProjectDto, Project> {
     @Override
     public ProjectDto toDto(Project project) {
         EmployeeDto employeeDto = this.employeeFactory.toDto(project.teamLead());
-        employeeDto.setDailyTimeSheetList(null);
+
         return new ProjectDto(
                 project.id().toString(),
                 this.employeeFactory.toDto(project.teamLead()),

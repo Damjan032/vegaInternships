@@ -2,53 +2,41 @@ package rs.vegait.timesheet.api.factory;
 
 import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.api.dto.DailyTimeSheetDto;
-import rs.vegait.timesheet.api.dto.EmployeeDto;
 import rs.vegait.timesheet.api.dto.PageDto;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
-import rs.vegait.timesheet.core.model.timesheet.TimeSheetResultSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Component
-public class DailyTimeSheetFactory implements Factory<DailyTimeSheetDto, TimeSheetResultSet> {
+public class DailyTimeSheetFactory {
     private final EmployeeFactory employeeFactory;
     private final TimeSheetFactory timeSheetFactory;
+    private final SimpleDateFormat sdf;
 
     public DailyTimeSheetFactory(EmployeeFactory employeeFactory, TimeSheetFactory timeSheetFactory) {
         this.employeeFactory = employeeFactory;
         this.timeSheetFactory = timeSheetFactory;
+        this.sdf = new SimpleDateFormat("yyyy-MM-dd");
     }
 
-    public DailyTimeSheet fromDto(UUID id, EmployeeDto employeeDto, Date day) {
-        /*return new DailyTimeSheet(
-                id,
-                this.employeeFactory.createFromDto(UUID.fromString(employeeDto.getId()), employeeDto),
-                day,
-                timeSheets);*/
-        return null;
-    }
+//    public DailyTimeSheet fromDto(EmployeeDto employeeDto, DailyTimeSheetDto dailyTimeSheetDto) {
+//        return new DailyTimeSheet(
+//                UUID.randomUUID(),
+//                this.employeeFactory.createFromDto(UUID.fromString(employeeDto.getId()), employeeDto),
+//                dailyTimeSheetDto.getDay(),
+//                this.timeSheetFactory.toList(dailyTimeSheetDto.getTimeSheetDtoList()));
+//    }
 
-    @Override
-    public TimeSheetResultSet createFromDto(UUID id, DailyTimeSheetDto dailyTimeSheetDto) {
-        return null;
-    }
-
-    @Override
-    public DailyTimeSheetDto toDto(TimeSheetResultSet timeSheetResultSet) {
+    public DailyTimeSheetDto toDto(DailyTimeSheet dailyTimeSheet) {
         return new DailyTimeSheetDto(
-                timeSheetResultSet.dailyTimeSheet().id().toString(),
-                timeSheetResultSet.dailyTimeSheet().day(),
-                this.timeSheetFactory.toListDto(timeSheetResultSet.timeSheets()),
-                timeSheetResultSet.dailyTimeOfWorks()
-        );
+                this.sdf.format(dailyTimeSheet.day()),
+                this.timeSheetFactory.toListDto(dailyTimeSheet.timeSheets()));
     }
 
-    @Override
-    public List<DailyTimeSheetDto> toListDto(Iterable<TimeSheetResultSet> iterable) {
+    public List<DailyTimeSheetDto> toListDto(Iterable<DailyTimeSheet> iterable) {
         List<DailyTimeSheetDto> dailyTimeSheetDtos = new ArrayList<>();
         iterable.forEach(timeSheetResultSet -> {
             dailyTimeSheetDtos.add(this.toDto(timeSheetResultSet));
@@ -56,8 +44,7 @@ public class DailyTimeSheetFactory implements Factory<DailyTimeSheetDto, TimeShe
         return dailyTimeSheetDtos;
     }
 
-    @Override
-    public PageDto<DailyTimeSheetDto> toDtoPage(Page<TimeSheetResultSet> page) {
+    public PageDto<DailyTimeSheetDto> toDtoPage(Page<DailyTimeSheet> page) {
         return null;
     }
 }

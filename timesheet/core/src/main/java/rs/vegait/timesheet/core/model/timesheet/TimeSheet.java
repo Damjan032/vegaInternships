@@ -7,11 +7,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 public class TimeSheet {
+    private final Category category;
     private SpentTime time;
     private Optional<TimeSheetDescription> description;
     private Optional<SpentTime> overtime;
     private Project project;
-    private final Category category;
 
     public TimeSheet(@NotNull SpentTime time, Optional<TimeSheetDescription> description, Optional<SpentTime> overtime, @NotNull Project project, Category category) {
         this.time = time;
@@ -51,7 +51,7 @@ public class TimeSheet {
         return project;
     }
 
-    public Category category(){
+    public Category category() {
         return this.category;
     }
 

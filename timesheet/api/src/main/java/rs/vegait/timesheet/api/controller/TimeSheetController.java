@@ -5,9 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.vegait.timesheet.api.dto.DailyTimeSheetDto;
-import rs.vegait.timesheet.api.dto.TimeSheetDto;
 import rs.vegait.timesheet.api.factory.DailyTimeSheetFactory;
 import rs.vegait.timesheet.api.factory.TimeSheetFactory;
+import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
@@ -28,7 +28,7 @@ public class TimeSheetController {
     private final DailyTimeSheetFactory dailyTimeSheetFactory;
     private final DailyTimeSheetRepository dailyTimeSheetRepository;
 
-    public TimeSheetController( TimeSheetFactory timeSheetFactory, EmployeeRepository employeeRepository, DailyTimeSheetService dailyTimeSheetService, DailyTimeSheetFactory dailyTimeSheetFactory, DailyTimeSheetRepository dailyTimeSheetRepository) {
+    public TimeSheetController(TimeSheetFactory timeSheetFactory, EmployeeRepository employeeRepository, DailyTimeSheetService dailyTimeSheetService, DailyTimeSheetFactory dailyTimeSheetFactory, DailyTimeSheetRepository dailyTimeSheetRepository) {
         this.timeSheetFactory = timeSheetFactory;
         this.employeeRepository = employeeRepository;
         this.dailyTimeSheetService = dailyTimeSheetService;
@@ -42,45 +42,31 @@ public class TimeSheetController {
                                                                       @PathParam("dateFrom") String dateFrom,
                                                                       @PathParam("dateTo") String dateTo) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return new ResponseEntity<>(this.dailyTimeSheetFactory.toListDto(
-                this.dailyTimeSheetService.findTimeSheetSet(employeeId,
-                        sdf.parse(dateFrom), sdf.parse(dateTo))
-        ), HttpStatus.OK);
+        Iterable<DailyTimeSheet> dailyTimeSheets = this.dailyTimeSheetService.findTimeSheetSet(employeeId,
+                sdf.parse(dateFrom), sdf.parse(dateTo));
+
+        Iterable<DailyTimeSheetDto> iterable = this.dailyTimeSheetFactory.toListDto(dailyTimeSheets);
+        return new ResponseEntity<>(iterable, HttpStatus.OK);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TimeSheetDto> addTimeSheet(@RequestBody TimeSheetDto timeSheetDto,
-                                                  @PathParam("employeeId") String employeeId,
-                                                  @PathParam("date") String date) throws Exception {
-       /* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public ResponseEntity<DailyTimeSheetDto> addTimeSheet(@RequestBody DailyTimeSheetDto dailyTimeSheetDto,
+                                                          @PathParam("employeeId") String employeeId) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Optional<Employee> employee = this.employeeRepository.findById(UUID.fromString(employeeId));
-        Optional<DailyTimeSheet> dailyTimeSheet = this.dailyTimeSheetService.findByEmployeeAndData( employeeId,  date);
-
-        if(!dailyTimeSheet.isPresent()){
+        if (employee.isPresent()) {
             UUID uuid = UUID.randomUUID();
-            this.dailyTimeSheetService.create(new DailyTimeSheet(uuid, employee.get(), sdf.parse(date), timeSheets));
-            dailyTimeSheet = this.dailyTimeSheetRepository.findById(uuid);
+            Iterable<TimeSheet> timeSheets = this.timeSheetFactory.toList(dailyTimeSheetDto.getTimeSheets());
+            DailyTimeSheet dailyTimeSheet =
+                    new DailyTimeSheet(uuid, employee.get(), sdf.parse(dailyTimeSheetDto.getDay()),
+                            timeSheets);
+            this.dailyTimeSheetService.createOrUpdate(dailyTimeSheet,
+                    employee.get());
+
         }
-        TimeSheet timeSheet = this.timeSheetFactory.fromDto(UUID.randomUUID(),timeSheetDto,dailyTimeSheet.get());
-        this.timeSheetService.create(timeSheet);
-
-        return new ResponseEntity<>(this.timeSheetFactory.toDto(timeSheet), HttpStatus.OK);*/
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TimeSheetDto> updateTimeSheet(@RequestBody TimeSheetDto timeSheetDto,
-                                                     @PathParam("employeeId") String employeeId,
-                                                     @PathParam("date") String date) throws Exception {
-        Optional<DailyTimeSheet> dailyTimeSheet = this.dailyTimeSheetService.findByEmployeeAndData( employeeId,  date);
-        if(!dailyTimeSheet.isPresent()){
-            throw new RuntimeException("Not exists dailyTimeSheet");
-        }
-
-        TimeSheet timeSheet = this.timeSheetFactory.fromDto(UUID.randomUUID(),timeSheetDto,dailyTimeSheet.get());
-        /*this.timeSheetService.update(timeSheet);*/
-        return new ResponseEntity<>(this.timeSheetFactory.toDto(timeSheet), HttpStatus.OK);
+        Optional<DailyTimeSheet> dailyTimeSheet = this.dailyTimeSheetService.findByEmployeeAndData(employeeId, sdf.parse(dailyTimeSheetDto.getDay()));
+        return new ResponseEntity<>(this.dailyTimeSheetFactory.toDto(dailyTimeSheet.get()), HttpStatus.OK);
     }
 
 

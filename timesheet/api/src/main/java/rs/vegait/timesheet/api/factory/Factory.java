@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface Factory<TDto, TEntity> {
-    TEntity createFromDto(UUID id, TDto dto);
+
+    TEntity createFromDto(UUID id, TDto tDto);
 
     TDto toDto(TEntity entity);
 

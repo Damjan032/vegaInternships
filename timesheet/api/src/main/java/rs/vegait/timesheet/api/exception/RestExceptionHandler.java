@@ -1,18 +1,10 @@
 package rs.vegait.timesheet.api.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.sql.SQLException;
-
-@ControllerAdvice
+//@ControllerAdvice
 public class RestExceptionHandler {
 
 
-
-    @ExceptionHandler(RuntimeException.class)
+   /* @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessages> processRuntimeException(RuntimeException ex) {
         return new ResponseEntity<>(new BadRequestException(ex.getMessage()).getErrorMessages(),
                 HttpStatus.NOT_FOUND);
@@ -27,6 +19,6 @@ public class RestExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorMessages> processNotFoundException(NotFoundException ex) {
         return new ResponseEntity<>(ex.getErrorMessages(), HttpStatus.NOT_FOUND);
-    }
+    }*/
 
 }

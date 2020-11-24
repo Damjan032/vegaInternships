@@ -9,7 +9,6 @@ import rs.vegait.timesheet.core.repository.ProjectRepository;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class CategoryService implements rs.vegait.timesheet.core.service.BaseService<Category, UUID> {

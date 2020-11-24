@@ -1,8 +1,6 @@
 package rs.vegait.timesheet.core.repository;
 
 
-import rs.vegait.timesheet.core.model.Page;
-
 import java.util.Optional;
 import java.util.UUID;
 

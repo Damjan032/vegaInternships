@@ -7,7 +7,6 @@ import rs.vegait.timesheet.core.model.employee.EmployeeStatus;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -27,5 +26,5 @@ public class EmployeeDto {
     private EmployeeStatus status;
     @NotNull
     private boolean accepted;
-    private List<DailyTimeSheetDto> dailyTimeSheetList;
+    ;
 }

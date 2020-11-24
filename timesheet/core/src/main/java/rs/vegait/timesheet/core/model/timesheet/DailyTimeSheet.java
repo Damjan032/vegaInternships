@@ -34,4 +34,8 @@ public class DailyTimeSheet {
     public Date day() {
         return day;
     }
+
+    public DailyTimeSheet changeTimeSheets(Iterable<TimeSheet> timeSheets) {
+        return new DailyTimeSheet(this.id, this.employee, this.day, timeSheets);
+    }
 }

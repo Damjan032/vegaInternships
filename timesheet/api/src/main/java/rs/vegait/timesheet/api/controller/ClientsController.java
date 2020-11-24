@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.api.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.service.ClientService;
 
 import javax.websocket.server.PathParam;
+import java.net.URI;
 import java.util.UUID;
 
 
@@ -33,10 +35,13 @@ public class ClientsController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClientDto> add(@RequestBody ClientDto clientDto) throws Exception {
+    public ResponseEntity<Void> add(@RequestBody ClientDto clientDto) throws Exception {
         Client newClient = clientFactory.createFromDto(UUID.randomUUID(), clientDto);
         clientService.create(newClient);
-        return new ResponseEntity<>(clientDto, HttpStatus.OK);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("api/clients/" + newClient.id()));
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

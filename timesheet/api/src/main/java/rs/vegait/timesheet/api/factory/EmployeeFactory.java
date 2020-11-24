@@ -33,7 +33,7 @@ public class EmployeeFactory implements Factory<EmployeeDto, Employee> {
     public EmployeeDto toDto(Employee employee) {
         String name = employee.name().firstName() + " " + employee.name().lastName();
         return new EmployeeDto(employee.id().toString(), employee.username(), name, employee.requiredHoursPerWeek(), employee.emailAddress(),
-                employee.role(), employee.status(), employee.wasAccepted(), null);
+                employee.role(), employee.status(), employee.wasAccepted());
 
     }
 

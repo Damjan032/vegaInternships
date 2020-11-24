@@ -46,14 +46,16 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
         prepareStatement.setDate(3, new java.sql.Date(dailyTimeSheet.day().getTime()));
 
         prepareStatement.executeUpdate();
-        for (TimeSheet timeSheet: dailyTimeSheet.timeSheets()) {
+        for (TimeSheet timeSheet : dailyTimeSheet.timeSheets()) {
             String sqlTimeSheet = "INSERT INTO `timesheet`.`timesheets` ( `time`, `description`, `overtime`, `projectID`, `dailytimesheetID`, `categoryId`) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement prepareStatementTimeSheet = connection.prepareStatement(sqlTimeSheet);
             prepareStatementTimeSheet.setDouble(1, timeSheet.time().numberOfHours());
-            if (timeSheet.hasDescription()) prepareStatementTimeSheet.setString(2, timeSheet.description().description());
+            if (timeSheet.hasDescription())
+                prepareStatementTimeSheet.setString(2, timeSheet.description().description());
             else prepareStatementTimeSheet.setNull(2, java.sql.Types.NULL);
-            if (timeSheet.hasDescription()) prepareStatementTimeSheet.setDouble(3, timeSheet.overtime().numberOfHours());
+            if (timeSheet.hasDescription())
+                prepareStatementTimeSheet.setDouble(3, timeSheet.overtime().numberOfHours());
             else prepareStatementTimeSheet.setNull(3, java.sql.Types.NULL);
             prepareStatementTimeSheet.setString(4, timeSheet.project().id().toString());
             prepareStatementTimeSheet.setString(5, dailyTimeSheet.id().toString());
@@ -121,7 +123,6 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
     @Override
     public Optional<DailyTimeSheet> findByEmployeeAndDay(Employee employee, java.util.Date date) throws Exception {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE employeeId = ? AND day like(?) ";
-        List<DailyTimeSheet> dailyTimeSheets = new ArrayList<>();
 
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setString(1, employee.id().toString());
@@ -135,7 +136,7 @@ public class JdbcDailyTimeSheetRepository implements DailyTimeSheetRepository {
                     this.findDailyTimeSheetsForDailySheet(rs.getString("id")));
         }
         rs.close();
-        if(dailyTimeSheet== null) return Optional.empty();
+        if (dailyTimeSheet == null) return Optional.empty();
 
         return Optional.of(dailyTimeSheet);
     }
