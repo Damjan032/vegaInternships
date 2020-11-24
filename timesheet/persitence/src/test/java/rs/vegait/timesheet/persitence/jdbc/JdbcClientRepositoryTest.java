@@ -36,7 +36,7 @@ public class JdbcClientRepositoryTest {
     }
 
     @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
+    public void setUp() throws Exception {
         initTestClients();
     }
 
@@ -145,7 +145,7 @@ public class JdbcClientRepositoryTest {
         });
     }
 
-    private void initTestClients() throws SQLException {
+    private void initTestClients() throws Exception {
         testClient = new Client(UUID.randomUUID(), new ClientName("Client123"),
                 new Address(
                         new Street("Jump", "21"),
@@ -187,8 +187,8 @@ public class JdbcClientRepositoryTest {
         testList.forEach(client -> {
             try {
                 jdbcClientRepository.add(client);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

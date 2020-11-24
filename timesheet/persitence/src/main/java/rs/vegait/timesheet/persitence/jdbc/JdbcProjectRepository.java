@@ -5,7 +5,6 @@ import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.project.*;
-import rs.vegait.timesheet.core.repository.CategoryRepository;
 import rs.vegait.timesheet.core.repository.ClientRepository;
 import rs.vegait.timesheet.core.repository.EmployeeRepository;
 import rs.vegait.timesheet.core.repository.ProjectRepository;
@@ -22,33 +21,30 @@ public class JdbcProjectRepository implements ProjectRepository {
     private final Connection connection;
     private final ClientRepository clientRepository;
     private final EmployeeRepository employeeRepository;
-    private final CategoryRepository categoryRepository;
 
     public JdbcProjectRepository(Connection connection, ClientRepository clientRepository,
-                                 EmployeeRepository employeeRepository, CategoryRepository categoryRepository) {
+                                 EmployeeRepository employeeRepository) {
         this.connection = connection;
         this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
-        this.categoryRepository = categoryRepository;
     }
 
 
     @Override
     public void add(Project newObject) throws SQLException {
-        String sql = "INSERT INTO `timesheet`.`projects` (`id`, `teamleadId`, `name`, `categoryId`, `clientId`, `status`, `description`) " +
+        String sql = "INSERT INTO `timesheet`.`projects` (`id`, `teamleadId`, `name`, `clientId`, `status`, `description`) " +
                 "VALUES (?, ?, " +
                 "?, ?," +
-                " ?, ?, ?)";
+                " ?, ?)";
 
         PreparedStatement prepareStatement = connection.prepareStatement(sql);
         prepareStatement.setString(1, newObject.id().toString());
         prepareStatement.setString(2, newObject.teamLead().id().toString());
         prepareStatement.setString(3, newObject.name().name());
-        prepareStatement.setString(4, newObject.category().id().toString());
-        prepareStatement.setString(5, newObject.client().id().toString());
-        prepareStatement.setString(6, newObject.status().toString());
-        if (newObject.hasDescription()) prepareStatement.setString(7, newObject.description().description());
-        else prepareStatement.setNull(7, java.sql.Types.NULL);
+        prepareStatement.setString(4, newObject.client().id().toString());
+        prepareStatement.setString(5, newObject.status().toString());
+        if (newObject.hasDescription()) prepareStatement.setString(6, newObject.description().description());
+        else prepareStatement.setNull(6, java.sql.Types.NULL);
 
         prepareStatement.executeUpdate();
 
@@ -74,7 +70,6 @@ public class JdbcProjectRepository implements ProjectRepository {
         String sql = "UPDATE " + TABLE_NAME + " SET " +
                 "teamleadId = ?, " +
                 "name = ?, " +
-                "categoryId = ?, " +
                 "clientId = ?, " +
                 "status = ?, " +
                 "description = ? " +
@@ -86,18 +81,16 @@ public class JdbcProjectRepository implements ProjectRepository {
         preparedStatement.setString(2,
                 newObject.name() == null ? projectOptional.get().name().name() : newObject.name().name());
         preparedStatement.setString(3,
-                newObject.category() == null ? projectOptional.get().category().id().toString() : newObject.category().id().toString());
-        preparedStatement.setString(4,
                 newObject.client() == null ? projectOptional.get().client().id().toString() : newObject.client().id().toString());
-        preparedStatement.setString(5,
+        preparedStatement.setString(4,
                 newObject.status() == null ? projectOptional.get().status().toString() : newObject.status().toString());
         if (!newObject.hasDescription() && !projectOptional.get().hasDescription()) {
-            preparedStatement.setNull(6, Types.NULL);
+            preparedStatement.setNull(5, Types.NULL);
         } else {
-            preparedStatement.setString(6,
+            preparedStatement.setString(5,
                     !newObject.hasDescription() ? projectOptional.get().description().description() : newObject.description().description());
         }
-        preparedStatement.setString(7, projectOptional.get().id().toString());
+        preparedStatement.setString(6, projectOptional.get().id().toString());
 
         preparedStatement.executeUpdate();
 
@@ -113,7 +106,6 @@ public class JdbcProjectRepository implements ProjectRepository {
         while (rs.next()) {
             Employee employee = this.employeeRepository.findById(UUID.fromString(rs.getString("teamleadId"))).get();
             Client client = this.clientRepository.findById(UUID.fromString(rs.getString("clientId"))).get();
-            Category category = this.categoryRepository.findById(UUID.fromString(rs.getString("categoryId"))).get();
             Optional<ProjectDescription> projectDescription = Optional.empty();
             if (rs.getString("description") != null)
                 projectDescription = Optional.of(new ProjectDescription(rs.getString("description")));
@@ -123,8 +115,7 @@ public class JdbcProjectRepository implements ProjectRepository {
                     new ProjectName(rs.getString("name")),
                     ProjectStatus.valueOf(rs.getString("status")),
                     employee,
-                    client,
-                    category));
+                    client));
         }
         rs.close();
         return projects;
@@ -141,7 +132,6 @@ public class JdbcProjectRepository implements ProjectRepository {
         if (rs.next()) {
             Employee employee = this.employeeRepository.findById(UUID.fromString(rs.getString("teamleadId"))).get();
             Client client = this.clientRepository.findById(UUID.fromString(rs.getString("clientId"))).get();
-            Category category = this.categoryRepository.findById(UUID.fromString(rs.getString("categoryId"))).get();
             Optional<ProjectDescription> projectDescription = Optional.empty();
             if (rs.getString("description") != null)
                 projectDescription = Optional.of(new ProjectDescription(rs.getString("description")));
@@ -151,8 +141,7 @@ public class JdbcProjectRepository implements ProjectRepository {
                     new ProjectName(rs.getString("name")),
                     ProjectStatus.valueOf(rs.getString("status")),
                     employee,
-                    client,
-                    category);
+                    client);
         }
         rs.close();
         if (project == null) {
@@ -171,7 +160,6 @@ public class JdbcProjectRepository implements ProjectRepository {
         if (rs.next()) {
             Employee employee = this.employeeRepository.findById(UUID.fromString(rs.getString("teamleadId"))).get();
             Client client = this.clientRepository.findById(UUID.fromString(rs.getString("clientId"))).get();
-            Category category = this.categoryRepository.findById(UUID.fromString(rs.getString("categoryId"))).get();
             Optional<ProjectDescription> projectDescription = Optional.empty();
             if (rs.getString("description") != null)
                 projectDescription = Optional.of(new ProjectDescription(rs.getString("description")));
@@ -181,8 +169,7 @@ public class JdbcProjectRepository implements ProjectRepository {
                     new ProjectName(rs.getString("name")),
                     ProjectStatus.valueOf(rs.getString("status")),
                     employee,
-                    client,
-                    category);
+                    client);
         }
         rs.close();
         if (project == null) {
@@ -221,7 +208,6 @@ public class JdbcProjectRepository implements ProjectRepository {
         while (rs.next()) {
             Employee employee = this.employeeRepository.findById(UUID.fromString(rs.getString("teamleadId"))).get();
             Client client = this.clientRepository.findById(UUID.fromString(rs.getString("clientId"))).get();
-            Category category = this.categoryRepository.findById(UUID.fromString(rs.getString("categoryId"))).get();
             Optional<ProjectDescription> projectDescription = Optional.empty();
             if (rs.getString("description") != null)
                 projectDescription = Optional.of(new ProjectDescription(rs.getString("description")));
@@ -231,8 +217,7 @@ public class JdbcProjectRepository implements ProjectRepository {
                     new ProjectName(rs.getString("name")),
                     ProjectStatus.valueOf(rs.getString("status")),
                     employee,
-                    client,
-                    category));
+                    client));
         }
         rs.close();
 

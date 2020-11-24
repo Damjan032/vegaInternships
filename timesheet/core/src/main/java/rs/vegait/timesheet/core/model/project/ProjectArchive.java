@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class ProjectArchive extends Project {
-    public ProjectArchive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client, Category category) {
-        super(id, description, name, ProjectStatus.ARCHIVE, teamLead, client, category);
+    public ProjectArchive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client) {
+        super(id, description, name, ProjectStatus.ARCHIVE, teamLead, client);
     }
 }

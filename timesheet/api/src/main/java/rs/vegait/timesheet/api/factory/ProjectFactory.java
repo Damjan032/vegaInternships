@@ -21,7 +21,6 @@ import java.util.UUID;
 public class ProjectFactory implements Factory<ProjectDto, Project> {
     private final EmployeeFactory employeeFactory;
     private final ClientFactory clientFactory;
-    private final CategoryFactory categoryFactory;
 
     @Override
     public Project createFromDto(UUID id, ProjectDto projectDto) {
@@ -37,8 +36,7 @@ public class ProjectFactory implements Factory<ProjectDto, Project> {
                 new ProjectName(projectDto.getName()),
                 ProjectStatus.valueOf(projectDto.getStatus()),
                 this.employeeFactory.createFromDto(UUID.fromString(projectDto.getTeamLead().getId()), projectDto.getTeamLead()),
-                this.clientFactory.createFromDto(UUID.fromString(projectDto.getClientDto().getId()), projectDto.getClientDto()),
-                this.categoryFactory.createFromDto(UUID.fromString(projectDto.getCategoryDto().getId()), projectDto.getCategoryDto()));
+                this.clientFactory.createFromDto(UUID.fromString(projectDto.getClientDto().getId()), projectDto.getClientDto()));
     }
 
     @Override
@@ -49,7 +47,6 @@ public class ProjectFactory implements Factory<ProjectDto, Project> {
                 project.id().toString(),
                 this.employeeFactory.toDto(project.teamLead()),
                 project.name().name(),
-                this.categoryFactory.toDto(project.category()),
                 project.status().name(),
                 this.clientFactory.toDto(project.client()),
                 project.hasDescription() ? project.description().description() : null

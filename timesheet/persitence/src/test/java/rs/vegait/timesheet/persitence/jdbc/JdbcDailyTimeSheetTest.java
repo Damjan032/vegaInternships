@@ -5,8 +5,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import rs.vegait.timesheet.core.model.client.*;
 import rs.vegait.timesheet.core.model.employee.*;
+import rs.vegait.timesheet.core.model.project.Category;
+import rs.vegait.timesheet.core.model.project.Project;
+import rs.vegait.timesheet.core.model.project.ProjectName;
+import rs.vegait.timesheet.core.model.project.ProjectStatus;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
+import rs.vegait.timesheet.core.model.timesheet.SpentTime;
+import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,11 +35,12 @@ public class JdbcDailyTimeSheetTest {
     private DailyTimeSheet testDailyTimeSheet;
     private List<DailyTimeSheet> testListDailyTimeSheet;
     private JdbcEmployeeRepository jdbcEmployeeRepository;
-    private JdbcTimeSheetRepository jdbcTimeSheetRepository;
     private JdbcProjectRepository jdbcProjectRepository;
+    private TimeSheet testTimeSheet;
+    private Project testProject;
 
     @BeforeClass
-    public static void setup() throws Exception, ClassNotFoundException {
+    public static void setup() throws Exception {
         String DB_URL = "jdbc:mysql://localhost:3306/timesheet?autoReconnect=true&useSSL=false";
         String USER = "root";
         String PASS = "root";
@@ -56,7 +64,9 @@ public class JdbcDailyTimeSheetTest {
 
     @Test
     public void Find_all_daily_sheets_for_specified_employee() throws Exception {
-        Iterable<DailyTimeSheet> dailyTimeSheetIterable = jdbcDailyTimeSheetRepository.findDailyTimeSheetsForEmployer(testDailyTimeSheet.employee(), null, null);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Iterable<DailyTimeSheet> dailyTimeSheetIterable = jdbcDailyTimeSheetRepository.
+                findDailyTimeSheetsForEmployee(testDailyTimeSheet.employee(), sdf.parse("31-12-0000"), sdf.parse("31-12-1000"));
         AtomicInteger j = new AtomicInteger();
         AtomicBoolean isSame = new AtomicBoolean(true);
         dailyTimeSheetIterable.forEach(dailyTimeSheet -> {
@@ -70,12 +80,6 @@ public class JdbcDailyTimeSheetTest {
     @Before
     public void setUp() throws Exception, ParseException {
         jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
-        JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
-        jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(this.connection, jdbcEmployeeRepository);
-        JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
-
-        JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
-        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository, jdbcEmployeeRepository, jdbcCategoryRepository);
         initTests();
     }
 
@@ -96,9 +100,18 @@ public class JdbcDailyTimeSheetTest {
             }
         });
         jdbcEmployeeRepository.remove(testDailyTimeSheet.employee().id());
+        jdbcProjectRepository.remove(testProject.id());
+        // testTimeSheet = new TimeSheet(new SpentTime(5),Optional.empty(),Optional.empty(),testProject,testCategory);
+
     }
 
     public void initTests() throws Exception {
+        JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
+        JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
+        JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
+        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository,jdbcEmployeeRepository);
+        jdbcDailyTimeSheetRepository = new JdbcDailyTimeSheetRepository(this.connection, jdbcEmployeeRepository,jdbcCategoryRepository,
+                jdbcProjectRepository);
         this.testListDailyTimeSheet = new ArrayList<>();
         Employee testEmployee = new Employee(UUID.randomUUID(),
                 new Name("Pera Pearic"),
@@ -109,19 +122,38 @@ public class JdbcDailyTimeSheetTest {
                 EmployeeStatus.ACTIVE,
                 EmployeeRole.WORKER,
                 true);
-
         jdbcEmployeeRepository.add(testEmployee);
+        Category testCategory = new Category(UUID.randomUUID(), "TEST_CAT");
+        jdbcCategoryRepository.add(testCategory);
+        Client testClient = new Client(UUID.randomUUID(), new ClientName("Client123"),
+                new Address(
+                        new Street("Jump", "21"),
+                        new City("New York", 10001),
+                        new Country("United States")
+                ));
+        jdbcClientRepository.add(testClient);
+
         String dateString = "31-12-0000";
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        testDailyTimeSheet = new DailyTimeSheet(UUID.randomUUID(), testEmployee, dateFormat.parse(dateString));
 
+
+        testProject = new Project(UUID.randomUUID(), Optional.empty(), new ProjectName("TestProject"), ProjectStatus.ACTIVE, testEmployee, testClient);
+        testTimeSheet = new TimeSheet(new SpentTime(5),Optional.empty(),Optional.empty(),testProject,testCategory);
+        List<TimeSheet> timeSheets = new ArrayList<>();
+        jdbcProjectRepository.add(testProject);
+        testDailyTimeSheet = new DailyTimeSheet(UUID.randomUUID(), testEmployee, dateFormat.parse(dateString), timeSheets);
+        jdbcDailyTimeSheetRepository.add(testDailyTimeSheet);
+        timeSheets.add(testTimeSheet);
         for (int i = 0; i < 5; i++) {
             dateString = "31-0" + i + "-0001";
-            DailyTimeSheet liseElement = new DailyTimeSheet(UUID.randomUUID(), testEmployee, dateFormat.parse(dateString));
+            List<TimeSheet> arrayList = new ArrayList<>();
+            arrayList.add(testTimeSheet);
+            DailyTimeSheet liseElement = new DailyTimeSheet(UUID.randomUUID(), testEmployee, dateFormat.parse(dateString),
+                    timeSheets);
             jdbcDailyTimeSheetRepository.add(liseElement);
             testListDailyTimeSheet.add(liseElement);
         }
-        jdbcDailyTimeSheetRepository.add(testDailyTimeSheet);
+
     }
 
 }

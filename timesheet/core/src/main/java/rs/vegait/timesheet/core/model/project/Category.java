@@ -9,8 +9,8 @@ public class Category {
     private String name;
 
     public Category(UUID id, @NotNull String name) {
-        if (id == null || name == null) {
-            throw new ExceptionInInitializerError();
+        if (id == null || name == null || name.trim().equals("")) {
+            throw new IllegalArgumentException();
         }
         this.id = id;
         this.name = name;

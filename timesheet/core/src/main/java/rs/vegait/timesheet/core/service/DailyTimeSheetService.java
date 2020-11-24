@@ -7,7 +7,6 @@ import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheetResultSet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
-import rs.vegait.timesheet.core.repository.TimeSheetRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,12 +16,10 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
 
     private final DailyTimeSheetRepository dailyTimeSheetRepository;
     private final EmployeeService employeeService;
-    private final TimeSheetRepository timeSheetRepository;
 
-    public DailyTimeSheetService(DailyTimeSheetRepository dailyTimeSheetRepository, EmployeeService employeeService, TimeSheetRepository timeSheetRepository) {
+    public DailyTimeSheetService(DailyTimeSheetRepository dailyTimeSheetRepository, EmployeeService employeeService) {
         this.dailyTimeSheetRepository = dailyTimeSheetRepository;
         this.employeeService = employeeService;
-        this.timeSheetRepository = timeSheetRepository;
     }
 
     @Override
@@ -56,14 +53,15 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     }
 
     public Iterable<TimeSheetResultSet> findTimeSheetSet(String employeeId, Date dateFrom, Date dateTo) throws Exception {
-        Employee employee = this.employeeService.findById(employeeId);
+      /* Employee employee = this.employeeService.findById(employeeId);
         List<TimeSheetResultSet> timeSheetResultSetList = new ArrayList<>();
-        Iterable<DailyTimeSheet> dailyTimeSheets = this.dailyTimeSheetRepository.findDailyTimeSheetsForEmployer(employee, dateFrom, dateTo);
+        Iterable<DailyTimeSheet> dailyTimeSheets = this.dailyTimeSheetRepository.findDailyTimeSheetsForEmployee(employee, dateFrom, dateTo);
         for (DailyTimeSheet dailyTimeSheet : dailyTimeSheets) {
             Iterable<TimeSheet> timeSheets = this.timeSheetRepository.findDailyTimeSheetsForDailySheet(dailyTimeSheet.id().toString());
             timeSheetResultSetList.add(new TimeSheetResultSet(dailyTimeSheet, timeSheets, dailyHoursOfWork(timeSheets)));
         }
-        return timeSheetResultSetList;
+        return timeSheetResultSetList;*/
+        return null;
     }
 
     public double dailyHoursOfWork(Iterable<TimeSheet> timeSheets) {

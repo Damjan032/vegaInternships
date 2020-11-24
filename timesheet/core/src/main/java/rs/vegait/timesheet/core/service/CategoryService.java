@@ -56,15 +56,6 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
             throw new RuntimeException("Non-existent category");
         }
 
-        AtomicBoolean isEmptyList = new AtomicBoolean(true);
-        var projects = this.projectRepository.findAll();
-        if (this.projectRepository.findAll() != null)
-            this.projectRepository.findAll().forEach(project -> {
-                if (project.category().id().equals(id)) {
-                    throw new RuntimeException("Cant delete - Have projects whit same category");
-                }
-            });
-
         this.categoryRepository.remove(id);
     }
 

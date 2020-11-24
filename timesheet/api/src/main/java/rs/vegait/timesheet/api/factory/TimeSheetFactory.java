@@ -35,20 +35,22 @@ public class TimeSheetFactory {
             optionalOvertime = Optional.empty();
         else
             optionalOvertime = Optional.of(new SpentTime(timeSheetDto.getOvertime()));
-        return new TimeSheet(id, new SpentTime(timeSheetDto.getTime()), optionalTimeSheetDescription,
+        return null;
+        /*return new TimeSheet(id, new SpentTime(timeSheetDto.getTime()), optionalTimeSheetDescription,
                 optionalOvertime,
                 this.projectFactory.createFromDto(UUID.fromString(timeSheetDto.getProjectDto().getId()), timeSheetDto.getProjectDto()),
-                dailyTimeSheet);
+                dailyTimeSheet);*/
     }
 
 
     public TimeSheetDto toDto(TimeSheet timeSheet) {
-        return new TimeSheetDto(timeSheet.id().toString(),
+       /* return new TimeSheetDto(timeSheet.id().toString(),
                 timeSheet.time().numberOfHours(),
                 timeSheet.hasDescription() ? timeSheet.description().description() : null,
                 timeSheet.hasOvertime() ? timeSheet.overtime().numberOfHours() : 0,
                 this.projectFactory.toDto(timeSheet.project())
-        );
+        );*/
+        return null;
     }
 
 

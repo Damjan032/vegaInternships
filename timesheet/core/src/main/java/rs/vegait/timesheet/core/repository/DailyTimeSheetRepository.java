@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface DailyTimeSheetRepository extends CoreRepository<DailyTimeSheet> {
-    Iterable<DailyTimeSheet> findDailyTimeSheetsForEmployer(Employee employee, Date dateFrom, Date dateTo) throws Exception;
+    Iterable<DailyTimeSheet> findDailyTimeSheetsForEmployee(Employee employee, Date dateFrom, Date dateTo) throws Exception;
 
     Optional<DailyTimeSheet> findByEmployeeAndDay(Employee employee, Date date) throws Exception;
 }

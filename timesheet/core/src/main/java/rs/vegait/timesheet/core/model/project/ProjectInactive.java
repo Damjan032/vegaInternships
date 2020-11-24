@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class ProjectInactive extends Project {
-    public ProjectInactive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client, Category category) {
-        super(id, description, name, ProjectStatus.INACTIVE, teamLead, client, category);
+    public ProjectInactive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client) {
+        super(id, description, name, ProjectStatus.INACTIVE, teamLead, client);
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public class ProjectActive extends Project {
 
 
-    public ProjectActive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client, Category category) {
-        super(id, description, name, ProjectStatus.ACTIVE, teamLead, client, category);
+    public ProjectActive(UUID id, Optional<ProjectDescription> description, ProjectName name, ProjectStatus status, Employee teamLead, Client client) {
+        super(id, description, name, ProjectStatus.ACTIVE, teamLead, client);
     }
 }

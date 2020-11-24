@@ -52,8 +52,8 @@ public class JdbcProjectRepositoryTest {
         Iterable<Project> projectsIterable = jdbcProjectRepository.findAll();
         AtomicInteger j = new AtomicInteger();
         projectsIterable.forEach(project -> {
-            testProjectsList.forEach(categoryFromList -> {
-                if (categoryFromList.id().equals(project.id())) {
+            testProjectsList.forEach(projectFromList -> {
+                if (projectFromList.id().equals(project.id())) {
                     j.getAndIncrement();
                 }
             });
@@ -145,9 +145,6 @@ public class JdbcProjectRepositoryTest {
         JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
         jdbcClientRepository.remove(testProject.client().id());
 
-        JdbcCategoryRepository jdbcCategoryRepository = new JdbcCategoryRepository(this.connection);
-        jdbcCategoryRepository.remove(testProject.category().id());
-
         JdbcEmployeeRepository jdbcEmployeeRepository = new JdbcEmployeeRepository(this.connection);
         jdbcEmployeeRepository.remove(testProject.teamLead().id());
     }
@@ -176,8 +173,8 @@ public class JdbcProjectRepositoryTest {
         JdbcClientRepository jdbcClientRepository = new JdbcClientRepository(this.connection);
         jdbcClientRepository.add(testClient);
 
-        testProject = new Project(UUID.randomUUID(), Optional.empty(), new ProjectName("TestProject"), ProjectStatus.ACTIVE, testEmployee, testClient, testCategory);
-        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository, jdbcEmployeeRepository, jdbcCategoryRepository);
+        testProject = new Project(UUID.randomUUID(), Optional.empty(), new ProjectName("TestProject"), ProjectStatus.ACTIVE, testEmployee, testClient);
+        jdbcProjectRepository = new JdbcProjectRepository(this.connection, jdbcClientRepository, jdbcEmployeeRepository);
         jdbcProjectRepository.add(testProject);
         testProjectsList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -204,8 +201,7 @@ public class JdbcProjectRepositoryTest {
                     new ProjectName(name),
                     ProjectStatus.ACTIVE,
                     testProject.teamLead(),
-                    testProject.client(),
-                    testProject.category());
+                    testProject.client());
 
             jdbcProjectRepository.add(listElement);
             testProjectsList.add(listElement);

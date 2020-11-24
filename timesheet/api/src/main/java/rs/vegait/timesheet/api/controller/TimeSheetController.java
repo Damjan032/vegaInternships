@@ -8,13 +8,11 @@ import rs.vegait.timesheet.api.dto.DailyTimeSheetDto;
 import rs.vegait.timesheet.api.dto.TimeSheetDto;
 import rs.vegait.timesheet.api.factory.DailyTimeSheetFactory;
 import rs.vegait.timesheet.api.factory.TimeSheetFactory;
-import rs.vegait.timesheet.core.model.employee.Employee;
 import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
 import rs.vegait.timesheet.core.repository.EmployeeRepository;
 import rs.vegait.timesheet.core.service.DailyTimeSheetService;
-import rs.vegait.timesheet.core.service.TimeSheetService;
 
 import javax.websocket.server.PathParam;
 import java.text.SimpleDateFormat;
@@ -24,15 +22,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "api/timesheets")
 public class TimeSheetController {
-    private final TimeSheetService timeSheetService;
     private final TimeSheetFactory timeSheetFactory;
     private final EmployeeRepository employeeRepository;
     private final DailyTimeSheetService dailyTimeSheetService;
     private final DailyTimeSheetFactory dailyTimeSheetFactory;
     private final DailyTimeSheetRepository dailyTimeSheetRepository;
 
-    public TimeSheetController(TimeSheetService timeSheetService, TimeSheetFactory timeSheetFactory, EmployeeRepository employeeRepository, DailyTimeSheetService dailyTimeSheetService, DailyTimeSheetFactory dailyTimeSheetFactory, DailyTimeSheetRepository dailyTimeSheetRepository) {
-        this.timeSheetService = timeSheetService;
+    public TimeSheetController( TimeSheetFactory timeSheetFactory, EmployeeRepository employeeRepository, DailyTimeSheetService dailyTimeSheetService, DailyTimeSheetFactory dailyTimeSheetFactory, DailyTimeSheetRepository dailyTimeSheetRepository) {
         this.timeSheetFactory = timeSheetFactory;
         this.employeeRepository = employeeRepository;
         this.dailyTimeSheetService = dailyTimeSheetService;
@@ -56,20 +52,21 @@ public class TimeSheetController {
     public ResponseEntity<TimeSheetDto> addTimeSheet(@RequestBody TimeSheetDto timeSheetDto,
                                                   @PathParam("employeeId") String employeeId,
                                                   @PathParam("date") String date) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       /* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Optional<Employee> employee = this.employeeRepository.findById(UUID.fromString(employeeId));
         Optional<DailyTimeSheet> dailyTimeSheet = this.dailyTimeSheetService.findByEmployeeAndData( employeeId,  date);
 
         if(!dailyTimeSheet.isPresent()){
             UUID uuid = UUID.randomUUID();
-            this.dailyTimeSheetService.create(new DailyTimeSheet(uuid, employee.get(), sdf.parse(date)));
+            this.dailyTimeSheetService.create(new DailyTimeSheet(uuid, employee.get(), sdf.parse(date), timeSheets));
             dailyTimeSheet = this.dailyTimeSheetRepository.findById(uuid);
         }
         TimeSheet timeSheet = this.timeSheetFactory.fromDto(UUID.randomUUID(),timeSheetDto,dailyTimeSheet.get());
         this.timeSheetService.create(timeSheet);
 
-        return new ResponseEntity<>(this.timeSheetFactory.toDto(timeSheet), HttpStatus.OK);
+        return new ResponseEntity<>(this.timeSheetFactory.toDto(timeSheet), HttpStatus.OK);*/
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -82,7 +79,7 @@ public class TimeSheetController {
         }
 
         TimeSheet timeSheet = this.timeSheetFactory.fromDto(UUID.randomUUID(),timeSheetDto,dailyTimeSheet.get());
-        this.timeSheetService.update(timeSheet);
+        /*this.timeSheetService.update(timeSheet);*/
         return new ResponseEntity<>(this.timeSheetFactory.toDto(timeSheet), HttpStatus.OK);
     }
 

@@ -24,11 +24,12 @@ public class DailyTimeSheetFactory implements Factory<DailyTimeSheetDto, TimeShe
     }
 
     public DailyTimeSheet fromDto(UUID id, EmployeeDto employeeDto, Date day) {
-        return new DailyTimeSheet(
+        /*return new DailyTimeSheet(
                 id,
                 this.employeeFactory.createFromDto(UUID.fromString(employeeDto.getId()), employeeDto),
-                day
-        );
+                day,
+                timeSheets);*/
+        return null;
     }
 
     @Override

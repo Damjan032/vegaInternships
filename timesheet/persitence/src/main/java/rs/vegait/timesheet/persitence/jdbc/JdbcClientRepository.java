@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.persitence.jdbc;
 
+
 import org.springframework.stereotype.Component;
 import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.client.*;
@@ -20,9 +21,8 @@ public class JdbcClientRepository implements ClientRepository {
         this.connection = connection;
     }
 
-
     @Override
-    public void add(Client newObject) throws SQLException {
+    public void add(Client newObject) throws Exception {
         String sql = "INSERT INTO " + TABLE_NAME + " (`id`, `name`, `countryName`, `cityName`, `postalCode`, `streetName`, `streetNumber`) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
@@ -121,11 +121,6 @@ public class JdbcClientRepository implements ClientRepository {
             return Optional.empty();
         }
         return Optional.of(client);
-    }
-
-    @Override
-    public Optional<Client> findByName(String name) throws SQLException {
-        return Optional.empty();
     }
 
     @Override

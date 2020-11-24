@@ -7,18 +7,24 @@ import java.util.Date;
 import java.util.UUID;
 
 public class DailyTimeSheet {
-    private UUID id;
-    private Employee employee;
-    private Date day;
+    private final UUID id;
+    private final Employee employee;
+    private final Date day;
+    private final Iterable<TimeSheet> timeSheets;
 
-    public DailyTimeSheet(UUID id, @NotNull Employee employee, @NotNull Date day) {
+    public DailyTimeSheet(UUID id, @NotNull Employee employee, @NotNull Date day, Iterable<TimeSheet> timeSheets) {
         this.id = id;
         this.employee = employee;
         this.day = day;
+        this.timeSheets = timeSheets;
     }
 
     public UUID id() {
         return id;
+    }
+
+    public Iterable<TimeSheet> timeSheets() {
+        return timeSheets;
     }
 
     public Employee employee() {

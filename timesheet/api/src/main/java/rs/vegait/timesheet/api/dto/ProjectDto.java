@@ -15,8 +15,6 @@ public class ProjectDto {
     @NotBlank
     private String name;
     @NotBlank
-    private CategoryDto categoryDto;
-    @NotBlank
     private String status;
     @NotBlank
     private ClientDto clientDto;

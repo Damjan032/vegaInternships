@@ -17,9 +17,5 @@ public interface CoreRepository<T> {
 
     Optional<T> findById(UUID id) throws Exception;
 
-    Optional<T> findByName(String name) throws Exception;
-
-    Page<T> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws Exception;
-
     // public T save(T newObject); //update if exist like a spring
 }

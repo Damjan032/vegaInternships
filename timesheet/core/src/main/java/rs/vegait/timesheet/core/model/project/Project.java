@@ -14,16 +14,14 @@ public class Project {
     protected ProjectStatus status;
     protected Employee teamLead;
     protected Client client;
-    protected Category category;
 
-    public Project(@NotNull UUID id, Optional<ProjectDescription> description, @NotNull ProjectName name, @NotNull ProjectStatus status, @NotNull Employee teamLead, @NotNull Client client, @NotNull Category category) {
+    public Project(@NotNull UUID id, Optional<ProjectDescription> description, @NotNull ProjectName name, @NotNull ProjectStatus status, @NotNull Employee teamLead, @NotNull Client client) {
         this.id = id;
         this.description = description;
         this.name = name;
         this.status = status;
         this.teamLead = teamLead;
         this.client = client;
-        this.category = category;
     }
 
     public UUID id() {
@@ -42,10 +40,6 @@ public class Project {
         return name;
     }
 
-    public Category category() {
-        return category;
-    }
-
     public ProjectStatus status() {
         return status;
     }
@@ -59,26 +53,22 @@ public class Project {
     }
 
     public Project changeDescription(ProjectDescription description) {
-        return new Project(this.id, Optional.of(description), this.name, this.status, this.teamLead, this.client, this.category);
+        return new Project(this.id, Optional.of(description), this.name, this.status, this.teamLead, this.client);
     }
 
     public Project rename(ProjectName name) {
-        return new Project(this.id, this.description, name, this.status, this.teamLead, this.client, this.category);
+        return new Project(this.id, this.description, name, this.status, this.teamLead, this.client);
     }
 
     public Project changeStatus(ProjectStatus status) {
-        return new Project(this.id, this.description, this.name, status, this.teamLead, this.client, this.category);
+        return new Project(this.id, this.description, this.name, status, this.teamLead, this.client);
     }
 
     public Project updateTeamLead(Employee teamLead) {
-        return new Project(this.id, this.description, this.name, this.status, teamLead, this.client, this.category);
+        return new Project(this.id, this.description, this.name, this.status, teamLead, this.client);
     }
 
     public Project updateClient(Client client) {
-        return new Project(this.id, this.description, this.name, this.status, this.teamLead, client, this.category);
-    }
-
-    public Project updateCategory(Category category) {
-        return new Project(this.id, this.description, this.name, this.status, this.teamLead, this.client, category);
+        return new Project(this.id, this.description, this.name, this.status, this.teamLead, client);
     }
 }
