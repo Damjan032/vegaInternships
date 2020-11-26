@@ -22,29 +22,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
     @Override
     public void add(Employee newObject) throws SQLException {
-
-//        String sql = "INSERT INTO " + TABLE_NAME + " VALUES ('" +
-//                newObject.id() + "',  '" + newObject.name().firstName() + "','" +
-//                newObject.name().lastName() + "','" +
-//                newObject.username() + "','" +
-//                newObject.hasPassword()? newObject.hashedPassword(): NULL + "','" +
-//                newObject.emailAddress() + "'," +
-//                newObject.requiredHoursPerWeek() + ",'" +
-//                newObject.status() + "','" +
-//                newObject.role() + "','" +
-//                (newObject.wasAccepted() ? 1 : 0) +
-//                "')";
-//        String sql = "INSERT INTO " + TABLE_NAME + " VALUES ('" +
-//                ? +"',  '" + newObject.name().firstName() + "','" +
-//                newObject.name().lastName() + "','" +
-//                newObject.username() + "','" +
-//                newObject.hasPassword() ? newObject.hashedPassword() : NULL + "','" +
-//                newObject.emailAddress() + "'," +
-//                newObject.requiredHoursPerWeek() + ",'" +
-//                newObject.status() + "','" +
-//                newObject.role() + "','" +
-//                (newObject.wasAccepted() ? 1 : 0) +
-//                "')";
         String sql = "INSERT INTO " + TABLE_NAME + " (`id`, `firstName`, " +
                 "`lastName`, `username`, `password`," +
                 " `emailAddress`, `requiredHoursPerWeek`, `status`, `role`, `wasAccepted`) VALUES ( " +
@@ -140,8 +117,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     Optional.empty(),
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
-                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
                     rs.getBoolean("wasAccepted")));
         }
         rs.close();
@@ -220,8 +197,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     Optional.empty(),
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
-                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
                     rs.getBoolean("wasAccepted"));
         }
         rs.close();
@@ -260,8 +237,8 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                     Optional.empty(),
                     new EmailAddress(rs.getString("emailAddress")),
                     new HoursPerWeek(rs.getDouble("requiredHoursPerWeek")),
-                    rs.getString("status") == "ACTIVE" ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
-                    rs.getString("role") == "ADMIN" ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
+                    rs.getString("status").equalsIgnoreCase("ACTIVE") ? EmployeeStatus.ACTIVE : EmployeeStatus.INACTIVE,
+                    rs.getString("role").equalsIgnoreCase("ADMIN") ? EmployeeRole.ADMIN : EmployeeRole.WORKER,
                     rs.getBoolean("wasAccepted")));
         }
         rs.close();

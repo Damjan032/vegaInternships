@@ -1,6 +1,5 @@
 package rs.vegait.timesheet.api.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,12 @@ import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.service.ClientService;
 
 import javax.websocket.server.PathParam;
-import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(value = "api/clients")
 public class ClientsController {
     private final ClientService clientService;
@@ -29,21 +29,19 @@ public class ClientsController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<ClientDto>> getAll() throws Exception {
+    public ResponseEntity<List<ClientDto>> getAll() throws Exception {
         Iterable<Client> employees = clientService.findAll();
         return new ResponseEntity<>(clientFactory.toListDto(employees), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> add(@RequestBody ClientDto clientDto) throws Exception {
+    public ResponseEntity<String> add(@RequestBody ClientDto clientDto) throws Exception {
         Client newClient = clientFactory.createFromDto(UUID.randomUUID(), clientDto);
         clientService.create(newClient);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("api/clients/" + newClient.id()));
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+;
+        return new ResponseEntity<>("api/clients/" + newClient.id(), HttpStatus.CREATED);
     }
-
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientDto> update(@RequestBody ClientDto clientDto) throws Exception {
         Client newClient = clientFactory.createFromDto(UUID.fromString(clientDto.getId()), clientDto);

@@ -5,7 +5,7 @@ public class TimeSheetDescription {
 
     public TimeSheetDescription(String description) {
         if (description == null) {
-            throw new ExceptionInInitializerError();
+            throw new IllegalArgumentException("Description is not in valid format");
         }
         this.description = description;
     }

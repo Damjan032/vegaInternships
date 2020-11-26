@@ -9,6 +9,10 @@ import rs.vegait.timesheet.core.model.employee.Username;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
 import rs.vegait.timesheet.core.repository.EmployeeRepository;
 
+import javax.management.InstanceAlreadyExistsException;
+import java.lang.module.FindException;
+import java.security.InvalidKeyException;
+import java.util.InputMismatchException;
 import java.util.UUID;
 
 @Component
@@ -28,13 +32,13 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
     public void create(Employee employee) throws Exception {
         var foundEmployee = this.employeeRepository.findById(employee.id());
         if (foundEmployee.isPresent()) {
-            throw new RuntimeException("Already exists with same id");
+            throw new InstanceAlreadyExistsException("Already exists with same id");
         }
 
         if (this.employeeRepository.findByEmailOrUsername(
                 new EmailAddress(employee.emailAddress()),
                 new Username(employee.username())).isPresent()) {
-            throw new RuntimeException("Already exists employee with same username or email");
+            throw new InstanceAlreadyExistsException("Already exists employee with same username or email");
         }
         String body = "http://localhost:8080/api/employees/activated?id=" + employee.id();
         this.smtpServer.sendEmail(employee.emailAddress(), "SSLEmail Testing Subject", body);
@@ -46,7 +50,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
     public void update(Employee employee) throws Exception {
         var foundEmployee = this.employeeRepository.findById(employee.id());
         if (!foundEmployee.isPresent()) {
-            throw new RuntimeException("Non-existent employee");
+            throw new InvalidKeyException("Non-existent employee");
         }
 
         if (this.employeeRepository.findByEmailOrUsername(
@@ -54,7 +58,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
                 new Username(employee.username()))
                 .map(e -> !e.equals(employee))
                 .orElse(false)) {
-            throw new RuntimeException("Already exists employee  with same username or email");
+            throw new InstanceAlreadyExistsException("Already exists employee  with same username or email");
         }
         this.employeeRepository.update(employee);
     }
@@ -63,7 +67,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
     public void delete(UUID id) throws Exception {
         var foundEmployee = this.employeeRepository.findById(id);
         if (!foundEmployee.isPresent()) {
-            throw new RuntimeException("Non-existent employee");
+            throw new InvalidKeyException("Non-existent employee");
         }
         this.employeeRepository.remove(id);
     }
@@ -75,7 +79,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
     public void setEmployeeActive(String id) throws Exception {
         var foundEmployee = this.employeeRepository.findById(UUID.fromString(id));
         if (!foundEmployee.isPresent()) {
-            throw new RuntimeException("Non-existent employee");
+            throw new InvalidKeyException("Non-existent employee");
         }
         Employee employee = foundEmployee.get().acceptMail();
         this.employeeRepository.update(employee);
@@ -85,7 +89,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
     public Employee findById(String id) throws Exception {
         var foundEmployee = this.employeeRepository.findById(UUID.fromString(id));
         if (!foundEmployee.isPresent()) {
-            throw new RuntimeException("Non-existent employee");
+            throw new InvalidKeyException("Non-existent employee");
         }
         return foundEmployee.get();
     }

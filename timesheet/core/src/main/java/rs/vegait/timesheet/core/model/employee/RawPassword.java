@@ -8,7 +8,7 @@ public class RawPassword implements Password {
 
     public RawPassword(String rawPassword, HashingAlgorithm hashingAlgorithm) {
         if (rawPassword == null || rawPassword.length() < 6) {
-            throw new ExceptionInInitializerError();
+            throw new IllegalArgumentException("Password is too week");
         }
 
         this.rawPassword = rawPassword;

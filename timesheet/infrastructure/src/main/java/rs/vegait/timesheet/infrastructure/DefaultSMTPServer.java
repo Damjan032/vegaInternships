@@ -18,7 +18,7 @@ public class DefaultSMTPServer implements SMTPServer {
         this.session = session;
     }
 
-    public void sendEmail(String toEmail, String subject, String body) throws Exception { //TODO Properties param
+    public void sendEmail(String toEmail, String subject, String body) throws Exception {
         MimeMessage msg = new MimeMessage(session);
         //set message headers
         msg.addHeader("Content-type", "text/HTML; charset=UTF-8");

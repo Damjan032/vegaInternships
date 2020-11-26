@@ -9,7 +9,7 @@ public class Name {
 
     public Name(String name) {
         if (name == null || name.length() < 2 || name.length() > 50)
-            throw new ExceptionInInitializerError();
+            throw new IllegalArgumentException("City name is not in correct format");
         this.name = name;
     }
 

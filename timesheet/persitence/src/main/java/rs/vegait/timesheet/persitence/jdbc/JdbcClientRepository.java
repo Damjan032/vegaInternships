@@ -201,6 +201,18 @@ public class JdbcClientRepository implements ClientRepository {
         return clientPage;
     }
 
+    @Override
+    public Iterable<Country> findCountries() throws SQLException {
+        String sql = "SELECT * FROM timesheet.countries;";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
+        List<Country> countries = new ArrayList<>();
+        while(rs.next()){
+            countries.add(new Country(rs.getString("name")));
+        }
+        return countries;
+    }
+
     public Iterable<Country> findAllCountries() throws SQLException {
         String sql = "SELECT * FROM countries";
         List<Country> countries = new ArrayList<>();

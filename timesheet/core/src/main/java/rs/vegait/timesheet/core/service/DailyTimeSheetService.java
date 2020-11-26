@@ -7,6 +7,8 @@ import rs.vegait.timesheet.core.model.timesheet.DailyTimeSheet;
 import rs.vegait.timesheet.core.model.timesheet.TimeSheet;
 import rs.vegait.timesheet.core.repository.DailyTimeSheetRepository;
 
+import javax.management.InstanceAlreadyExistsException;
+import java.security.InvalidKeyException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +28,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     public void create(DailyTimeSheet dailyTimeSheet) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(dailyTimeSheet.id());
         if (foundDailyTimeSheet.isPresent()) {
-            throw new RuntimeException("Already exists with same id");
+            throw new InstanceAlreadyExistsException("Already exists dailyTimeSheet with same id");
         }
 
         this.dailyTimeSheetRepository.add(dailyTimeSheet);
@@ -37,7 +39,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     public void update(DailyTimeSheet updateObject) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(updateObject.id());
         if (foundDailyTimeSheet.isPresent()) {
-            throw new RuntimeException("Already exists with same id");
+            throw new InstanceAlreadyExistsException("Already exists dailyTimeSheet with same id");
         }
         this.dailyTimeSheetRepository.update(updateObject);
 
@@ -47,7 +49,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     public void delete(UUID id) throws Exception {
         var foundDailyTimeSheet = this.dailyTimeSheetRepository.findById(id);
         if (!foundDailyTimeSheet.isPresent()) {
-            throw new RuntimeException("Non-existent dailyTimeSheet");
+            throw new InvalidKeyException("Non-existing dailyTimeSheet");
         }
         this.dailyTimeSheetRepository.remove(id);
     }
@@ -70,7 +72,7 @@ public class DailyTimeSheetService implements BaseService<DailyTimeSheet, UUID> 
     public Optional<DailyTimeSheet> findByEmployeeAndData(String employeeId, Date date) throws Exception {
         Employee employee = this.employeeService.findById(employeeId);
         if (employee == null) {
-            throw new RuntimeException("Non-existing employeeId");
+            throw new InvalidKeyException("Non-existing dailyTimeSheet");
         }
         return this.dailyTimeSheetRepository.findByEmployeeAndDay(employee, date);
     }

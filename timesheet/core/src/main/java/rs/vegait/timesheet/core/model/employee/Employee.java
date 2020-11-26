@@ -92,7 +92,7 @@ public class Employee {
 
     public Employee resetPassword(String password, String repeatedPassword, HashingAlgorithm hashingAlgorithm) {
         if (!password.equals(repeatedPassword)) {
-            throw new RuntimeException("Not same password");
+            throw new IllegalArgumentException("Not same password");
         }
 
         return new Employee(this.id, this.name, this.username, Optional.of(new RawPassword(password, hashingAlgorithm)), this.emailAddress, this.requiredHoursPerWeek, this.status, this.role, true);

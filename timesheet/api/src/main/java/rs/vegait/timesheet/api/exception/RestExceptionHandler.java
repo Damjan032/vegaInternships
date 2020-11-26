@@ -1,24 +1,40 @@
 package rs.vegait.timesheet.api.exception;
 
-//@ControllerAdvice
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.management.InstanceAlreadyExistsException;
+import java.security.InvalidKeyException;
+import java.sql.SQLIntegrityConstraintViolationException;
+
+@ControllerAdvice
 public class RestExceptionHandler {
 
-
-   /* @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorMessages> processRuntimeException(RuntimeException ex) {
-        return new ResponseEntity<>(new BadRequestException(ex.getMessage()).getErrorMessages(),
-                HttpStatus.NOT_FOUND);
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)//Foreign key
+    public ResponseEntity<ErrorMessages> processSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+        return new ResponseEntity<>(new ErrorMessages(409, "Conflict", ex.getMessage()),
+                HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ErrorMessages> processSQLException(SQLException ex) {
-        return new ResponseEntity<>(new NotFoundException(ex.getMessage()).getErrorMessages()
-                , HttpStatus.NOT_FOUND);
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorMessages> processIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(new ErrorMessages(400, "Bad request", ex.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorMessages> processNotFoundException(NotFoundException ex) {
-        return new ResponseEntity<>(ex.getErrorMessages(), HttpStatus.NOT_FOUND);
-    }*/
+    @ExceptionHandler(InstanceAlreadyExistsException.class)
+    public ResponseEntity<ErrorMessages> processInstanceAlreadyExistsException(InstanceAlreadyExistsException ex) {
+        return new ResponseEntity<>(new ErrorMessages(409, "Conflict", ex.getMessage()),
+                HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidKeyException.class)
+    public ResponseEntity<ErrorMessages> processInvalidKeyException(InvalidKeyException ex) {
+        return new ResponseEntity<>(new ErrorMessages(400, "Bad request", ex.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
 
 }

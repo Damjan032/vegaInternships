@@ -22,14 +22,6 @@ public class DailyTimeSheetFactory {
         this.sdf = new SimpleDateFormat("yyyy-MM-dd");
     }
 
-//    public DailyTimeSheet fromDto(EmployeeDto employeeDto, DailyTimeSheetDto dailyTimeSheetDto) {
-//        return new DailyTimeSheet(
-//                UUID.randomUUID(),
-//                this.employeeFactory.createFromDto(UUID.fromString(employeeDto.getId()), employeeDto),
-//                dailyTimeSheetDto.getDay(),
-//                this.timeSheetFactory.toList(dailyTimeSheetDto.getTimeSheetDtoList()));
-//    }
-
     public DailyTimeSheetDto toDto(DailyTimeSheet dailyTimeSheet) {
         return new DailyTimeSheetDto(
                 this.sdf.format(dailyTimeSheet.day()),

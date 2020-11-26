@@ -19,6 +19,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
+
 @RequestMapping(value = "api/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -33,13 +34,14 @@ public class EmployeeController {
         this.hashingAlgorithm = hashingAlgorithm;
     }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<EmployeeDto>> getAll() throws Exception {
         Iterable<Employee> employees = this.employeeRepository.findAll();
         return new ResponseEntity<>(employeeFactory.toListDto(employees), HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@RequestBody EmployeeDto employeeDto) throws Exception {
         Employee newEmployee = this.employeeFactory.createFromDto(UUID.randomUUID(), employeeDto);
@@ -50,6 +52,7 @@ public class EmployeeController {
         return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeDto> update(@PathVariable("id") String id, @RequestBody EmployeeDto employeeDto) throws Exception {
         Employee employeeToUpdate = this.employeeFactory.createFromDto(UUID.fromString(id), employeeDto);

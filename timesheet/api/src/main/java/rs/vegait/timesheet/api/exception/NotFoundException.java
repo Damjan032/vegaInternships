@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,12 +13,7 @@ public class NotFoundException extends RuntimeException {
     private ErrorMessages errorMessages;
 
     public NotFoundException(String msg) {
-        List<String> msgs = new ArrayList<>();
-        msgs.add(msg);
-        this.errorMessages = new ErrorMessages(404, "Not Found", msgs);
+        this.errorMessages = new ErrorMessages(404, "Not Found", msg);
     }
 
-    public NotFoundException(List<String> msgs) {
-        this.errorMessages = new ErrorMessages(404, "Not Found", msgs);
-    }
 }

@@ -6,6 +6,9 @@ import rs.vegait.timesheet.core.model.Page;
 import rs.vegait.timesheet.core.model.project.Project;
 import rs.vegait.timesheet.core.repository.ProjectRepository;
 
+import javax.management.InstanceAlreadyExistsException;
+import javax.naming.ConfigurationException;
+import java.security.InvalidKeyException;
 import java.util.UUID;
 
 @Component
@@ -21,7 +24,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     public void create(Project project) throws Exception {
         var foundProject = this.projectRepository.findById(project.id());
         if (foundProject.isPresent()) {
-            throw new RuntimeException("Already exists with same id");
+            throw new InstanceAlreadyExistsException("Already exists project with same id");
         }
 
         this.projectRepository.add(project);
@@ -31,7 +34,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     public void update(Project updateObject) throws Exception {
         var foundProject = this.projectRepository.findById(updateObject.id());
         if (!foundProject.isPresent()) {
-            throw new RuntimeException("Non-existent project");
+            throw new InvalidKeyException("Non-existent project");
         }
         this.projectRepository.update(updateObject);
 
@@ -41,7 +44,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     public void delete(UUID id) throws Exception {
         var foundProject = this.projectRepository.findById(id);
         if (!foundProject.isPresent()) {
-            throw new RuntimeException("Non-existent project");
+            throw new InvalidKeyException("Non-existent project");
         }
         this.projectRepository.remove(id);
     }
@@ -53,7 +56,7 @@ public class ProjectService implements BaseService<Project, UUID> {
     public Project findById(String id) throws Exception {
         var foundProject = this.projectRepository.findById(UUID.fromString(id));
         if (!foundProject.isPresent()) {
-            throw new RuntimeException("Non-existent project");
+            throw new InvalidKeyException("Non-existent project");
         }
         return foundProject.get();
     }

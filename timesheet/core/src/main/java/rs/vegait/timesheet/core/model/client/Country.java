@@ -3,11 +3,11 @@ package rs.vegait.timesheet.core.model.client;
 import java.util.Objects;
 
 public class Country {
-    private String name;
+    private final String name;
 
     public Country(String name) {
         if (name == null)
-            throw new ExceptionInInitializerError();
+            throw new IllegalArgumentException("Country name is not in valid format");
         this.name = name;
     }
 

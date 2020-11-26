@@ -4,8 +4,8 @@ public class Username {
     public String username;
 
     public Username(String username) {
-        if (username == null) {
-            throw new ExceptionInInitializerError();
+        if (username == null || username.length()<5) {
+            throw new IllegalArgumentException("Username is not valid ");
         }
         this.username = username;
     }

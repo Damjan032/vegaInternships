@@ -10,7 +10,7 @@ public class Category {
 
     public Category(UUID id, @NotNull String name) {
         if (id == null || name == null || name.trim().equals("")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Category name is not in correct format");
         }
         this.id = id;
         this.name = name;

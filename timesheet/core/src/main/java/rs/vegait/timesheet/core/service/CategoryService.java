@@ -7,6 +7,8 @@ import rs.vegait.timesheet.core.model.project.Category;
 import rs.vegait.timesheet.core.repository.CategoryRepository;
 import rs.vegait.timesheet.core.repository.ProjectRepository;
 
+import javax.management.InstanceAlreadyExistsException;
+import java.security.InvalidKeyException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,10 +27,10 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     public void create(Category category) throws Exception {
         var foundCategory = this.categoryRepository.findById(category.id());
         if (foundCategory.isPresent()) {
-            throw new RuntimeException("Already exists with same id");
+            throw new InstanceAlreadyExistsException("Already exists with same id");
         }
         if (this.categoryRepository.findByName(category.name()).isPresent()) {
-            throw new RuntimeException("Already exists employee  with same name");
+            throw new InstanceAlreadyExistsException("Already exists employee  with same name");
         }
         this.categoryRepository.add(category);
     }
@@ -37,12 +39,12 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     public void update(Category updateObject) throws Exception {
         var foundCategory = this.categoryRepository.findById(updateObject.id());
         if (!foundCategory.isPresent()) {
-            throw new RuntimeException("Non-exists");
+            throw new InvalidKeyException("Non-exists category");
         }
         Optional<Category> sameField = this.categoryRepository.findByName(updateObject.name());
         if (sameField.isPresent()) {
             if (!sameField.get().id().equals(updateObject.id()))
-                throw new RuntimeException("Already exists category with same name");
+                throw new InstanceAlreadyExistsException("Already exists category with same name");
         }
         this.categoryRepository.update(updateObject);
 
@@ -52,7 +54,7 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     public void delete(UUID id) throws Exception {
         var foundCategory = this.categoryRepository.findById(id);
         if (!foundCategory.isPresent()) {
-            throw new RuntimeException("Non-existent category");
+            throw new InvalidKeyException("Non-existent category");
         }
 
         this.categoryRepository.remove(id);
@@ -65,7 +67,7 @@ public class CategoryService implements rs.vegait.timesheet.core.service.BaseSer
     public Category findById(String id) throws Exception {
         var found = this.categoryRepository.findById(UUID.fromString(id));
         if (!found.isPresent()) {
-            throw new RuntimeException("Non-existent category");
+            throw new InvalidKeyException("Non-existent category");
         }
         return found.get();
     }

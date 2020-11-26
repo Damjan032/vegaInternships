@@ -3,10 +3,12 @@ package rs.vegait.timesheet.core.model.client;
 import java.util.Objects;
 
 public class Street {
-    private String name;
-    private String number;
+    private final String name;
+    private final String number;
 
     public Street(String name, String number) {
+        if (name == null || name.trim().length()==0)
+            throw new IllegalArgumentException("Street name is not in valid format");
         this.name = name;
         this.number = number;
     }

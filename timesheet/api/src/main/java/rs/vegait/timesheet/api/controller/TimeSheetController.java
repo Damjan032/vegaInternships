@@ -15,6 +15,7 @@ import rs.vegait.timesheet.core.repository.EmployeeRepository;
 import rs.vegait.timesheet.core.service.DailyTimeSheetService;
 
 import javax.websocket.server.PathParam;
+import java.security.InvalidKeyException;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class TimeSheetController {
             this.dailyTimeSheetService.createOrUpdate(dailyTimeSheet,
                     employee.get());
 
-        }
+        } else throw new InvalidKeyException("Invalid employeeId");
         Optional<DailyTimeSheet> dailyTimeSheet = this.dailyTimeSheetService.findByEmployeeAndData(employeeId, sdf.parse(dailyTimeSheetDto.getDay()));
         return new ResponseEntity<>(this.dailyTimeSheetFactory.toDto(dailyTimeSheet.get()), HttpStatus.OK);
     }
