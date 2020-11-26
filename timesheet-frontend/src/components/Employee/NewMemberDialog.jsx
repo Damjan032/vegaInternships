@@ -7,49 +7,47 @@ import {addEmployeeAction} from "../../store/actions/employees/employeesActions"
 export default function NewMemberDialog(props) {
     const [employee, setEmployee] = useState({
         name: '',
-        email: '',
-        password: null,
         username: '',
-        hoursWeekly: '',
-        type: 1,
-        isActive: true,
+        email: '',
+        hoursPerWeek: '',
+        role: "WORKER",
+        status: "ACTIVE",
+        accepted: false,
     });
+
     const {handleSubmit, register, errors} = useForm();
     const {onClose, open} = props;
-
     const dispatch = useDispatch();
 
     const inputChanged = (event) => {
-        let inputValue;
-
-        switch (event.target.name) {
-            case "isActive":
-                inputValue = (event.target.value === 'true')
-                break;
-            case "type":
-                inputValue = parseInt(event.target.value);
-                break;
-            case "hoursWeekly":
-                inputValue = parseInt(event.target.value);
-                break;
-            default:
-                inputValue = event.target.value;
-        }
-
         setEmployee({
             ...employee,
-            [event.target.name]: inputValue,
+            [event.target.name]: event.target.value,
         });
-    };
+        if (event.target.name === "isActive") {
+            setEmployee({
+                ...employee,
+                status: event.target.value === "true" ? "ACTIVE" : "INACTIVE",
+            });
+        }
+        if (event.target.name === "type") {
+            setEmployee({
+                ...employee,
+                role: event.target.value === "WORKER" ? "WORKER" : "ADMIN",
+            });
+        }
+    }
+
     const saveEmployee = () => {
         dispatch(addEmployeeAction(employee));
         setEmployee({
             name: '',
-            email: '',
             username: '',
-            hoursWeekly: '',
-            type: 1,
-            isActive: true,
+            email: '',
+            hoursPerWeek: '',
+            role: "WORKER",
+            status: "ACTIVE",
+            accepted: false,
         });
         onClose();
     };
@@ -80,8 +78,8 @@ export default function NewMemberDialog(props) {
                                 <input
                                     type="number"
                                     className="in-text"
-                                    name="hoursWeekly"
-                                    value={employee.hoursWeekly}
+                                    name="hoursPerWeek"
+                                    value={employee.hoursPerWeek}
                                     ref={register({
                                         required: 'Hours per week are required',
                                         pattern: {
@@ -91,7 +89,8 @@ export default function NewMemberDialog(props) {
                                     })}
                                     onChange={inputChanged}
                                 />
-                                <span className="input-error">{errors.hoursWeekly && errors.hoursWeekly.message}</span>
+                                <span
+                                    className="input-error">{errors.hoursPerWeek && errors.hoursPerWeek.message}</span>
 
                             </li>
                             <li>
@@ -135,14 +134,14 @@ export default function NewMemberDialog(props) {
                             <li className="inline">
                                 <label>Status:</label>
                                 <span className="radio">
-                  <label>InisActive:</label>
+                  <label>Inactive:</label>
                   <input
                       type="radio"
                       value={false}
                       name="isActive"
-                      id="inisActive"
+                      id="inactive"
                       ref={register({required: 'Status is required'})}
-                      checked={!employee.isActive}
+                      checked={employee.status !== "ACTIVE"}
                       onChange={inputChanged}
                   />
                 </span>
@@ -152,9 +151,9 @@ export default function NewMemberDialog(props) {
                       type="radio"
                       value={true}
                       name="isActive"
-                      id="isActive"
+                      id="active"
                       ref={register({required: 'Status is required'})}
-                      checked={employee.isActive}
+                      checked={employee.status === "ACTIVE"}
                       onChange={inputChanged}
                   />
                 </span>
@@ -167,11 +166,11 @@ export default function NewMemberDialog(props) {
                   <label>Admin:</label>
                   <input
                       type="radio"
-                      value="0"
+                      value="ADMIN"
                       name="type"
                       id="admin"
                       ref={register({required: 'Role is required'})}
-                      checked={employee.type === 0}
+                      checked={employee.role === "ADMIN"}
                       onChange={inputChanged}
                   />
                 </span>
@@ -179,11 +178,11 @@ export default function NewMemberDialog(props) {
                   <label>Worker:</label>
                   <input
                       type="radio"
-                      value="1"
+                      value="WORKER"
                       name="type"
                       id="worker"
                       ref={register({required: 'Role is required'})}
-                      checked={employee.type === 1}
+                      checked={employee.role !== "ADMIN"}
                       onChange={inputChanged}
                   />
                 </span>

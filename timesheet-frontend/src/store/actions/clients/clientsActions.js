@@ -13,9 +13,9 @@ export const getAllClientsAction = () => async dispatch => {
 
 export const addClientAction = client => async dispatch => {
     await axios.post('/clients', client).then((response) => {
-        console.log(response.data.split("/clients/")[1])
-        console.log(client)
-        let clientNew = {id:response.data.split("/clients/")[1],
+        console.log(response.headers.location.split("/clients/")[1])
+        console.log(response)
+        let clientNew = {id:response.headers.location.split("/clients/")[1],
             city: client.city,
             country: client.country,
             name: client.name,
@@ -35,8 +35,7 @@ export const deleteClientAction = clientId => async dispatch => {
 };
 
 export const updateClientAction = client => async dispatch => {
-    await axios.put(`/clients`, client);
-    console.log(client)
+    await axios.put(`/clients/${client.id}`, client);
     dispatch(updateClientActionCreator(client));
 };
 

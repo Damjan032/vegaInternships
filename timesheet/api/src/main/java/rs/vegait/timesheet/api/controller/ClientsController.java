@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.api.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,12 @@ import rs.vegait.timesheet.core.model.client.Client;
 import rs.vegait.timesheet.core.service.ClientService;
 
 import javax.websocket.server.PathParam;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(value = "api/clients")
 public class ClientsController {
     private final ClientService clientService;
@@ -35,16 +36,17 @@ public class ClientsController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> add(@RequestBody ClientDto clientDto) throws Exception {
+    public ResponseEntity<Void> add(@RequestBody ClientDto clientDto) throws Exception {
         Client newClient = clientFactory.createFromDto(UUID.randomUUID(), clientDto);
         clientService.create(newClient);
-
-;
-        return new ResponseEntity<>("api/clients/" + newClient.id(), HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("api/clients/" + newClient.id()));
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClientDto> update(@RequestBody ClientDto clientDto) throws Exception {
-        Client newClient = clientFactory.createFromDto(UUID.fromString(clientDto.getId()), clientDto);
+
+    @PutMapping(path = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClientDto> update(@PathVariable String id, @RequestBody ClientDto clientDto) throws Exception {
+        Client newClient = clientFactory.createFromDto(UUID.fromString(id), clientDto);
         clientService.update(newClient);
         return new ResponseEntity<>(clientDto, HttpStatus.OK);
     }

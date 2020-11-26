@@ -12,9 +12,18 @@ export const getAllEmployeesAction = () => async dispatch => {
 };
 
 export const addEmployeeAction = employee => async dispatch => {
-    const {data} = await axios.post('/employees', employee);
+    console.log(employee)
+    await axios.post('/employees', employee).then((response) => {
+        console.log(response.data.split("/employees/")[1])
+        console.log(employee)
+        let employeeNew = {...employee,id:response.data.split("/clients/")[1]}
 
-    dispatch(addEmployeeCreator(data));
+        console.log(employeeNew);
+        dispatch(addEmployeeCreator(employeeNew));
+    }).catch(error => {
+        console.log(error);
+    });
+    //dispatch(addEmployeeCreator(data));
 
 
 };
@@ -25,6 +34,7 @@ export const deleteEmployeeAction = employeeId => async dispatch => {
 };
 
 export const updateEmployeeAction = employee => async dispatch => {
-    await axios.put(`/employees`, employee);
+    console.log(employee)
+    await axios.put(`/employees/${employee.id}`, employee);
     dispatch(updateEmployeeCreator(employee));
 };

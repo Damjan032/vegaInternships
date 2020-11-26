@@ -10,7 +10,6 @@ export function clients(state = [], action) {
       return state.filter(item => item.id !== action.clientId);
 
     case 'UPDATE_CLIENT':
-
       state = [
         ...state.filter(c => c.id !== action.client.id),
         action.client

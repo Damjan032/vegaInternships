@@ -12,7 +12,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @ControllerAdvice
 public class RestExceptionHandler {
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)//Foreign key
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<ErrorMessages> processSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
         return new ResponseEntity<>(new ErrorMessages(409, "Conflict", ex.getMessage()),
                 HttpStatus.CONFLICT);

@@ -1,6 +1,5 @@
 package rs.vegait.timesheet.api.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +14,9 @@ import rs.vegait.timesheet.core.repository.EmployeeRepository;
 import rs.vegait.timesheet.core.service.EmployeeService;
 
 import javax.websocket.server.PathParam;
-import java.net.URI;
 import java.util.UUID;
 
 @RestController
-
 @RequestMapping(value = "api/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -34,27 +31,22 @@ public class EmployeeController {
         this.hashingAlgorithm = hashingAlgorithm;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<EmployeeDto>> getAll() throws Exception {
         Iterable<Employee> employees = this.employeeRepository.findAll();
         return new ResponseEntity<>(employeeFactory.toListDto(employees), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create(@RequestBody EmployeeDto employeeDto) throws Exception {
+    public ResponseEntity<String> create(@RequestBody EmployeeDto employeeDto) throws Exception {
         Employee newEmployee = this.employeeFactory.createFromDto(UUID.randomUUID(), employeeDto);
         employeeService.create(newEmployee);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("api/employees/" + newEmployee.id()));
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        return new ResponseEntity<>("api/employees/" + newEmployee.id(), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeDto> update(@PathVariable("id") String id, @RequestBody EmployeeDto employeeDto) throws Exception {
+    @PutMapping(path = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EmployeeDto> update(@PathVariable String id, @RequestBody EmployeeDto employeeDto) throws Exception {
         Employee employeeToUpdate = this.employeeFactory.createFromDto(UUID.fromString(id), employeeDto);
         employeeService.update(employeeToUpdate);
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);

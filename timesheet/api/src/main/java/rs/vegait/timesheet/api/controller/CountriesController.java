@@ -2,7 +2,6 @@ package rs.vegait.timesheet.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ import rs.vegait.timesheet.api.factory.CountryFactory;
 import rs.vegait.timesheet.core.repository.ClientRepository;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(value = "api/countries")
 public class CountriesController {
 

@@ -1,7 +1,6 @@
 package rs.vegait.timesheet.api.factory;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import rs.vegait.timesheet.api.dto.ClientDto;
 import rs.vegait.timesheet.api.dto.PageDto;
 import rs.vegait.timesheet.core.model.Page;

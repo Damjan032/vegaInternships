@@ -14,7 +14,7 @@ export default function Client(props) {
     dispatch(deleteClientAction(id));
   }
 
-  const [newClient, setClientNewClient] = useState({
+  const [client, setClient] = useState({
     id: props.client.id,
     name: props.client.name,
     street: props.client.street,
@@ -24,13 +24,13 @@ export default function Client(props) {
   });
 
   function updateClient() {
-    dispatch(updateClientAction(newClient));
+    dispatch(updateClientAction(client));
   }
 
 
   function inputChanged(event) {
-    setClientNewClient({
-      ...newClient,
+    setClient({
+      ...client,
       [event.target.name]: event.target.value,
     });
   }
@@ -38,7 +38,7 @@ export default function Client(props) {
   return (
       <div className="item">
         <div className="heading" onClick={() => setIsEditing(!isEditing)}>
-          <span>{newClient.name}</span>
+          <span>{client.name}</span>
           <i>+</i>
         </div>
         {isEditing && <div className="details">
@@ -49,7 +49,7 @@ export default function Client(props) {
                 <input
                     type="text"
                     className="in-text"
-                    value={newClient.name}
+                    value={client.name}
                     name="name"
                     ref={register({
                       required: 'Name is required'
@@ -63,7 +63,7 @@ export default function Client(props) {
                 <input
                     type="text"
                     className="in-text"
-                    value={newClient.zipCode}
+                    value={client.zipCode}
                     name="zipCode"
                     onChange={inputChanged}
                 />
@@ -75,15 +75,15 @@ export default function Client(props) {
                 <input
                     type="text"
                     className="in-text"
-                    value={newClient.street}
+                    value={client.street}
                     name="street"
                     onChange={inputChanged}
                 />
               </li>
               <li>
                 <label>Country:</label>
-                <CountrySelection value={newClient.country}
-                                  onChange={e => newClient.country = e.target.value}/>
+                <CountrySelection value={client.country}
+                                  onChange={e => client.country = e.target.value}/>
               </li>
             </ul>
             <ul className="form last">
@@ -92,7 +92,7 @@ export default function Client(props) {
                 <input
                     type="text"
                     className="in-text"
-                    value={newClient.city}
+                    value={client.city}
                     name="city"
                     onChange={inputChanged}
                 />
@@ -108,7 +108,7 @@ export default function Client(props) {
                 <button
                     type="button"
                     className="btn red"
-                    onClick={() => deleteClient(newClient.id)}
+                    onClick={() => deleteClient(client.id)}
                 >Delete
                 </button>
               </div>

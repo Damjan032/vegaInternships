@@ -12,7 +12,8 @@ export default function Employee(props) {
     email: props.employee.email,
     hoursPerWeek: props.employee.hoursPerWeek,
     role: props.employee.role,
-    status: props.employee.status
+    status: props.employee.status,
+    accepted:props.employee.accepted
   });
 
   const {handleSubmit} = useForm();
@@ -46,7 +47,6 @@ export default function Employee(props) {
       });
     }
   }
-  console.log(employee);
 
   return (
       <div className="item">
