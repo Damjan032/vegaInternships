@@ -26,6 +26,7 @@ public class ProjectFactory implements Factory<ProjectDto, Project> {
     public Project createFromDto(UUID id, ProjectDto projectDto) {
         ProjectDescription projectDescription = new ProjectDescription("description");
         Optional<ProjectDescription> optionalProjectDescription;
+
         if (projectDto.getDescription() == null || projectDto.getDescription().trim().equalsIgnoreCase(""))
             optionalProjectDescription = Optional.empty();
         else

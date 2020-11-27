@@ -43,9 +43,9 @@ public class ProjectController {
         return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectDto> update(@RequestBody ProjectDto projectDto) throws Exception {
-        Project newProject = projectFactory.createFromDto(UUID.fromString(projectDto.getId()), projectDto);
+    @PutMapping(path="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProjectDto> update(@PathVariable String id, @RequestBody ProjectDto projectDto) throws Exception {
+        Project newProject = projectFactory.createFromDto(UUID.fromString(id), projectDto);
         projectService.update(newProject);
         return new ResponseEntity<>(projectDto, HttpStatus.OK);
     }

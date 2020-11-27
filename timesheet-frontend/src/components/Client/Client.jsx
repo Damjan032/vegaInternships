@@ -82,8 +82,8 @@ export default function Client(props) {
               </li>
               <li>
                 <label>Country:</label>
-                <CountrySelection value={client.country}
-                                  onChange={e => client.country = e.target.value}/>
+                <CountrySelection name="country" value={client.country}
+                                  onChange={inputChanged}/>
               </li>
             </ul>
             <ul className="form last">

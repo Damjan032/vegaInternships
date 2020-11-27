@@ -26,5 +26,4 @@ public class EmployeeDto {
     private EmployeeStatus status;
     @NotNull
     private boolean accepted;
-    ;
 }

@@ -1,7 +1,9 @@
 import {getAllCountries} from './countriesActionCreator';
-import axios from '../../../axios';
+import {getAllCountriesFromRepository} from "../../repositories/countriesRepository";
 
-export const getAllCountriesAction = () => async (dispatch) => {
-    const {data} = await axios.get('/countries');
-    dispatch(getAllCountries(data));
+export const getAllCountriesAction = () => async (dispatch) =>{
+    getAllCountriesFromRepository().then((result) => {
+        dispatch(getAllCountries(result.data));
+    });
+
 };

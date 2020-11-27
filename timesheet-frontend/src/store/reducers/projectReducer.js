@@ -11,8 +11,8 @@ export function projects(state = [], action) {
 
         case 'UPDATE_PROJECT':
             state = [
-                ...state.filter(c => c.id !== action.project.id),
-                action.project
+                ...state.filter(c => c.id !== action.projects.id),
+                action.projects
             ];
 
             return state;

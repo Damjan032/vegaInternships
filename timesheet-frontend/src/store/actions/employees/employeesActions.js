@@ -4,37 +4,39 @@ import {
     getAllEmployeesCreator,
     updateEmployeeCreator,
 } from './employeesActionCreator';
-import axios from '../../../axios';
+
+import {
+    addEmployeeInRepository,
+    deleteEmployeeFromRepository,
+    getAllEmployeesFromRepository,
+    updateEmployeeInRepository
+} from "../../repositories/employeeRepository";
 
 export const getAllEmployeesAction = () => async dispatch => {
-    const {data} = await axios.get('/employees');
-    dispatch(getAllEmployeesCreator(data));
+    getAllEmployeesFromRepository().then((employees) => {
+        dispatch(getAllEmployeesCreator(employees));
+    });
 };
 
 export const addEmployeeAction = employee => async dispatch => {
-    console.log(employee)
-    await axios.post('/employees', employee).then((response) => {
-        console.log(response.data.split("/employees/")[1])
-        console.log(employee)
-        let employeeNew = {...employee,id:response.data.split("/clients/")[1]}
-
-        console.log(employeeNew);
-        dispatch(addEmployeeCreator(employeeNew));
-    }).catch(error => {
-        console.log(error);
+    addEmployeeInRepository(employee).then((headers) => {
+        dispatch(addEmployeeCreator({
+            id: headers.location.split("/employees/")[1],
+            ...employee
+        }));
     });
-    //dispatch(addEmployeeCreator(data));
-
-
 };
 
 export const deleteEmployeeAction = employeeId => async dispatch => {
-    await axios.delete(`/employees/${employeeId}`);
-    dispatch(deleteEmployeeCreator(employeeId));
+    deleteEmployeeFromRepository(employeeId).then(
+        dispatch(deleteEmployeeCreator(employeeId))
+    )
 };
 
 export const updateEmployeeAction = employee => async dispatch => {
-    console.log(employee)
-    await axios.put(`/employees/${employee.id}`, employee);
-    dispatch(updateEmployeeCreator(employee));
+    updateEmployeeInRepository(employee).then(
+        dispatch(updateEmployeeCreator(employee))
+    )
 };
+
+

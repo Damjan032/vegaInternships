@@ -4,39 +4,39 @@ import {
     getAllClientCreator,
     updateClientActionCreator,
 } from './clientsActionsCreator';
-import axios from '../../../axios';
+
+import {
+    addClientInRepository,
+    deleteClientFromRepository,
+    getAllClientsFromRepository,
+    updateClientInRepository
+} from "../../repositories/clientsRepository";
 
 export const getAllClientsAction = () => async dispatch => {
-    const {data} = await axios.get('/clients');
-    dispatch(getAllClientCreator(data));
+    getAllClientsFromRepository().then((clients) => {
+        dispatch(getAllClientCreator(clients));
+    });
 };
 
 export const addClientAction = client => async dispatch => {
-    await axios.post('/clients', client).then((response) => {
-        console.log(response.headers.location.split("/clients/")[1])
-        console.log(response)
-        let clientNew = {id:response.headers.location.split("/clients/")[1],
-            city: client.city,
-            country: client.country,
-            name: client.name,
-            street: client.street,
-            zipCode:client.zipCode}
-        console.log(clientNew);
-        dispatch(addClientCreator(clientNew));
-    }).catch(error => {
-        console.log(error);
+    addClientInRepository(client).then((result) => {
+        dispatch(addClientCreator({
+            id: result.headers.location.split("/clients/")[1],
+            ...client
+        }));
     });
-
 };
 
 export const deleteClientAction = clientId => async dispatch => {
-    await axios.delete(`/clients/${clientId}`);
-    dispatch(deleteClientCreator(clientId));
+    deleteClientFromRepository(clientId).then(
+        dispatch(deleteClientCreator(clientId))
+    )
 };
 
 export const updateClientAction = client => async dispatch => {
-    await axios.put(`/clients/${client.id}`, client);
-    dispatch(updateClientActionCreator(client));
+    updateClientInRepository(client).then(
+        dispatch(updateClientActionCreator(client))
+    )
 };
 
 

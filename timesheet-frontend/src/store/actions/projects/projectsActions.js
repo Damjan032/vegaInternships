@@ -3,28 +3,40 @@ import {
     deleteProjectCreator,
     getAllProjectsCreator,
     updateProjectCreator,
-} from './projectsActionCreator';
-import axios from '../../../axios';
+} from './projectsActionsCreator';
+
+import {
+    addProjectInRepository,
+    deleteProjectFromRepository,
+    getAllProjectsFromRepository,
+    updateProjectInRepository
+} from "../../repositories/projectRepository";
 
 export const getAllProjectsAction = () => async dispatch => {
-    const {data} = await axios.get('/projects');
-    dispatch(getAllProjectsCreator(data));
+    getAllProjectsFromRepository().then((projects) => {
+        dispatch(getAllProjectsCreator(projects));
+    });
 };
 
 export const addProjectAction = project => async dispatch => {
-    const {data} = await axios.post('/projects', project);
-
-    dispatch(addProjectCreator(data));
-
-
+    addProjectInRepository(project).then((headers) => {
+        dispatch(addProjectCreator({
+            id: headers.location.split("/projects/")[1],
+            ...project
+        }));
+    });
 };
 
 export const deleteProjectAction = projectId => async dispatch => {
-    await axios.delete(`/projects/${projectId}`);
-    dispatch(deleteProjectCreator(projectId));
+    deleteProjectFromRepository(projectId).then(
+        dispatch(deleteProjectCreator(projectId))
+    )
 };
 
 export const updateProjectAction = project => async dispatch => {
-    await axios.put(`/projects`, project);
-    dispatch(updateProjectCreator(project));
+    updateProjectInRepository(project).then(
+        dispatch(updateProjectCreator(project))
+    )
 };
+
+
