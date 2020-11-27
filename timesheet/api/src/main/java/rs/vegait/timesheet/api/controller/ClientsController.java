@@ -52,7 +52,7 @@ public class ClientsController {
     }
 
 
-    @GetMapping(path = "/search")
+    @GetMapping(path = "/page")
     public ResponseEntity<PageDto<ClientDto>> getPage(
             @PathParam("pageNumber") Integer pageNumber,
             @PathParam("pageSize") Integer pageSize,

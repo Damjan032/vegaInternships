@@ -7,11 +7,18 @@ import {useForm} from "react-hook-form";
 export default function Client(props) {
   const {handleSubmit, register, errors} = useForm();
   const [isEditing, setIsEditing] = useState(false);
-
+  const onDeleteOrUpdate = props.onDeleteOrUpdate;
+  // console.log("Client")
+  // console.log(onDelete)
   const dispatch = useDispatch();
 
-  function deleteClient(id) {
+  async function deleteClient(id) {
     dispatch(deleteClientAction(id));
+    console.log(id);
+    setTimeout(
+        () => onDeleteOrUpdate(),
+        500
+    );
   }
 
   const [client, setClient] = useState({
@@ -25,6 +32,10 @@ export default function Client(props) {
 
   function updateClient() {
     dispatch(updateClientAction(client));
+    setTimeout(
+        () => onDeleteOrUpdate(),
+        500
+    );
   }
 
 

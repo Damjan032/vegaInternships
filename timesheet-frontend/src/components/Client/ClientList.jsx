@@ -1,15 +1,14 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import Client from "./Client";
 
 
 export default function ClientList(props) {
-    const clients = useSelector(state => state.clients);
 
+    const {clients, onDelete} = props;
     return (
-        <div className="accordion-wrap clients">
+        <div className="accordion-wrap clientPages">
             {clients.map(client => (
-                <Client key={client.id} client={client}/>
+                <Client onDeleteOrUpdate={onDelete} key={client.id} client={client}/>
             ))}
         </div>
     );

@@ -1,12 +1,12 @@
 package rs.vegait.timesheet.core.model;
 
 public class Page<T> {
-    private Iterable<T> items;
-    private int pageSize;
-    private int pageNumber;
-    private int totalItems;
+    private final Iterable<T> items;
+    private final int pageSize;
+    private final int pageNumber;
+    private final int totalItems;
 
-    public Page(Iterable<T> items, int pageSize, int pageNumber, int totalItems) {
+    public Page(Iterable<T> items, int pageNumber, int pageSize, int totalItems) {
         this.items = items;
         this.pageSize = pageSize;
         this.pageNumber = pageNumber;

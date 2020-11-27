@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class PageDto<T> {
     @NotBlank
-    private Iterable<T> iterable;
+    private Iterable<T> items;
     @NotBlank
     private int pageNumber;
 
@@ -18,7 +18,7 @@ public class PageDto<T> {
     private int totalSize;
 
     public PageDto(Iterable<T> items, int pageNumber, int pageSize, int totalSize) {
-        this.iterable = items;
+        this.items = items;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.totalSize = totalSize;

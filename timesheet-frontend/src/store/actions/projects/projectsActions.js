@@ -18,6 +18,7 @@ export const getAllProjectsAction = () => async dispatch => {
     });
 };
 
+
 export const addProjectAction = project => async dispatch => {
     addProjectInRepository(project).then((headers) => {
         dispatch(addProjectCreator({

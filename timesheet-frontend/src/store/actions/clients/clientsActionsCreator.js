@@ -13,6 +13,11 @@ export const getAllClientCreator = clients => ({
     clients,
 });
 
+export const getPageOfClientCreator = page => ({
+    type: 'GET_PAGE_OF_CLIENTS',
+    page,
+});
+
 export const deleteClientCreator = clientId => ({
     type: 'DELETE_CLIENT',
     clientId,

@@ -2,6 +2,7 @@ import {
     addClientCreator,
     deleteClientCreator,
     getAllClientCreator,
+    getPageOfClientCreator,
     updateClientActionCreator,
 } from './clientsActionsCreator';
 
@@ -9,6 +10,7 @@ import {
     addClientInRepository,
     deleteClientFromRepository,
     getAllClientsFromRepository,
+    getPageClientsFromRepository,
     updateClientInRepository
 } from "../../repositories/clientsRepository";
 
@@ -18,12 +20,22 @@ export const getAllClientsAction = () => async dispatch => {
     });
 };
 
+export const getPageOfClientsAction = (pageNumber, letter, search) => async dispatch => {
+    getPageClientsFromRepository(pageNumber, letter, search).then((pages) => {
+        console.log("pages['iterable']")
+        console.log(search);
+        dispatch(getPageOfClientCreator(pages));
+    });
+};
+
 export const addClientAction = client => async dispatch => {
     addClientInRepository(client).then((result) => {
+        console.log(result);
         dispatch(addClientCreator({
-            id: result.headers.location.split("/clients/")[1],
+            id: result.location.split("/clients/")[1],
             ...client
         }));
+        getPageClientsFromRepository(1);
     });
 };
 

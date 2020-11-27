@@ -1,5 +1,6 @@
 package rs.vegait.timesheet.api.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import rs.vegait.timesheet.core.repository.EmployeeRepository;
 import rs.vegait.timesheet.core.service.EmployeeService;
 
 import javax.websocket.server.PathParam;
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -42,7 +44,9 @@ public class EmployeeController {
         Employee newEmployee = this.employeeFactory.createFromDto(UUID.randomUUID(), employeeDto);
         employeeService.create(newEmployee);
 
-        return new ResponseEntity<>("api/employees/" + newEmployee.id(), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("api/employees/" + newEmployee.id()));
+        return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     @PutMapping(path = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

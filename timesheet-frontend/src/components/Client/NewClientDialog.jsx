@@ -15,7 +15,7 @@ export default function NewClientDialog(props) {
         country: null,
     });
     const {handleSubmit, register, errors} = useForm();
-    const {onClose, open} = props;
+    const {onClose, open, onAdd} = props;
 
     const dispatch = useDispatch();
 
@@ -25,8 +25,8 @@ export default function NewClientDialog(props) {
             [event.target.name]: event.target.value,
         });
     };
-    const saveNewClient = () => {
-        dispatch(addClientAction(client));
+    const saveNewClient = async () => {
+        await dispatch(addClientAction(client));
         setClient({
             name: '',
             street: '',
@@ -34,7 +34,7 @@ export default function NewClientDialog(props) {
             zipCode: '',
             country: '',
         });
-
+        await onAdd();
         onClose();
     };
 

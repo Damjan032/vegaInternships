@@ -18,4 +18,19 @@ export async function updateClientInRepository(client) {
     await axios.put(`/clients/${client.id}`, client);
 }
 
+export async function getPageClientsFromRepository(pageNumber, letter, search) {
+    let letterParam = ''
+    if(letter!=='' && letter!==undefined && letter!=='cancel'){
+        letterParam = `&firstLetter=${letter}`;
+    }
+    let searchParam = ''
+    if(search!=='' && search!==undefined){
+        searchParam = `&searchString=${search}`;
+    }
+    console.log("getPageClientsFromRepository")
+    console.log(searchParam)
+    const {data} = await axios.get(`/clients/page?pageNumber=${pageNumber}&pageSize=5${letterParam}${searchParam}`);
+    return data;
+}
+
 

@@ -5,7 +5,6 @@ import Project from "./Project";
 
 export default function ProjectList(props) {
     const projects = useSelector(state => state.projects);
-    console.log(projects)
 
     return (
         <div className="accordion-wrap clients">

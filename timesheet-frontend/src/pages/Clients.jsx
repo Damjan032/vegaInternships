@@ -1,74 +1,88 @@
 import React, {useEffect, useState} from 'react';
 import NewClientDialog from "../components/Client/NewClientDialog";
-import {getAllClientsAction} from '../store/actions/clients/clientsActions';
+import {getPageOfClientsAction} from '../store/actions/clients/clientsActions';
 import {getAllCountriesAction} from '../store/actions/countries/countriesActions';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import LetterList from "../components/LetterList";
 import ClientList from "../components/Client/ClientList";
+import PaginationBar from "../components/PaginationBar";
+import SearchInput from "../components/SearchInput";
 
 
 export default function Clients() {
-  const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const [activeLetter, setActiveLetter] = useState('');
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const [activeLetter, setActiveLetter] = useState('');
+    const [searchString, setStringString] = useState('');
 
-  function dialogClosed() {
-    setIsDialogVisible(false);
-  }
+    function dialogClosed() {
+        setIsDialogVisible(false);
+    }
 
-  const dispatch = useDispatch();
+    const pageOfClients = useSelector(state => state.clientPages);
+    const dispatch = useDispatch();
+
+    const handleAddOrDelete = async () => {
+        setTimeout(() => {
+        }, 2000);
+        await dispatch(getPageOfClientsAction(pageOfClients.pageNumber, activeLetter, searchString));
+    };
+
+    const handlePropagationClick = (numberOfPage) => {
+        if (numberOfPage === "NEXT") {
+            dispatch(getPageOfClientsAction(++pageOfClients.pageNumber, activeLetter, searchString));
+        } else {
+            dispatch(getPageOfClientsAction(numberOfPage));
+            pageOfClients.pageNumber = numberOfPage;
+        }
+    };
+
+    async function handleSearch(event){
+        await setStringString(event.target.value);
+        setTimeout(() => {
+        }, 2000);
+        await dispatch(getPageOfClientsAction(pageOfClients.pageNumber, activeLetter, event.target.value));
+    }
+
+    async function letterClicked(letter) {
+        if (letter === "cancel") {
+            setActiveLetter('');
+        } else {
+            setActiveLetter(letter);
+        }
+        setTimeout(() => {
+        }, 2000);
+        await dispatch(getPageOfClientsAction(pageOfClients.pageNumber, letter, searchString));
+    }
+
+    useEffect(() => {
+        dispatch(getPageOfClientsAction(1));
+        dispatch(getAllCountriesAction());
+    }, [dispatch]);
 
 
-  useEffect(() => {
-    dispatch(getAllClientsAction());
-    dispatch(getAllCountriesAction());
-  }, [dispatch]);
+    return (
+        <>
+            <h2>
+                <i className="ico clients"/>Clients
+            </h2>
+            <div className="grey-box-wrap reports">
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#"
+                   className="link new-member-popup"
+                   onClick={() => setIsDialogVisible(true)}
+                >
+                    Create new client
+                </a>
+                <NewClientDialog onAdd={handleAddOrDelete} open={isDialogVisible} onClose={dialogClosed}/>
+                <SearchInput searchString={searchString} onChange={handleSearch}/>
+            </div>
 
 
-  return (
-      <>
-        <h2>
-          <i className="ico clients"/>Clients
-        </h2>
-        <div className="grey-box-wrap reports">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#"
-             className="link new-member-popup"
-             onClick={() => setIsDialogVisible(true)}
-          >
-            Create new client
-          </a>
-          <NewClientDialog open={isDialogVisible} onClose={dialogClosed}/>
-          <div className="search-page">
-            <form>
-              <input
-                  type="search"
-                  name="search-clients"
-                  className="in-search"
-              />
-            </form>
-          </div>
-        </div>
+            <LetterList activeLetter={activeLetter} onClick={letterClicked}/>
 
-
-        <LetterList activeLetter={activeLetter} setActiveLetter={setActiveLetter}/>
-
-        <ClientList/>
-        <div className="pagination">
-          <ul>
-            <li>
-              <a href="/#">1</a>
-            </li>
-            <li>
-              <a href="/#">2</a>
-            </li>
-            <li>
-              <a href="/#">3</a>
-            </li>
-            <li className="last">
-              <a href="/#"> Next</a>
-            </li>
-          </ul>
-        </div>
-      </>
+            <ClientList onDelete={handleAddOrDelete} clients={pageOfClients.items}/>
+            <PaginationBar onClick={handlePropagationClick} pageNumber={pageOfClients.pageNumber}
+                           totalSize={pageOfClients.totalSize} pageSize={pageOfClients.pageSize}/>
+        </>
   );
 }
