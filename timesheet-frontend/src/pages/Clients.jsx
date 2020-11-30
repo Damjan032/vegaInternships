@@ -22,8 +22,6 @@ export default function Clients() {
     const dispatch = useDispatch();
 
     const handleAddOrDelete = async () => {
-        setTimeout(() => {
-        }, 2000);
         await dispatch(getPageOfClientsAction(pageOfClients.pageNumber, activeLetter, searchString));
     };
 

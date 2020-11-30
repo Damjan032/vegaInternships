@@ -200,7 +200,7 @@ public class JdbcProjectRepository implements ProjectRepository {
         totalRowsStatement.setString(3, searchText != null ? "%" + searchText.trim() + "%" : "");
 
         preparedStatement.setInt(4, (pageNumber - 1) * pageSize);
-        preparedStatement.setInt(5, Math.min(Math.abs(numberOfRows - pageSize * pageNumber), pageSize));
+        preparedStatement.setInt(5, pageSize);
 
         ResultSet rs = totalRowsStatement.executeQuery();
         rs.next();

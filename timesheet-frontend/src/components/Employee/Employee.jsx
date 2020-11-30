@@ -4,7 +4,7 @@ import {deleteEmployeeAction, updateEmployeeAction} from '../../store/actions/em
 import {useForm} from "react-hook-form";
 
 export default function Employee(props) {
-
+  const onDeleteOrUpdate = props.onDeleteOrUpdate;
   const [employee, setEmployee] = useState({
     id: props.employee.id,
     name: props.employee.name,
@@ -13,7 +13,7 @@ export default function Employee(props) {
     hoursPerWeek: props.employee.hoursPerWeek,
     role: props.employee.role,
     status: props.employee.status,
-    accepted:props.employee.accepted
+    accepted: props.employee.accepted
   });
 
   const {handleSubmit} = useForm();
@@ -23,10 +23,18 @@ export default function Employee(props) {
 
   function deleteEmployee(id) {
     dispatch(deleteEmployeeAction(id));
+    setTimeout(
+        () => onDeleteOrUpdate(),
+        500
+    );
   }
 
   function updateEmployee() {
     dispatch(updateEmployeeAction(employee));
+    setTimeout(
+        () => onDeleteOrUpdate(),
+        500
+    );
   }
 
   function inputChanged(event) {

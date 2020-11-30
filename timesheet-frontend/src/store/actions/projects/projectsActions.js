@@ -2,6 +2,7 @@ import {
     addProjectCreator,
     deleteProjectCreator,
     getAllProjectsCreator,
+    getPageOfProjectsCreator,
     updateProjectCreator,
 } from './projectsActionsCreator';
 
@@ -9,6 +10,7 @@ import {
     addProjectInRepository,
     deleteProjectFromRepository,
     getAllProjectsFromRepository,
+    getPageProjectsFromRepository,
     updateProjectInRepository
 } from "../../repositories/projectRepository";
 
@@ -18,6 +20,12 @@ export const getAllProjectsAction = () => async dispatch => {
     });
 };
 
+export const getPageOfProjectsAction = (pageNumber, letter, search) => async dispatch => {
+    getPageProjectsFromRepository(pageNumber, letter, search).then((pages) => {
+
+        dispatch(getPageOfProjectsCreator(pages));
+    });
+};
 
 export const addProjectAction = project => async dispatch => {
     addProjectInRepository(project).then((headers) => {

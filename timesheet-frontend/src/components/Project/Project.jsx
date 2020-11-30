@@ -10,11 +10,16 @@ export default function Projects(props) {
     const clients = useSelector(state => state.clients);
     const employees = useSelector(state => state.employees);
     const [isEditing, setIsEditing] = useState(false);
+    const onDeleteOrUpdate = props.onDeleteOrUpdate;
 
     const dispatch = useDispatch();
 
     function deleteProject(id) {
         dispatch(deleteProjectAction(id));
+        setTimeout(
+            () => onDeleteOrUpdate(),
+            500
+        );
     }
     const [project, setProject] = useState({
         clientDto : props.project.clientDto,
@@ -28,7 +33,11 @@ export default function Projects(props) {
 
     });
     function updateProject() {
-       dispatch(updateProjectAction(project));
+        dispatch(updateProjectAction(project));
+        setTimeout(
+            () => onDeleteOrUpdate(),
+            500
+        );
     }
 
     function inputChanged(event) {

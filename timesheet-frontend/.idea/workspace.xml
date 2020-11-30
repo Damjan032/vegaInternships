@@ -19,27 +19,48 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="259aa6ac-4e5e-40bb-af0c-cb1a9f3f7326" name="Default Changelist" comment="Added front repositories">
-      <change afterPath="$PROJECT_DIR$/src/components/PaginationBar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/SearchInput.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/clientPagesReducer.js" afterDir="false" />
+    <list default="true" id="259aa6ac-4e5e-40bb-af0c-cb1a9f3f7326" name="Default Changelist" comment="Front pages search and letter for clients">
+      <change afterPath="$PROJECT_DIR$/src/components/Calendar/ListOfDays.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Calendar/TableOfDays.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Calendar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/actions/dailyTImeSheets/dailyTimeSheetsActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/actions/dailyTImeSheets/dailyTimeSheetsActionsCreator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/dailyTimeSheetReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/employeePageReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/projectPagesReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/repositories/dailyTimeSheetRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Client/Client.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Client/Client.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Client/ClientList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Client/ClientList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Client/NewClientDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Client/NewClientDialog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LetterList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LetterList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Employee/Employee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/Employee.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Employee/EmployeesList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/EmployeesList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Employee/NewMemberDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/NewMemberDialog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PaginationBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaginationBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Project/NewProjectDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Project/NewProjectDialog.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Project/Project.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Project/Project.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Project/ProjectList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Project/ProjectList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Clients.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Clients.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Employees.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Employees.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Projects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Projects.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/clients/clientsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/clients/clientsActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/clients/clientsActionsCreator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/clients/clientsActionsCreator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/employees/employeesActionCreator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/employees/employeesActionCreator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/employees/employeesActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/employees/employeesActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/projects/projectsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/projects/projectsActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/projects/projectsActionsCreator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/projects/projectsActionsCreator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/employeeReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/employeeReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/repositories/clientsRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/clientsRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/ClientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/ClientsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/repositories/employeeRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/employeeRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/repositories/projectRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/projectRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/dto/PageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/dto/PageDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../timesheet/core/src/main/java/rs/vegait/timesheet/core/model/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/core/src/main/java/rs/vegait/timesheet/core/model/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/factory/EmployeeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/factory/EmployeeFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/factory/ProjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/api/src/main/java/rs/vegait/timesheet/api/factory/ProjectFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcEmployeeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcEmployeeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/persitence/src/main/java/rs/vegait/timesheet/persitence/jdbc/JdbcProjectRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +127,13 @@
       <workItem from="1606387388663" duration="23774000" />
       <workItem from="1606415332153" duration="1360000" />
       <workItem from="1606426857338" duration="5322000" />
-      <workItem from="1606466482760" duration="33590000" />
+      <workItem from="1606466482760" duration="33700000" />
+      <workItem from="1606516244815" duration="17000" />
+      <workItem from="1606575101795" duration="247000" />
+      <workItem from="1606575382168" duration="7290000" />
+      <workItem from="1606654107549" duration="507000" />
+      <workItem from="1606680576881" duration="595000" />
+      <workItem from="1606725260262" duration="14762000" />
     </task>
     <task id="LOCAL-00001" summary="Front employee and clients">
       <created>1606389899219</created>
@@ -129,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606476364353</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Front pages search and letter for clients">
+      <created>1606506431227</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606506431227</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,17 +184,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Front employee and clients" />
     <MESSAGE value="Added front repositories" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added front repositories" />
+    <MESSAGE value="Front pages search and letter for clients" />
+    <option name="LAST_COMMIT_MESSAGE" value="Front pages search and letter for clients" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="395" y="91" key="#Inspections" timestamp="1606733473363">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="395" y="91" key="#Inspections/0.0.1536.824@0.0.1536.824" timestamp="1606733473363" />
     <state x="223" y="67" width="1089" height="737" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606335337274">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" width="1089" height="737" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1606335337274" />
-    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606484597542">
+    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606740714226">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606484597542" />
+    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606740714226" />
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606310715958">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -169,56 +208,45 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1606501509568" />
-    <state width="1515" height="110" key="GridCell.Tab.0.bottom" timestamp="1606503294481">
+    <state width="1515" height="110" key="GridCell.Tab.0.bottom" timestamp="1606735179543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="110" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606503294481" />
-    <state width="1515" height="110" key="GridCell.Tab.0.center" timestamp="1606503294481">
+    <state width="1515" height="110" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606735179543" />
+    <state width="1515" height="110" key="GridCell.Tab.0.center" timestamp="1606735179543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="110" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606503294481" />
-    <state width="1515" height="110" key="GridCell.Tab.0.left" timestamp="1606503294481">
+    <state width="1515" height="110" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606735179543" />
+    <state width="1515" height="110" key="GridCell.Tab.0.left" timestamp="1606735179543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="110" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606503294481" />
-    <state width="1515" height="110" key="GridCell.Tab.0.right" timestamp="1606503294481">
+    <state width="1515" height="110" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606735179543" />
+    <state width="1515" height="110" key="GridCell.Tab.0.right" timestamp="1606735179543">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="110" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606503294481" />
-    <state x="522" y="115" key="RollbackChangesDialog" timestamp="1606483326859">
+    <state width="1515" height="110" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606735179543" />
+    <state x="522" y="115" key="RollbackChangesDialog" timestamp="1606578029962">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="522" y="115" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606483326859" />
+    <state x="522" y="115" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606578029962" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1606335229954">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1606335229954" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606476370584">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606506432688">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606476370584" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606506432688" />
     <state x="859" y="0" width="683" height="830" key="dock-window-1" timestamp="1606477373695">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="859" y="0" width="683" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1606477373695" />
-    <state x="478" y="145" width="579" height="534" key="find.popup" timestamp="1606499560434">
+    <state x="478" y="145" width="579" height="534" key="find.popup" timestamp="1606744630743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606499560434" />
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1606429015977">
+    <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606744630743" />
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1606734214787">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606429015977" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/components/Employee/NewMemberDialog.jsx</url>
-          <line>21</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606734214787" />
   </component>
 </project>

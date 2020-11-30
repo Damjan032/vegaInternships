@@ -1,16 +1,18 @@
 import {
     addEmployeeCreator,
     deleteEmployeeCreator,
-    getAllEmployeesCreator,
+    getAllEmployeesCreator, getPageOfEmployeesCreator,
     updateEmployeeCreator,
 } from './employeesActionCreator';
 
 import {
     addEmployeeInRepository,
     deleteEmployeeFromRepository,
-    getAllEmployeesFromRepository,
+    getAllEmployeesFromRepository, getPageEmployeesFromRepository,
     updateEmployeeInRepository
 } from "../../repositories/employeeRepository";
+import {getPageProjectsFromRepository} from "../../repositories/projectRepository";
+import {getPageOfProjectsCreator} from "../projects/projectsActionsCreator";
 
 export const getAllEmployeesAction = () => async dispatch => {
     getAllEmployeesFromRepository().then((employees) => {
@@ -31,6 +33,12 @@ export const deleteEmployeeAction = employeeId => async dispatch => {
     deleteEmployeeFromRepository(employeeId).then(
         dispatch(deleteEmployeeCreator(employeeId))
     )
+};
+
+export const getPageOfEmployeesAction = (pageNumber) => async dispatch => {
+    getPageEmployeesFromRepository(pageNumber).then((pages) => {
+        dispatch(getPageOfEmployeesCreator(pages));
+    });
 };
 
 export const updateEmployeeAction = employee => async dispatch => {

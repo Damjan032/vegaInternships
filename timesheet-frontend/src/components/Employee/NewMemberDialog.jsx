@@ -16,7 +16,7 @@ export default function NewMemberDialog(props) {
     });
 
     const {handleSubmit, register, errors} = useForm();
-    const {onClose, open} = props;
+    const {onClose, open, onAdd} = props;
     const dispatch = useDispatch();
 
     const inputChanged = (event) => {
@@ -38,7 +38,7 @@ export default function NewMemberDialog(props) {
         }
     }
 
-    const saveEmployee = () => {
+    function saveEmployee () {
         dispatch(addEmployeeAction(employee));
         setEmployee({
             name: '',
@@ -49,6 +49,10 @@ export default function NewMemberDialog(props) {
             status: "ACTIVE",
             accepted: false,
         });
+        setTimeout(
+            () => onAdd(),
+            2000
+        );
         onClose();
     };
 

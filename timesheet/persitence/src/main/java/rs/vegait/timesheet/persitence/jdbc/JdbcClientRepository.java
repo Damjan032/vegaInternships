@@ -179,7 +179,7 @@ public class JdbcClientRepository implements ClientRepository {
         List<Client> clients = new ArrayList<>();
         int numberOfRows = 0;
         preparedStatement.setInt(1, (pageNumber - 1) * pageSize);
-        preparedStatement.setInt(2, Math.min(Math.abs(numberOfRows - pageSize * pageNumber), pageSize));
+        preparedStatement.setInt(2, pageSize);
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(selectCount);
         rs.next();

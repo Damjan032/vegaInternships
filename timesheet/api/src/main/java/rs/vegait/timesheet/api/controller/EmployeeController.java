@@ -74,7 +74,7 @@ public class EmployeeController {
         return new ResponseEntity<>("Now employee is active.", HttpStatus.OK);
     }
 
-    @GetMapping(path = "/search")
+    @GetMapping(path = "/page")
     public ResponseEntity<PageDto<EmployeeDto>> getPage(@PathParam("pageNumber") Integer pageNumber,
                                                         @PathParam("pageSize") Integer pageSize) throws Exception {
 

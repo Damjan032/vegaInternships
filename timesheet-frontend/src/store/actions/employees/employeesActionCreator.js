@@ -8,6 +8,11 @@ export const getAllEmployeesCreator = (employees) => ({
     employees,
 });
 
+export const getPageOfEmployeesCreator = page => ({
+    type: 'GET_PAGE_OF_EMPLOYEES',
+    page,
+});
+
 export const deleteEmployeeCreator = (employeeId) => ({
     type: 'DELETE_EMPLOYEE',
     employeeId,

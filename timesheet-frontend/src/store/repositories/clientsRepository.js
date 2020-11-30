@@ -27,8 +27,6 @@ export async function getPageClientsFromRepository(pageNumber, letter, search) {
     if(search!=='' && search!==undefined){
         searchParam = `&searchString=${search}`;
     }
-    console.log("getPageClientsFromRepository")
-    console.log(searchParam)
     const {data} = await axios.get(`/clients/page?pageNumber=${pageNumber}&pageSize=5${letterParam}${searchParam}`);
     return data;
 }

@@ -1,0 +1,11 @@
+export function fetchPageOfProjects(state = {items: [], pageNumber: 1, pageSize: 5, totalSize: 100}, action) {
+    switch (action.type) {
+
+        case 'GET_PAGE_OF_PROJECTS':
+            return action.page;
+
+
+        default:
+            return state;
+    }
+}

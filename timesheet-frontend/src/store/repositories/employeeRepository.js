@@ -18,4 +18,9 @@ export async function updateEmployeeInRepository(employee) {
     await axios.put(`/employees/${employee.id}`, employee);
 }
 
+export async function getPageEmployeesFromRepository(pageNumber) {
+    const {data} = await axios.get(`/employees/page?pageNumber=${pageNumber}&pageSize=2`);
+    return data;
+}
+
 

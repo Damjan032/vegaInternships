@@ -13,6 +13,11 @@ export const deleteProjectCreator = (projectId) => ({
     projectId,
 })
 
+export const getPageOfProjectsCreator = page => ({
+    type: 'GET_PAGE_OF_PROJECTS',
+    page,
+});
+
 export const updateProjectCreator = (projects) => ({
     type: 'UPDATE_PROJECT',
     projects,

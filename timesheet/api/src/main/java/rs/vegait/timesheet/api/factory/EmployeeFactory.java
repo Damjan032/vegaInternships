@@ -50,8 +50,8 @@ public class EmployeeFactory implements Factory<EmployeeDto, Employee> {
     public PageDto<EmployeeDto> toDtoPage(Page<Employee> page) {
 
         return new PageDto<>(this.toListDto(page.items()),
-                page.pageSize(),
                 page.pageNumber(),
+                page.pageSize(),
                 page.totalItems()
         );
     }

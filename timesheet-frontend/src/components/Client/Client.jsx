@@ -8,13 +8,10 @@ export default function Client(props) {
   const {handleSubmit, register, errors} = useForm();
   const [isEditing, setIsEditing] = useState(false);
   const onDeleteOrUpdate = props.onDeleteOrUpdate;
-  // console.log("Client")
-  // console.log(onDelete)
   const dispatch = useDispatch();
 
   async function deleteClient(id) {
     dispatch(deleteClientAction(id));
-    console.log(id);
     setTimeout(
         () => onDeleteOrUpdate(),
         500

@@ -66,8 +66,8 @@ public class ProjectFactory implements Factory<ProjectDto, Project> {
     @Override
     public PageDto<ProjectDto> toDtoPage(Page<Project> page) {
         return new PageDto<>(this.toListDto(page.items()),
-                page.pageSize(),
                 page.pageNumber(),
+                page.pageSize(),
                 page.totalItems()
         );
     }

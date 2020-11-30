@@ -19,7 +19,7 @@ export default function NewProjectDialog(props) {
         name: '',
     });
     const {handleSubmit, register, errors} = useForm();
-    const {onClose, open} = props;
+    const {onClose, open, onAdd} = props;
 
     const dispatch = useDispatch();
 
@@ -46,7 +46,7 @@ export default function NewProjectDialog(props) {
                 });
         }
     };
-    const saveNewProject = () => {
+    function saveNewProject () {
         dispatch(addProjectAction(project));
         setProject({
             clientDto: '',
@@ -57,7 +57,10 @@ export default function NewProjectDialog(props) {
             teamLeadId: '',
             name: ''
         });
-
+        setTimeout(
+            () => onAdd(),
+            500
+        );
         onClose();
     };
 

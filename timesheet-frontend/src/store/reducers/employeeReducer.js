@@ -10,7 +10,6 @@ export function employees(state = [], action) {
             return state.filter((item) => item.id !== action.employeeId);
 
         case 'UPDATE_EMPLOYEE':
-            console.log(action);
             state = [
                 ...state.filter(c => c.id !== action.employees.id),
                 action.employees

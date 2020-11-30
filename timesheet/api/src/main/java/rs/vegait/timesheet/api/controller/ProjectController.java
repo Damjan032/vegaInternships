@@ -51,7 +51,7 @@ public class ProjectController {
     }
 
 
-    @GetMapping(path = "/search")
+    @GetMapping(path = "/page")
     public ResponseEntity<PageDto<ProjectDto>> getPage(
             @PathParam("pageNumber") Integer pageNumber,
             @PathParam("pageSize") Integer pageSize,

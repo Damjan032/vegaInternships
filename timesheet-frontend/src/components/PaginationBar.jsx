@@ -2,6 +2,7 @@ import React from "react";
 
 export default function PaginationBar(props) {
     const {pageSize, pageNumber, totalSize, onClick} = props;
+    console.log(totalSize)
     //console.log(Array(Math.ceil(totalSize/pageSize) - 1 + 1).fill().map((_, idx) => 1 + idx))
     return (
         <div className="pagination">

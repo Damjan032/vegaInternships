@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Clients from "./pages/Clients";
 import Employees from "./pages/Employees";
 import Projects from "./pages/Projects"
+import Calendar from "./pages/Calendar";
 
 function App() {
     return (
@@ -22,7 +23,12 @@ function App() {
                         <Route path="/projects">
                             <Projects/>
                         </Route>
-                        {/*<Route path="/"></Route>*/}
+                        <Route path="/calendar">
+                            <Calendar/>
+                        </Route>
+                        <Route path="/index">
+                            <Calendar/>
+                        </Route>
                     </section>
                 </div>
                 <Footer/>

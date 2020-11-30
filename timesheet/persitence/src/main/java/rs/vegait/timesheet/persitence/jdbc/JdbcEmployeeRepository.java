@@ -211,7 +211,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Page<Employee> findBy(String searchText, char firstLetter, int pageNumber, int pageSize) throws SQLException {
-        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY lastName, firstName LIMIT  ?, ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY firstName, lastName LIMIT  ?, ?";
         PreparedStatement pstmt = this.connection.prepareStatement(sql);
         pstmt.setInt(1, (pageNumber - 1) * pageSize);
         pstmt.setInt(2, pageSize);
@@ -220,13 +220,15 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
         List<Employee> employees = new ArrayList<>();
         int numberOfRows = 0;
 
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT COUNT(*) AS total FROM " + TABLE_NAME);
+        PreparedStatement totalStatement = connection.prepareStatement("SELECT COUNT(*) AS total FROM " + TABLE_NAME);
+        ResultSet rs = totalStatement.executeQuery();
+
         rs.next();
         numberOfRows = rs.getInt("total");
 
         pstmt.setInt(1, (pageNumber - 1) * pageSize);
-        pstmt.setInt(2, Math.min(Math.abs(numberOfRows - pageSize * pageNumber), pageSize));
+
+        pstmt.setInt(2,  pageSize);
 
         rs = pstmt.executeQuery();
         while (rs.next()) {

@@ -6,6 +6,7 @@ const middleware = [
     thunk,
 ];
 
+// noinspection JSCheckFunctionSignatures
 const store = createStore(
     rootReducer,
     applyMiddleware(...middleware)
