@@ -1,9 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ListOfDays from "./ListOfDays";
+import {useDispatch} from "react-redux";
+import {getDailyTimeSheetAction} from "../../store/actions/dailyTImeSheets/dailyTimeSheetsActions";
 
 
 export default function TableOfDays(props) {
-    const {month,year, today} = props;
+    const {month, year, today, listOfWeeks} = props;
+    const dispatch = useDispatch();
+    console.log("TableOfDays" + month)
+    dispatch(getDailyTimeSheetAction("30a77b80-5ac7-4435-8ee4-068d0eae18e0", getFormattedDay(listOfWeeks[0][0]),
+        getFormattedDay(listOfWeeks[listOfWeeks.length - 1][6])));
+
+
+    function getFormattedDay(day) {
+        if (day === undefined) day = new Date();
+        let mm = parseInt(String(day.getMonth() + 1).padStart(2, '0'));
+        mm = mm < 10 ? 0 + '' + mm : mm;
+        let dayNumber = day.getDate() < 10 ? 0 + '' + day.getDate() : day.getDate();
+        return day.getFullYear() + "-" + mm + "-" + dayNumber;
+    }
+
+
     return (
         <>
             <table className="month-table">
@@ -26,7 +43,7 @@ export default function TableOfDays(props) {
                     <th>sat</th>
                     <th>sun</th>
                 </tr>
-               <ListOfDays month={month} year={year} today={today}/>
+                <ListOfDays listOfWeeks={listOfWeeks} month={month} year={year} today={today}/>
                 </tbody>
             </table>
         </>

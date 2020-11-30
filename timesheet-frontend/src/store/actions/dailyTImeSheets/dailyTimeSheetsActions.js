@@ -1,8 +1,10 @@
-import {getAllDailyTimeSheetsFromEmployeeBetweenToDaysRepository} from "../../repositories/dailyTimeSheetRepository";
+import {getAllDailyTimeSheetsFromEmployeeBetweenTwoDaysRepository} from "../../repositories/dailyTimeSheetRepository";
 import {getDailyTimeSheetsCreator} from "./dailyTimeSheetsActionsCreator";
 
-export const getDailyTimeSheet = (employeeId, dateFrom, dateTo) => async dispatch => {
-    getAllDailyTimeSheetsFromEmployeeBetweenToDaysRepository(employeeId, dateFrom, dateTo).then((dailyTimeSheets) => {
+export const getDailyTimeSheetAction = (employeeId, dateFrom, dateTo) => async dispatch =>  {
+    console.log("OVDEEEE");
+    console.log(dateFrom);
+    getAllDailyTimeSheetsFromEmployeeBetweenTwoDaysRepository(employeeId, dateFrom, dateTo).then((dailyTimeSheets) => {
         dispatch(getDailyTimeSheetsCreator(dailyTimeSheets));
     });
 };

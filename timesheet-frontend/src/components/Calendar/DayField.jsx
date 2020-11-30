@@ -2,8 +2,8 @@ import React from 'react';
 import {useSelector} from "react-redux";
 
 
-export default function ListOfDays(props) {
-    const {month, today, listOfWeeks} = props;
+export default function DayField(props) {
+    const {today, day, dailyTimeSheet, numberOfHoursOfWork} = props;
 
     const dailyTimeSheets = useSelector(state => state.dailyTimeSheets);
     console.log("DAILY")
@@ -31,17 +31,15 @@ export default function ListOfDays(props) {
 
     return (
         <>
-            {listOfWeeks.map(week => (
-                <tr>
-                    {week.map(day => (
+
                         <td className={(today<=day) ? "disable": dailyTime(day)<7.5? "negative" :
                             day.getMonth() < today.getMonth() ?
-                             "positive previous": "positive"}>
+                                "positive previous": "positive"}>
                             <div className="date" >
-                        {/*// <td className={(today<=day) ? "disable":*/}
-                        {/*//     day.getMonth() < today.getMonth() ?*/}
-                        {/*//      "positive previous": dailyTime(day)<7.5? "negative" : "positive"}>*/}
-                        {/*    <div className="date" >*/}
+                                {/*// <td className={(today<=day) ? "disable":*/}
+                                {/*//     day.getMonth() < today.getMonth() ?*/}
+                                {/*//      "positive previous": dailyTime(day)<7.5? "negative" : "positive"}>*/}
+                                {/*    <div className="date" >*/}
                                 <span>{day.getDate()}</span>
                             </div>
                             <div className="hours">
@@ -50,10 +48,6 @@ export default function ListOfDays(props) {
                                 </a>
                             </div>
                         </td>
-                    ))}
-
-                </tr>
-            ))}
 
         </>
     );
