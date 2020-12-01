@@ -7,6 +7,7 @@ import {fetchPageOfClients} from "./clientPagesReducer";
 import {fetchPageOfProjects} from "./projectPagesReducer";
 import {fetchPageOfEmployee} from "./employeePageReducer";
 import {fetchDailyTimeSheet} from "./dailyTimeSheetReducer";
+import {fetchCategory} from "./categoriesReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     projectsPage: fetchPageOfProjects,
     employeesPage: fetchPageOfEmployee,
     dailyTimeSheets: fetchDailyTimeSheet,
+    categories: fetchCategory,
     countries,
     employees,
     projects

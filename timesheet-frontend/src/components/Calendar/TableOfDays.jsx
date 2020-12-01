@@ -5,9 +5,8 @@ import {getDailyTimeSheetAction} from "../../store/actions/dailyTImeSheets/daily
 
 
 export default function TableOfDays(props) {
-    const {month, year, today, listOfWeeks} = props;
+    const {year, today, listOfWeeks} = props;
     const dispatch = useDispatch();
-    console.log("TableOfDays" + month)
     dispatch(getDailyTimeSheetAction("30a77b80-5ac7-4435-8ee4-068d0eae18e0", getFormattedDay(listOfWeeks[0][0]),
         getFormattedDay(listOfWeeks[listOfWeeks.length - 1][6])));
 
@@ -43,7 +42,7 @@ export default function TableOfDays(props) {
                     <th>sat</th>
                     <th>sun</th>
                 </tr>
-                <ListOfDays listOfWeeks={listOfWeeks} month={month} year={year} today={today}/>
+                <ListOfDays listOfWeeks={listOfWeeks} year={year} today={today}/>
                 </tbody>
             </table>
         </>

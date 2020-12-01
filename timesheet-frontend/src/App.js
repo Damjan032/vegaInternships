@@ -6,6 +6,7 @@ import Clients from "./pages/Clients";
 import Employees from "./pages/Employees";
 import Projects from "./pages/Projects"
 import TimeSheet from "./pages/TimeSheet";
+import WeekView from "./pages/WeekView";
 
 function App() {
     return (
@@ -14,6 +15,13 @@ function App() {
                 <Header/>
                 <div className="wrapper">
                     <section className="content">
+                        <Route path="/index">
+                            <TimeSheet/>
+                        </Route>
+                        <Route
+                            path='/weekView'
+                            render={ props => <WeekView {...props} />}
+                        />
                         <Route path="/clients">
                             <Clients/>
                         </Route>
@@ -26,9 +34,7 @@ function App() {
                         <Route path="/calendar">
                             <TimeSheet/>
                         </Route>
-                        <Route path="/index">
-                            <TimeSheet/>
-                        </Route>
+
                     </section>
                 </div>
                 <Footer/>

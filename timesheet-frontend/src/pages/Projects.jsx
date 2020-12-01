@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import NewProjectDialog from "../components/Project/NewProjectDialog"
+import NewProjectDialog from "../components/Project/NewProjectDialog";
 import {useDispatch, useSelector} from 'react-redux';
 import {getPageOfProjectsAction} from "../store/actions/projects/projectsActions";
 import ProjectsList from "../components/Project/ProjectList";

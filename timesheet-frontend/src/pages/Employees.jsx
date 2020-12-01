@@ -11,7 +11,6 @@ export default function Employees() {
     const pageOfEmployees = useSelector(state => state.employeesPage);
     const dispatch = useDispatch();
 
-    console.log(pageOfEmployees)
     const handleAddOrDelete = async () => {
         await dispatch(getPageOfEmployeesAction(pageOfEmployees.pageNumber));
         // setTimeout(dispatch(getPageOfEmployeesAction(pageOfEmployees.pageNumber)), 2000);

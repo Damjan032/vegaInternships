@@ -40,7 +40,6 @@ export default function TimeSheet() {
             days.push(new Date(date));
             date.setDate(date.getDate() + 1);
         }
-        console.log("MONTH " + month)
         return days;
     }
 
@@ -98,7 +97,7 @@ export default function TimeSheet() {
 
                 </div>
             </div>
-            <TableOfDays month={month} listOfWeeks={chunkArray(getDaysInMonth(), getDaysInMonth().length / 7)} year={year}
+            <TableOfDays listOfWeeks={chunkArray(getDaysInMonth(), getDaysInMonth().length / 7)} year={year}
                          today={today}/>
             <div className="total">
                 <span>Total hours: <em>90</em></span>
