@@ -1,9 +1,9 @@
 import React from "react";
 
 export default function SearchInput(props) {
-    const {onChange,searchString} = props;
+    const {onChange, searchString} = props;
 
-    return(
+    return (
         <div className="search-page">
             <form>
                 <input

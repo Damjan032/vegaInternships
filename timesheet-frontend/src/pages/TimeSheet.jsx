@@ -20,7 +20,7 @@ export default function TimeSheet() {
             setMonth(1);
             setYear(year + 1);
         } else {
-            setMonth(month+1)
+            setMonth(month + 1)
         }
     }
 

@@ -12,7 +12,7 @@ export default function WeekView(props) {
     const dispatch = useDispatch();
     const [currentDate, setCurrentDate] = useState(new Date(`${props.location.pathname.split('/').slice(-1)[0].slice(0, 4)}-${props.location.pathname.split('/').slice(-1)[0].slice(4, 6)}-${props.location.pathname.split('/').slice(-1)[0].slice(6, 8)}`));
     //const [dailyTimeSheets, setDailTimeSheets] = useState(dispatch(getDailyTimeSheetAction("30a77b80-5ac7-4435-8ee4-068d0eae18e0", getFormattedDay(currentDate[0]),
-     //   getFormattedDay(currentDate[6]))));
+    //   getFormattedDay(currentDate[6]))));
 
 
     function getFormattedDay(day) {

@@ -1,9 +1,9 @@
 export function countries(state = [], action) {
-  switch (action.type) {
-    case 'GET_ALL_COUNTRIES':
-      return action.countries;
+    switch (action.type) {
+        case 'GET_ALL_COUNTRIES':
+            return action.countries;
 
-    default:
-      return state;
-  }
+        default:
+            return state;
+    }
 }

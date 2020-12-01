@@ -3,7 +3,6 @@ import NewMemberDialog from "../components/Employee/NewMemberDialog"
 import {useDispatch, useSelector} from 'react-redux';
 import {getPageOfEmployeesAction} from "../store/actions/employees/employeesActions";
 import EmployeesList from "../components/Employee/EmployeesList";
-import {getPageOfProjectsAction} from "../store/actions/projects/projectsActions";
 import PaginationBar from "../components/PaginationBar";
 
 export default function Employees() {
@@ -54,6 +53,6 @@ export default function Employees() {
 
             <PaginationBar onClick={handlePropagationClick} pageNumber={pageOfEmployees.pageNumber}
                            totalSize={pageOfEmployees.totalSize} pageSize={pageOfEmployees.pageSize}/>
-      </>
-  );
+        </>
+    );
 }

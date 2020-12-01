@@ -38,7 +38,7 @@ export default function NewMemberDialog(props) {
         }
     }
 
-    function saveEmployee () {
+    function saveEmployee() {
         dispatch(addEmployeeAction(employee));
         setEmployee({
             name: '',
@@ -54,7 +54,7 @@ export default function NewMemberDialog(props) {
             2000
         );
         onClose();
-    };
+    }
 
     return (
         <Dialog onClose={onClose} open={open}>

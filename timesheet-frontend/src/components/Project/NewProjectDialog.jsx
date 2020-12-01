@@ -46,7 +46,8 @@ export default function NewProjectDialog(props) {
                 });
         }
     };
-    function saveNewProject () {
+
+    function saveNewProject() {
         dispatch(addProjectAction(project));
         setProject({
             clientDto: '',
@@ -62,7 +63,7 @@ export default function NewProjectDialog(props) {
             500
         );
         onClose();
-    };
+    }
 
     return (
         <Dialog onClose={onClose} open={open}>

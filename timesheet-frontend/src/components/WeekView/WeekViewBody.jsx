@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import ClientSelection from "../Client/ClientSelection";
-import ProjectSelection from "../Project/ProjectSelection";
-import CategorySelection from "../Category/CategoriesSelection";
 import {useDispatch, useSelector} from "react-redux";
+import DailyTimeSheetsList from "./DailyTimeSheetsList";
 
 export default function WeekViewBody(props) {
     const emptyTimeSheet = {
@@ -34,28 +32,29 @@ export default function WeekViewBody(props) {
     }
 
     function setCurrentDailyTimeSheet() {
-        console.log("Opa djurdjo usa sam odje");
-        console.log(dailyTimeSheets)
-        let dailyPom= []
+        let dailyPom = []
         dailyTimeSheets.map(daily => {
             if (daily.day === getFormattedDay(currentDay)) {
-                console.log("Nasa sam te macak");
-                console.log(daily['timeSheets']);
                 dailyPom = daily['timeSheets'];
             }
         });
-        let numberOfEmpty = 7-dailyPom.length
-        for(let i = 0; i<numberOfEmpty;i++){
+        let numberOfEmpty = 7 - dailyPom.length
+        for (let i = 0; i < numberOfEmpty; i++) {
             dailyPom.push(emptyTimeSheet);
         }
-        console.log(dailyPom);
+        let dailyWithId=[]
+        for (let i = 0; i < 7; i++) {
+            dailyWithId.push({
+                ...dailyPom[i],
+                id:i
+            });
+        }
+        return dailyWithId;
     }
 
 
     useEffect(() => {
         setCurrentDaily(setCurrentDailyTimeSheet(dailyTimeSheets))
-        /*dispatch(getDailyTimeSheetAction("30a77b80-5ac7-4435-8ee4-068d0eae18e0", getFormattedDay(week[0]),
-            getFormattedDay(week[6])))*/
 
     }, [dispatch]);
 
@@ -105,30 +104,7 @@ export default function WeekViewBody(props) {
                     <th className="small">Overtime</th>
                 </tr>
 
-                {listTimesSheets.map(i => (
-                    <tr key={i}>
-                        <td>
-                            <ClientSelection/>
-                        </td>
-                        <td>
-                            <ProjectSelection/>
-                        </td>
-                        <td>
-                            <CategorySelection/>
-                        </td>
-                        <td>
-                            <input type="text" className="in-text medium"/>
-                        </td>
-                        <td className="small">
-                            <input name="time"
-                                   value={(dailyTimeSheets[i] !== undefined ? dailyTimeSheets[0]['imeSheets'].time : '')}
-                                   type="text" className="in-text xsmall"/>
-                        </td>
-                        <td className="small">
-                            <input type="text" className="in-text xsmall"/>
-                        </td>
-                    </tr>
-                ))}
+                <DailyTimeSheetsList dailyTimeSheets={setCurrentDailyTimeSheet()}/>
                 </tbody>
             </table>
             <div className="total">

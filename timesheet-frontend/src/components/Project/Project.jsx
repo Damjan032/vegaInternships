@@ -21,17 +21,19 @@ export default function Projects(props) {
             500
         );
     }
+
     const [project, setProject] = useState({
-        clientDto : props.project.clientDto,
-        clientId : props.project.clientDto.id,
+        clientDto: props.project.clientDto,
+        clientId: props.project.clientDto.id,
         description: props.project.description,
         id: props.project.id,
         name: props.project.name,
         status: props.project.status,
-        teamLead:props.project.teamLead,
-        teamLeadId:props.project.teamLead.id,
+        teamLead: props.project.teamLead,
+        teamLeadId: props.project.teamLead.id,
 
     });
+
     function updateProject() {
         dispatch(updateProjectAction(project));
         setTimeout(
@@ -41,7 +43,7 @@ export default function Projects(props) {
     }
 
     function inputChanged(event) {
-        if(event.target.value==='') return;
+        if (event.target.value === '') return;
         switch (event.target.name) {
             case "teamLead":
                 setProject({
@@ -64,6 +66,7 @@ export default function Projects(props) {
                 });
         }
     }
+
     return (
         <div className="item">
             <div className="heading" onClick={() => setIsEditing(!isEditing)}>
@@ -90,7 +93,7 @@ export default function Projects(props) {
                         <li>
                             <label>Lead:</label>
                             <EmployeeSelection value={project.teamLeadId}
-                                             onChange={inputChanged}/>
+                                               onChange={inputChanged}/>
                         </li>
 
                     </ul>
@@ -100,7 +103,7 @@ export default function Projects(props) {
                             <input
                                 type="text"
                                 className="in-text"
-                                value={project.description==null?"":project.description}
+                                value={project.description == null ? "" : project.description}
                                 name="description"
                                 onChange={inputChanged}
                             />
@@ -109,19 +112,19 @@ export default function Projects(props) {
                     <ul className="form">
                         <li>
                             <label>Customer:</label>
-                            <ClientSelection  value={project.clientId}
-                                               onChange={inputChanged}/>
+                            <ClientSelection value={project.clientId}
+                                             onChange={inputChanged}/>
                         </li>
                         <li>
-                            <label  className="myMargin">Status:</label>
+                            <label className="myMargin">Status:</label>
                             <span className="radio">
-                            <label  className="myMargin">Active:</label>
+                            <label className="myMargin">Active:</label>
                             <input
                                 type="radio"
                                 value="ACTIVE"
                                 name="status"
                                 id="active"
-                                checked={project.status==="ACTIVE"}
+                                checked={project.status === "ACTIVE"}
                                 onChange={inputChanged}
                             />
                           </span>
@@ -132,7 +135,7 @@ export default function Projects(props) {
                                 value="INACTIVE"
                                 name="status"
                                 id="inactive"
-                                checked={project.status==="INACTIVE"}
+                                checked={project.status === "INACTIVE"}
                                 onChange={inputChanged}
                             />
                           </span>
@@ -143,7 +146,7 @@ export default function Projects(props) {
                                 value="ARCHIVE"
                                 name="status"
                                 id="archive"
-                                checked={project.status==="ARCHIVE"}
+                                checked={project.status === "ARCHIVE"}
                                 onChange={inputChanged}
                             />
                           </span>

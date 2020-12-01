@@ -9,7 +9,7 @@ export default function ListOfDays(props) {
     const {today, listOfWeeks} = props;
 
     const dailyTimeSheets = useSelector(state => state.dailyTimeSheets);
-;
+
 
     function getFormattedDay(day) {
         if (day === undefined) day = new Date();
@@ -19,7 +19,7 @@ export default function ListOfDays(props) {
         return day.getFullYear() + "-" + mm + "-" + dayNumber;
     }
 
-    function dailyTime(day){
+    function dailyTime(day) {
         let time = 0;
         dailyTimeSheets.map(dailyTimeSheet => {
             if (dailyTimeSheet.day === getFormattedDay(day)) {
@@ -53,10 +53,10 @@ export default function ListOfDays(props) {
                             day.getMonth() < today.getMonth() ?
                                 "positive previous" : "positive"}>
                             <div className="date">
-                        {/*// <td className={(today<=day) ? "disable":*/}
-                        {/*//     day.getMonth() < today.getMonth() ?*/}
-                        {/*//      "positive previous": dailyTime(day)<7.5? "negative" : "positive"}>*/}
-                        {/*    <div className="date" >*/}
+                                {/*// <td className={(today<=day) ? "disable":*/}
+                                {/*//     day.getMonth() < today.getMonth() ?*/}
+                                {/*//      "positive previous": dailyTime(day)<7.5? "negative" : "positive"}>*/}
+                                {/*    <div className="date" >*/}
                                 <span>{day.getDate()}</span>
                             </div>
                             <div className="hours">

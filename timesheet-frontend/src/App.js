@@ -20,7 +20,7 @@ function App() {
                         </Route>
                         <Route
                             path='/weekView'
-                            render={ props => <WeekView {...props} />}
+                            render={props => <WeekView {...props} />}
                         />
                         <Route path="/clients">
                             <Clients/>

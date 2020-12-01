@@ -1,4 +1,4 @@
-export function fetchWeekView(state = {week:[], day:new Date()}, action) {
+export function fetchWeekView(state = {week: [], day: new Date()}, action) {
     switch (action.type) {
         case 'GET_WEEK_VIEW_INFO':
             return action.weekView;

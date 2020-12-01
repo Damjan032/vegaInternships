@@ -34,7 +34,7 @@ export default function Clients() {
         }
     };
 
-    async function handleSearch(event){
+    async function handleSearch(event) {
         await setStringString(event.target.value);
         setTimeout(() => {
         }, 2000);
@@ -82,5 +82,5 @@ export default function Clients() {
             <PaginationBar onClick={handlePropagationClick} pageNumber={pageOfClients.pageNumber}
                            totalSize={pageOfClients.totalSize} pageSize={pageOfClients.pageSize}/>
         </>
-  );
+    );
 }
