@@ -23,4 +23,12 @@ export async function getPageEmployeesFromRepository(pageNumber) {
     return data;
 }
 
+export async function resetPasswordInRepository(employeeId, passwords) {
+    console.log("employeeId, passwords")
+    console.log(passwords);
+    await axios.post(`/employees/resetPassword?id=${employeeId}`, passwords).then(
+        await axios.get(`/employees/activated?id=${employeeId}`)
+    );
+}
+
 

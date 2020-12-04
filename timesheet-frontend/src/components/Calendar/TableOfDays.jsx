@@ -1,7 +1,8 @@
 import React from 'react';
 import ListOfDays from "./ListOfDays";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getDailyTimeSheetAction} from "../../store/actions/dailyTImeSheets/dailyTimeSheetsActions";
+import TotalHours from "./TotalHours";
 
 
 export default function TableOfDays(props) {
@@ -18,7 +19,13 @@ export default function TableOfDays(props) {
         let dayNumber = day.getDate() < 10 ? 0 + '' + day.getDate() : day.getDate();
         return day.getFullYear() + "-" + mm + "-" + dayNumber;
     }
+    function totalHours(){
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        console.log("EVE SATA");
+        return 5;
+
+    }
 
     return (
         <>
@@ -45,6 +52,8 @@ export default function TableOfDays(props) {
                 <ListOfDays listOfWeeks={listOfWeeks} year={year} today={today}/>
                 </tbody>
             </table>
+            <TotalHours/>
+
         </>
     );
 }

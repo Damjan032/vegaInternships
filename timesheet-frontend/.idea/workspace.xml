@@ -19,35 +19,28 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="259aa6ac-4e5e-40bb-af0c-cb1a9f3f7326" name="Default Changelist" comment="search, pagable and fisrtLetter calendar view and dailyTimeSheetRepository">
+    <list default="true" id="259aa6ac-4e5e-40bb-af0c-cb1a9f3f7326" name="Default Changelist" comment="weekView">
+      <change afterPath="$PROJECT_DIR$/src/components/Calendar/TotalHours.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Reports/ReportsBody.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/NewPassword.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Reports.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/LoggedRouter.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Calendar/DayField.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calendar/DayField.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Calendar/ListOfDays.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calendar/ListOfDays.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Calendar/TableOfDays.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Calendar/TableOfDays.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Category/CategoriesSelection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Category/CategoriesSelection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Client/Client.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Client/Client.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Client/ClientSelection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Client/ClientSelection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Employee/Employee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/Employee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Employee/EmployeesList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/EmployeesList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Employee/NewMemberDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Employee/NewMemberDialog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Project/NewProjectDialog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Project/NewProjectDialog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Project/Project.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Project/Project.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SearchInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SearchInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/WeekView/DailyTimeSheetsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WeekView/DailyTimeSheetsList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PaginationBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaginationBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/WeekView/DailyTimeSheetsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WeekView/TimeSheetsList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/WeekView/WeekViewBody.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WeekView/WeekViewBody.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Clients.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Clients.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Employees.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Employees.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Projects.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Projects.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/TimeSheet.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/TimeSheet.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/WeekView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/WeekView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/countries/countriesActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/countries/countriesActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/dailyTImeSheets/dailyTimeSheetsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/dailyTImeSheets/dailyTimeSheetsActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/employees/employeesActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/employees/employeesActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/clientsReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/clientsReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/countriesReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/countriesReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/weekReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/weekReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/repositories/clientsRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/clientsRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/repositories/countriesRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/countriesRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/repositories/employeeRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/repositories/employeeRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../timesheet/core/src/main/java/rs/vegait/timesheet/core/service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../timesheet/core/src/main/java/rs/vegait/timesheet/core/service/EmployeeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +56,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1kmeD0tjq5onuWOYWSdHFjQdfqj" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -89,6 +85,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Damjan\Desktop\Praksa\timesheet\timesheet-frontend\src\components" />
+      <recent name="C:\Users\Damjan\Desktop\Praksa\timesheet\timesheet-frontend\src\pages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Damjan\Desktop\Praksa\timesheet\timesheet-frontend\src\pages" />
     </key>
   </component>
@@ -126,7 +125,11 @@
       <workItem from="1606725260262" duration="30594000" />
       <workItem from="1606781099256" duration="200000" />
       <workItem from="1606781390874" duration="263000" />
-      <workItem from="1606812634055" duration="21852000" />
+      <workItem from="1606812634055" duration="23379000" />
+      <workItem from="1606839907576" duration="1969000" />
+      <workItem from="1606900074333" duration="26054000" />
+      <workItem from="1606985643901" duration="6083000" />
+      <workItem from="1607073429512" duration="3457000" />
     </task>
     <task id="LOCAL-00001" summary="Front employee and clients">
       <created>1606389899219</created>
@@ -170,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606759680666</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="weekView">
+      <created>1606838051839</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1606838051839</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +203,8 @@
     <MESSAGE value="Added front repositories" />
     <MESSAGE value="Front pages search and letter for clients" />
     <MESSAGE value="search, pagable and fisrtLetter calendar view and dailyTimeSheetRepository" />
-    <option name="LAST_COMMIT_MESSAGE" value="search, pagable and fisrtLetter calendar view and dailyTimeSheetRepository" />
+    <MESSAGE value="weekView" />
+    <option name="LAST_COMMIT_MESSAGE" value="weekView" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

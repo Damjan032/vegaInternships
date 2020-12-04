@@ -77,6 +77,7 @@ export default function TimeSheet() {
     }
 
 
+
     useEffect(() => {
         dispatch(getDailyTimeSheetAction("30a77b80-5ac7-4435-8ee4-068d0eae18e0", getFormattedDay(listOfDays[0]),
             getFormattedDay(listOfDays[listOfDays.length - 1])));
@@ -99,9 +100,7 @@ export default function TimeSheet() {
             </div>
             <TableOfDays listOfWeeks={chunkArray(getDaysInMonth(), getDaysInMonth().length / 7)} year={year}
                          today={today}/>
-            <div className="total">
-                <span>Total hours: <em>90</em></span>
-            </div>
+
         </>
     );
 }

@@ -3,7 +3,7 @@ import ClientSelection from "../Client/ClientSelection";
 import ProjectSelection from "../Project/ProjectSelection";
 import CategorySelection from "../Category/CategoriesSelection";
 
-export default function DailyTimeSheetsList(props) {
+export default function TimeSheetsList(props) {
     const emptyTimeSheet = {
         time: '',
         description: '',
@@ -12,18 +12,19 @@ export default function DailyTimeSheetsList(props) {
         categoryDto: ''
     }
     const {dailyTimeSheets} = props;
+    console.log("DailyTimeSheetsList");
     console.log(dailyTimeSheets);
 
     const inputChanged = (event) => {
         switch (event.target.name) {
             case "client":
-                console.log("Djes klijent");
+                console.log("client");
                 break;
             case "project":
-                console.log("Djes klijent");
+                console.log("project");
                 break;
             case "categories":
-                console.log("Djes klijent");
+                console.log("categories");
                 break;
             default:
                 console.log("Ovo ostalo");
@@ -40,6 +41,14 @@ export default function DailyTimeSheetsList(props) {
         console.log(event.target.value)
 
     };
+
+    function totalHours(daily){
+        console.log(daily)
+        console.log("EVE SATA");
+        return 5;
+
+    }
+
     return (
         <>
             {dailyTimeSheets.map(timeSheet => (
@@ -66,7 +75,7 @@ export default function DailyTimeSheetsList(props) {
                                type="text" className="in-text xsmall"/>
                     </td>
                     <td className="small">
-                        <input onChange={inputChanged} id={timeSheet.id} value={timeSheet.overtime} name="overtime" type="text" className="in-text xsmall"/>
+                        <input onChange={inputChanged} id={timeSheet.id} placeholder={timeSheet.overtime} name="overtime" type="text" className="in-text xsmall"/>
                     </td>
                 </tr>
             ))}

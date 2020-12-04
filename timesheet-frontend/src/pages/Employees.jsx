@@ -16,7 +16,9 @@ export default function Employees() {
     };
 
     const handlePropagationClick = (numberOfPage) => {
-        if (numberOfPage === "NEXT") {
+        if (numberOfPage === "PREV") {
+            dispatch(getPageOfEmployeesAction(--pageOfEmployees.pageNumber));
+        } else if (numberOfPage === "NEXT") {
             dispatch(getPageOfEmployeesAction(++pageOfEmployees.pageNumber));
         } else {
             dispatch(getPageOfEmployeesAction(numberOfPage));

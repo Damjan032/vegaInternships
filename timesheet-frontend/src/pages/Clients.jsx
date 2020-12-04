@@ -26,7 +26,11 @@ export default function Clients() {
     };
 
     const handlePropagationClick = (numberOfPage) => {
-        if (numberOfPage === "NEXT") {
+
+        if (numberOfPage === "PREV") {
+            dispatch(getPageOfClientsAction(--pageOfClients.pageNumber, activeLetter, searchString));
+        }
+        else if (numberOfPage === "NEXT") {
             dispatch(getPageOfClientsAction(++pageOfClients.pageNumber, activeLetter, searchString));
         } else {
             dispatch(getPageOfClientsAction(numberOfPage));

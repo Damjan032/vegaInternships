@@ -10,7 +10,7 @@ import {
     addEmployeeInRepository,
     deleteEmployeeFromRepository,
     getAllEmployeesFromRepository,
-    getPageEmployeesFromRepository,
+    getPageEmployeesFromRepository, repeatPasswordInRepository, resetPasswordInRepository,
     updateEmployeeInRepository
 } from "../../repositories/employeeRepository";
 
@@ -45,6 +45,10 @@ export const updateEmployeeAction = employee => async dispatch => {
     updateEmployeeInRepository(employee).then(
         dispatch(updateEmployeeCreator(employee))
     )
+};
+
+export const resetPasswordAction = (employeeId,passwords)  => {
+    resetPasswordInRepository(employeeId, passwords).then(r => console.log("done"));
 };
 
 

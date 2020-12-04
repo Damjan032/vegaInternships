@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import DailyTimeSheetsList from "./DailyTimeSheetsList";
+import TimeSheetsList from "./TimeSheetsList";
 
 export default function WeekViewBody(props) {
     const emptyTimeSheet = {
@@ -104,7 +104,7 @@ export default function WeekViewBody(props) {
                     <th className="small">Overtime</th>
                 </tr>
 
-                <DailyTimeSheetsList dailyTimeSheets={setCurrentDailyTimeSheet()}/>
+                <TimeSheetsList dailyTimeSheets={setCurrentDailyTimeSheet()}/>
                 </tbody>
             </table>
             <div className="total">

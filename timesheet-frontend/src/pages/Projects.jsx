@@ -27,7 +27,9 @@ export default function Projects() {
     };
 
     const handlePropagationClick = (numberOfPage) => {
-        if (numberOfPage === "NEXT") {
+        if (numberOfPage === "PREV") {
+            dispatch(getPageOfProjectsAction(--pageOfProjects.pageNumber, activeLetter, searchString));
+        } else if (numberOfPage === "NEXT") {
             dispatch(getPageOfProjectsAction(++pageOfProjects.pageNumber, activeLetter, searchString));
         } else {
             dispatch(getPageOfProjectsAction(numberOfPage));

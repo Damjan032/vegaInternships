@@ -40,7 +40,7 @@ public class EmployeeService implements rs.vegait.timesheet.core.service.BaseSer
                 new Username(employee.username())).isPresent()) {
             throw new InstanceAlreadyExistsException("Already exists employee with same username or email");
         }
-        String body = "http://localhost:8080/api/employees/activated?id=" + employee.id();
+        String body = "http://localhost:3000/newPassword?id=" + employee.id();
         this.smtpServer.sendEmail(employee.emailAddress(), "SSLEmail Testing Subject", body);
         this.employeeRepository.add(employee);
     }
